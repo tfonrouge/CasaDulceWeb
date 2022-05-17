@@ -29,7 +29,7 @@ class App : Application() {
         CustomerCatalog
     }
 
-    private val obs = ObservableValue(State.Home)
+    private val obs: ObservableValue<State> = ObservableValue(State.Home)
 
     override fun start(state: Map<String, Any>) {
 
