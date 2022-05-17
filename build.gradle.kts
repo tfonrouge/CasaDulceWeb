@@ -91,6 +91,9 @@ kotlin {
                 implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
                 implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
                 implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
+
+                implementation("org.xerial:sqlite-jdbc:3.36.0.3")
+//                implementation("com.github.gwenn:sqlite-dialect:0.1.0")
             }
         }
         val backendTest by getting {

@@ -5,9 +5,9 @@ import com.fonrouge.remoteScreen.tables.Products
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
 import io.kvision.remote.RemoteSorter
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
 
 actual class ProductCatalogService : IProductCatalogService {
 
@@ -18,15 +18,20 @@ actual class ProductCatalogService : IProductCatalogService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<Product> {
-        Database.connect()
-        val list = Products.selectAll().toList()
+        val list = transaction {
+            Products.selectAll().toList()
+        }
+        println(list)
         return RemoteData(listOf())
     }
 
     override suspend fun agregaProducto(product: Product) {
-        Products.insert {
-            it[description] = product.description
-            it[unit] = product.unit
+        transaction {
+            val id = Products.insertAndGetId {
+                it[description] = product.description
+                it[unit] = product.unit
+            }
+            println("inserted product with id = '$id'")
         }
     }
 }

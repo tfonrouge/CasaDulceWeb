@@ -1,11 +1,13 @@
 package com.fonrouge.remoteScreen
 
+import ProductModel
 import io.kvision.form.FormPanel
 import io.kvision.form.formPanel
 import io.kvision.form.text.text
 import io.kvision.html.button
 import io.kvision.modal.Modal
 import io.kvision.toast.Toast
+import kotlinx.coroutines.launch
 
 enum class EditMode {
     Create,
@@ -34,7 +36,9 @@ class DialogEditProduct(val editMode: EditMode) : Modal() {
             } else {
                 val product = form.getData()
                 console.warn("product =", product)
-
+                AppScope.launch {
+                    ProductModel.createProduct(product)
+                }
             }
         }
     }
