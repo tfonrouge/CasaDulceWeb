@@ -15,4 +15,6 @@ interface IProductCatalogService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<Product>
+
+    suspend fun agregaProducto(product: Product)
 }

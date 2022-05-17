@@ -5,14 +5,17 @@ import com.fonrouge.remoteScreen.services.ProductCatalogServiceManager
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
 import io.kvision.html.button
+import io.kvision.modal.Dialog
+import io.kvision.modal.Modal
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
 import io.kvision.routing.routing
 import io.kvision.tabulator.*
+import io.kvision.utils.px
 
 class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
     init {
-        flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.SPACEEVENLY ) {
+        flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.SPACEEVENLY) {
             button("Home").onClick {
                 routing.navigate("")
             }
@@ -25,12 +28,14 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
             button("Edit List").onClick {
                 routing.navigate("/editList")
             }
+            marginBottom = 10.px
         }
         tabulatorRemote(
             serviceManager = ProductCatalogServiceManager,
             function = IProductCatalogService::products,
             options = TabulatorOptions(
                 layout = Layout.FITCOLUMNS,
+                pagination = true,
                 paginationMode = PaginationMode.REMOTE,
                 filterMode = FilterMode.REMOTE,
                 sortMode = SortMode.REMOTE,
@@ -50,5 +55,12 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                 )
             )
         )
+
+        flexPanel(direction = FlexDirection.ROW) {
+            button(text = "Add Product").onClick {
+                val modal = DialogEditProduct(EditMode.Create)
+                modal.show()
+            }
+        }
     }
 }
