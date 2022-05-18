@@ -21,8 +21,7 @@ class App : Application() {
 
     enum class State {
         Home,
-        PendingList,
-        EditPendingList,
+        CustomerOrderList,
         ProductCatalog,
         CustomerCatalog
     }
@@ -35,8 +34,7 @@ class App : Application() {
 
         routing
             .on("/", { obs.value = State.Home })
-            .on("/pendingList", { obs.value = State.PendingList })
-            .on("/editList", { obs.value = State.EditPendingList })
+            .on("/customerOrderList", { obs.value = State.CustomerOrderList })
             .on("/productCatalog", { obs.value = State.ProductCatalog })
             .on("/customerCatalog", { obs.value = State.CustomerCatalog })
             .resolve()
@@ -57,8 +55,7 @@ class App : Application() {
             main().bind(obs) {
                 when (it) {
                     State.Home -> add(ViewHome())
-                    State.PendingList -> add(ViewPendingList())
-                    State.EditPendingList -> add(ViewEditList())
+                    State.CustomerOrderList -> add(ViewCustomerOrderList())
                     State.ProductCatalog -> add(ViewProductCatalog())
                     State.CustomerCatalog -> add(ViewCustomerCatalog())
                 }

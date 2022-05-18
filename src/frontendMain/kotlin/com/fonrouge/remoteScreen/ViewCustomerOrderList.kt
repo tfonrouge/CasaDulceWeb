@@ -8,7 +8,7 @@ import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
 import io.kvision.routing.routing
 
-class ViewPendingList : FlexPanel(direction = FlexDirection.COLUMN) {
+class ViewCustomerOrderList : FlexPanel(direction = FlexDirection.COLUMN) {
     init {
         flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.SPACEEVENLY) {
             button("Home").onClick {
@@ -20,10 +20,7 @@ class ViewPendingList : FlexPanel(direction = FlexDirection.COLUMN) {
             button("Customer Catalog").onClick {
                 routing.navigate("/customerCatalog")
             }
-            button("Edit List").onClick {
-                routing.navigate("/editList")
-            }
         }
-        span("PendingList")
+        span("Customer Order List")
     }
 }

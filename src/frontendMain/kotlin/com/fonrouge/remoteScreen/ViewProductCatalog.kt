@@ -33,14 +33,11 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
             button("Home").onClick {
                 routing.navigate("")
             }
-            button("Pending List").onClick {
-                routing.navigate("/pendingList")
-            }
             button("Customer Catalog").onClick {
                 routing.navigate("/customerCatalog")
             }
-            button("Edit List").onClick {
-                routing.navigate("/editList")
+            button("Customer Order List").onClick {
+                routing.navigate("/customerOrderList")
             }
             marginBottom = 10.px
         }

@@ -14,14 +14,11 @@ class ViewCustomerCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
             button("Home").onClick {
                 routing.navigate("")
             }
-            button("Pending List").onClick {
-                routing.navigate("/pendingList")
-            }
             button("Product Catalog").onClick {
                 routing.navigate("/productCatalog")
             }
-            button("Edit List").onClick {
-                routing.navigate("/editList")
+            button("Customer Order List").onClick {
+                routing.navigate("/customerOrderList")
             }
         }
         span("Customer Catalog")
