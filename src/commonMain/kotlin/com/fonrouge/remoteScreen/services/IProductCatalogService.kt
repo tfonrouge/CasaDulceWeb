@@ -16,5 +16,7 @@ interface IProductCatalogService {
         state: String?
     ): RemoteData<Product>
 
-    suspend fun agregaProducto(product: Product)
+    suspend fun createProductWith(product: Product)
+
+    suspend fun updateProduct(product: Product, fieldName: String)
 }

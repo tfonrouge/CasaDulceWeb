@@ -11,5 +11,4 @@ class CustomerOrder(
     val unit: String,
     @Contextual
     val created: LocalDateTime
-) {
-}
+)

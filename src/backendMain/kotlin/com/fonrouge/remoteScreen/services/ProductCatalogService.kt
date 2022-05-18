@@ -31,12 +31,30 @@ actual class ProductCatalogService : IProductCatalogService {
         return RemoteData(list)
     }
 
-    override suspend fun agregaProducto(product: Product) {
+    override suspend fun createProductWith(product: Product) {
         transaction {
             TableProduct.new {
                 code = product.code.uppercase()
                 description = product.description
                 unit = product.unit
+            }
+            try {
+                commit()
+            } catch (e: ExposedSQLException) {
+                println("error on product create = ${e.message}")
+                throw ServiceException("error on product create = ${e.message}")
+            }
+        }
+    }
+
+    override suspend fun updateProduct(product: Product, fieldName: String) {
+        transaction {
+            TableProduct.findById(product.id)?.let { tableProduct ->
+                when (fieldName) {
+                    "code" -> tableProduct.code = product.code.uppercase()
+                    "description" -> tableProduct.description = product.description
+                    "unit" -> tableProduct.unit = product.unit
+                }
             }
             try {
                 commit()

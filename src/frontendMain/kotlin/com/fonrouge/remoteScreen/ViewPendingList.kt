@@ -2,7 +2,6 @@ package com.fonrouge.remoteScreen
 
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
-import io.kvision.core.onClick
 import io.kvision.html.button
 import io.kvision.html.span
 import io.kvision.panel.FlexPanel

@@ -6,6 +6,10 @@ object ProductModel {
     val productCatalogService = ProductCatalogService()
 
     suspend fun createProduct(product: Product) {
-        productCatalogService.agregaProducto(product)
+        productCatalogService.createProductWith(product)
+    }
+
+    suspend fun updateProduct(product: Product, fieldName: String) {
+        productCatalogService.updateProduct(product, fieldName)
     }
 }

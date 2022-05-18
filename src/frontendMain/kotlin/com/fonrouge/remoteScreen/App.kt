@@ -2,9 +2,7 @@ package com.fonrouge.remoteScreen
 
 import io.kvision.*
 import io.kvision.core.*
-import io.kvision.html.h1
-import io.kvision.html.header
-import io.kvision.html.main
+import io.kvision.html.*
 import io.kvision.panel.flexPanel
 import io.kvision.panel.root
 import io.kvision.routing.Routing
@@ -46,8 +44,12 @@ class App : Application() {
         val root = root("kvapp") {
             header {
             }.bind(obs) {
-                flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.CENTER) {
+                flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.CENTER, alignItems = AlignItems.CENTER) {
                     borderBottom = Border(width = 3.px, style = BorderStyle.SOLID, color = Color("blue"))
+                    image("Logotipo-Casa-Dulce.png") {
+                        height = 8.rem
+                        marginRight = 1.rem
+                    }
                     h1("Casa Dulce: ${it.name}")
                     marginBottom = 1.rem
                 }

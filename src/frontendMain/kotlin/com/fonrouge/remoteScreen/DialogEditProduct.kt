@@ -9,12 +9,7 @@ import io.kvision.modal.Modal
 import io.kvision.toast.Toast
 import kotlinx.coroutines.launch
 
-enum class EditMode {
-    Create,
-    Update
-}
-
-class DialogEditProduct(val editMode: EditMode) : Modal() {
+class DialogEditProduct(product: Product?) : Modal() {
 
     var form: FormPanel<Product>
 
