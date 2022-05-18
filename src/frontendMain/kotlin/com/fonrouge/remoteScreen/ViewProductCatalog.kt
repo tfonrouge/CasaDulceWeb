@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
-    lateinit var tabRemote: TabulatorRemote<Product, ProductCatalogService>
+    var tabRemote: TabulatorRemote<Product, ProductCatalogService>
 
     companion object {
         var timerHandle: Int? = null

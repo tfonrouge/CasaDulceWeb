@@ -3,7 +3,7 @@ import com.fonrouge.remoteScreen.services.ProductCatalogService
 
 object ProductModel {
 
-    val productCatalogService = ProductCatalogService()
+    private val productCatalogService = ProductCatalogService()
 
     suspend fun createProduct(product: Product) {
         productCatalogService.createProductWith(product)

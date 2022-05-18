@@ -39,7 +39,7 @@ class App : Application() {
             .on("/customerCatalog", { obs.value = State.CustomerCatalog })
             .resolve()
 
-        val root = root("kvapp") {
+        root("kvapp") {
             header {
             }.bind(obs) {
                 flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.CENTER, alignItems = AlignItems.CENTER) {
