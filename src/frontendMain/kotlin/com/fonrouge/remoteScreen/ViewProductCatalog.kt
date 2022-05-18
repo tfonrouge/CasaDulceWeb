@@ -138,7 +138,7 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
         flexPanel(direction = FlexDirection.ROW) {
             button(text = "Create Product").onClick {
-                val modal = DialogEditProduct(null)
+                val modal = DialogEditProduct()
                 modal.show()
             }
         }

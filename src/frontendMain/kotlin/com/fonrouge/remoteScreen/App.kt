@@ -40,6 +40,7 @@ class App : Application() {
             .resolve()
 
         root("kvapp") {
+            margin = 1.rem
             header {
             }.bind(obs) {
                 flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.CENTER, alignItems = AlignItems.CENTER) {
