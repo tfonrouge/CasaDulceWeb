@@ -21,6 +21,9 @@ class DialogEditProduct(val editMode: EditMode) : Modal() {
     init {
         form = formPanel {
 
+            text(label = "Code:")
+                .bind(key = Product::code, required = true)
+
             text(label = "Description:")
                 .bind(key = Product::description, required = true)
 
@@ -34,10 +37,13 @@ class DialogEditProduct(val editMode: EditMode) : Modal() {
             if (!form.validate()) {
                 Toast.warning("incomplete form...")
             } else {
-                val product = form.getData()
-                console.warn("product =", product)
+                this@DialogEditProduct.hide()
                 AppScope.launch {
-                    ProductModel.createProduct(product)
+                    try {
+                        ProductModel.createProduct(form.getData())
+                    } catch (e: Exception) {
+                        Toast.error(e.message ?: "?")
+                    }
                 }
             }
         }
