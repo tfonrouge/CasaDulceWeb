@@ -2,8 +2,9 @@ package com.fonrouge.remoteScreen.database
 
 import com.mongodb.client.model.Collation
 import com.mongodb.client.model.CollationStrength
-import com.mongodb.reactivestreams.client.MongoDatabase
 import io.ktor.server.application.*
+import org.litote.kmongo.coroutine.CoroutineDatabase
+import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 
 //private var database: String? = "test"
@@ -12,11 +13,11 @@ private var plugin: MongoDbPluginConfiguration = MongoDbPluginConfiguration()
 var locale = "en"
 
 val mongoClient by lazy {
-    plugin.let { KMongo.createClient(it.connectionString) }
+    plugin.let { KMongo.createClient(it.connectionString).coroutine }
 }
 
 @Suppress("unused")
-val mongoDatabase: MongoDatabase by lazy {
+val mongoDatabase: CoroutineDatabase by lazy {
     mongoClient.getDatabase(plugin.database)
 }
 
