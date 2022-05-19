@@ -1,9 +1,9 @@
 package com.fonrouge.remoteScreen
 
 import ProductModel
-import com.fonrouge.remoteScreen.services.IProductCatalogService
-import com.fonrouge.remoteScreen.services.ProductCatalogService
-import com.fonrouge.remoteScreen.services.ProductCatalogServiceManager
+import com.fonrouge.remoteScreen.services.IInventoryItmService
+import com.fonrouge.remoteScreen.services.InventoryItmService
+import com.fonrouge.remoteScreen.services.InventoryItmServiceManager
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
 import io.kvision.core.onEvent
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
-    var tabRemote: TabulatorRemote<Product, ProductCatalogService>
+    var tabRemote: TabulatorRemote<InventoryItm, InventoryItmService>
 
     companion object {
         var timerHandle: Int? = null
@@ -42,8 +42,8 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
             marginBottom = 10.px
         }
         tabRemote = tabulatorRemote(
-            serviceManager = ProductCatalogServiceManager,
-            function = IProductCatalogService::products,
+            serviceManager = InventoryItmServiceManager,
+            function = IInventoryItmService::inventoryItmList,
             types = setOf(TableType.STRIPED, TableType.HOVER, TableType.BORDERED),
             options = TabulatorOptions(
                 layout = Layout.FITCOLUMNS,
@@ -54,12 +54,13 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                 dataLoader = false,
                 columns = listOf(
                     ColumnDefinition(
-                        title = Product::id.name,
-                        field = Product::id.name,
+                        title = InventoryItm::id.name,
+//                        field = InventoryItm::id.name,
+                        field = "_id",
                     ),
                     ColumnDefinition(
-                        title = Product::code.name,
-                        field = Product::code.name,
+                        title = InventoryItm::code.name,
+                        field = InventoryItm::code.name,
                         headerFilter = Editor.INPUT,
                         editorComponentFunction = { _, _, success, _, data ->
                             TextInput(value = data.code).apply {
@@ -78,8 +79,8 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                         }
                     ),
                     ColumnDefinition(
-                        title = Product::description.name,
-                        field = Product::description.name,
+                        title = InventoryItm::description.name,
+                        field = InventoryItm::description.name,
                         headerFilter = Editor.INPUT,
                         editorComponentFunction = { _, _, success, _, data ->
                             TextInput(value = data.description).apply {
@@ -98,8 +99,8 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                         }
                     ),
                     ColumnDefinition(
-                        title = Product::unit.name,
-                        field = Product::unit.name,
+                        title = InventoryItm::unit.name,
+                        field = InventoryItm::unit.name,
                         headerFilter = Editor.INPUT,
                         editorComponentFunction = { _, _, success, _, data ->
                             TextInput(value = data.unit).apply {

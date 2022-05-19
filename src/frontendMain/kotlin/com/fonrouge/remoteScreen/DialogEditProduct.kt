@@ -16,19 +16,19 @@ import kotlinx.coroutines.launch
 
 class DialogEditProduct : Modal(caption = "New Product") {
 
-    var form: FormPanel<Product>
+    var form: FormPanel<InventoryItm>
 
     init {
         form = formPanel {
 
             text(label = "Code:")
-                .bind(key = Product::code, required = true)
+                .bind(key = InventoryItm::code, required = true)
 
             text(label = "Description:")
-                .bind(key = Product::description, required = true)
+                .bind(key = InventoryItm::description, required = true)
 
             text(label = "Unit:")
-                .bind(key = Product::unit, required = true)
+                .bind(key = InventoryItm::unit, required = true)
         }
 
         flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.FLEXEND) {

@@ -1,22 +1,22 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.remoteScreen.Product
+import com.fonrouge.remoteScreen.InventoryItm
 import io.kvision.annotations.KVService
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
 import io.kvision.remote.RemoteSorter
 
 @KVService
-interface IProductCatalogService {
-    suspend fun products(
+interface IInventoryItmService {
+    suspend fun inventoryItmList(
         page: Int?,
         size: Int?,
         filter: List<RemoteFilter>?,
         sorter: List<RemoteSorter>?,
         state: String?
-    ): RemoteData<Product>
+    ): RemoteData<InventoryItm>
 
-    suspend fun createProductWith(product: Product)
+    suspend fun createProductWith(inventoryItm: InventoryItm)
 
-    suspend fun updateProduct(product: Product, fieldName: String)
+    suspend fun updateProduct(inventoryItm: InventoryItm, fieldName: String)
 }

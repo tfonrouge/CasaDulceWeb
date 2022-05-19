@@ -1,15 +1,15 @@
-import com.fonrouge.remoteScreen.Product
-import com.fonrouge.remoteScreen.services.ProductCatalogService
+import com.fonrouge.remoteScreen.InventoryItm
+import com.fonrouge.remoteScreen.services.InventoryItmService
 
 object ProductModel {
 
-    private val productCatalogService = ProductCatalogService()
+    private val productCatalogService = InventoryItmService()
 
-    suspend fun createProduct(product: Product) {
-        productCatalogService.createProductWith(product)
+    suspend fun createProduct(inventoryItm: InventoryItm) {
+        productCatalogService.createProductWith(inventoryItm)
     }
 
-    suspend fun updateProduct(product: Product, fieldName: String) {
-        productCatalogService.updateProduct(product, fieldName)
+    suspend fun updateProduct(inventoryItm: InventoryItm, fieldName: String) {
+        productCatalogService.updateProduct(inventoryItm, fieldName)
     }
 }

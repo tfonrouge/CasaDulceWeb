@@ -70,6 +70,9 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api("io.kvision:kvision-server-ktor:$kvisionVersion")
+                implementation("org.litote.kmongo:kmongo-id:4.6.0")
+//                implementation("org.litote.kmongo:kmongo-id-serialization:4.6.0")
+//                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
             }
             kotlin.srcDir("build/generated-src/common")
         }
@@ -88,12 +91,9 @@ kotlin {
                 implementation("io.ktor:ktor-server-compression:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
-                implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
-                implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
-                implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
-
-                implementation("org.xerial:sqlite-jdbc:3.36.0.3")
-//                implementation("com.github.gwenn:sqlite-dialect:0.1.0")
+                implementation("org.litote.kmongo:kmongo:4.6.0")
+                implementation("org.litote.kmongo:kmongo-coroutine:4.6.0")
+                implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.6.0")
             }
         }
         val backendTest by getting {
@@ -124,6 +124,8 @@ kotlin {
                 implementation("io.kvision:kvision-simple-select-remote:$kvisionVersion")
                 implementation("io.kvision:kvision-tabulator-remote:$kvisionVersion")
                 implementation("io.kvision:kvision-toast:$kvisionVersion")
+
+//                implementation("org.litote.kmongo:kmongo-id:4.6.0")
             }
             kotlin.srcDir("build/generated-src/frontend")
         }
