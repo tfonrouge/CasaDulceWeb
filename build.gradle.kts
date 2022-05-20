@@ -125,7 +125,7 @@ kotlin {
                 implementation("io.kvision:kvision-tabulator-remote:$kvisionVersion")
                 implementation("io.kvision:kvision-toast:$kvisionVersion")
 
-//                implementation("org.litote.kmongo:kmongo-id:4.6.0")
+                implementation("org.litote.kmongo:kmongo-id:4.6.0")
             }
             kotlin.srcDir("build/generated-src/frontend")
         }
