@@ -12,4 +12,5 @@ class InventoryItm(
     var code: String,
     var description: String,
     var unit: String,
+    var stock: Int,
 )

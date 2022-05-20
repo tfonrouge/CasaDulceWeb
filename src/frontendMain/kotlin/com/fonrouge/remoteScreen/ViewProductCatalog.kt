@@ -8,6 +8,8 @@ import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
 import io.kvision.core.onEvent
 import io.kvision.form.InputSize
+import io.kvision.form.spinner.Spinner
+import io.kvision.form.spinner.SpinnerInput
 import io.kvision.form.text.TextInput
 import io.kvision.html.button
 import io.kvision.panel.FlexPanel
@@ -111,6 +113,27 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                                         data.unit = self.value ?: "***"
                                         AppScope.launch {
                                             ProductModel.updateProduct(data, "unit")
+                                            success(self.value)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ),
+                    ColumnDefinition(
+                        title = InventoryItm::stock.name,
+                        field = InventoryItm::stock.name,
+//                        headerFilter = Editor.INPUT,
+                        editorComponentFunction = { _, _, success, _, data ->
+                            SpinnerInput(value = data.stock).apply {
+                                size = InputSize.SMALL
+                                onEvent {
+                                    change = {
+                                        editing = false
+                                        data.stock = (self.value ?: 0) as Int
+                                        AppScope.launch {
+                                            console.warn("valor de data =", data)
+                                            ProductModel.updateProduct(data, "stock")
                                             success(self.value)
                                         }
                                     }
