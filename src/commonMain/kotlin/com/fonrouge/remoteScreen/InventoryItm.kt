@@ -7,7 +7,7 @@ import kotlin.js.JsExport
 @JsExport
 class InventoryItm(
 //    @SerialName("_id")
-    var _id: String = "",
+    var _id: String,
     var code: String,
     var description: String,
     var unit: String,
