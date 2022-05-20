@@ -8,7 +8,6 @@ import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
 import io.kvision.core.onEvent
 import io.kvision.form.InputSize
-import io.kvision.form.spinner.Spinner
 import io.kvision.form.spinner.SpinnerInput
 import io.kvision.form.text.TextInput
 import io.kvision.html.button
@@ -56,7 +55,7 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                 dataLoader = false,
                 columns = listOf(
                     ColumnDefinition(
-                        title = InventoryItm::id.name,
+                        title = InventoryItm::_id.name,
 //                        field = InventoryItm::id.name,
                         field = "_id",
                     ),

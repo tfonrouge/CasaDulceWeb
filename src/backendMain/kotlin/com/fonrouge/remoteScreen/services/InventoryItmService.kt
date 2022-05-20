@@ -24,7 +24,7 @@ actual class InventoryItmService : IInventoryItmService {
 
     override suspend fun createProductWith(inventoryItm: InventoryItm) {
         try {
-            inventoryItm.id = newId<String>().toString()
+            inventoryItm._id = newId<String>().toString()
             inventoryItmColl.insertOne(inventoryItm)
         } catch (e: ServiceException) {
             println("error on product create = ${e.message}")
@@ -34,7 +34,7 @@ actual class InventoryItmService : IInventoryItmService {
 
     override suspend fun updateProduct(inventoryItm: InventoryItm, fieldName: String) {
         try {
-            inventoryItmColl.updateOne(Document("_id", inventoryItm.id), inventoryItm)
+            inventoryItmColl.updateOne(Document("_id", inventoryItm._id), inventoryItm)
         } catch (e: ServiceException) {
             println("error on product create = ${e.message}")
             throw ServiceException("error on product create = ${e.message}")
