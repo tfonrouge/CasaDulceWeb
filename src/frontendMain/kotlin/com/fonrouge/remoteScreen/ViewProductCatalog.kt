@@ -1,16 +1,12 @@
 package com.fonrouge.remoteScreen
 
-import ProductModel
 import com.fonrouge.remoteScreen.services.IInventoryItmService
 import com.fonrouge.remoteScreen.services.InventoryItmService
 import com.fonrouge.remoteScreen.services.InventoryItmServiceManager
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
 import io.kvision.core.onEvent
-import io.kvision.form.InputSize
-import io.kvision.form.spinner.SpinnerInput
-import io.kvision.form.text.TextInput
-import io.kvision.html.Span
+import io.kvision.form.upload.upload
 import io.kvision.html.button
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
@@ -19,9 +15,6 @@ import io.kvision.tabulator.*
 import io.kvision.utils.event
 import io.kvision.utils.px
 import kotlinx.browser.window
-import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.decodeFromDynamic
 
 class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
@@ -33,6 +26,9 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
     }
 
     init {
+
+        setDragDropData("text/plain", "element")
+
         flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.SPACEEVENLY) {
             button("Home").onClick {
                 routing.navigate("")
@@ -58,97 +54,29 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                 dataLoader = false,
                 columns = listOf(
                     ColumnDefinition(
-                        title = InventoryItm::id.name,
-//                        field = InventoryItm::id.name,
-                        field = "_id",
+                        title = InventoryItm::_id.name,
+                        field = InventoryItm::_id.name,
+                        headerFilter = Editor.NUMBER
                     ),
                     ColumnDefinition(
-                        title = InventoryItm::code.name,
-                        field = InventoryItm::code.name,
-                        headerFilter = Editor.INPUT,
-                        editorComponentFunction = { _, _, success, _, data ->
-                            TextInput(value = data.code).apply {
-                                size = InputSize.SMALL
-                                onEvent {
-                                    change = {
-                                        editing = false
-                                        data.code = self.value ?: "***"
-                                        AppScope.launch {
-                                            ProductModel.updateProduct(data, "code")
-                                            success(self.value)
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        title = InventoryItm::itemName.name,
+                        field = InventoryItm::itemName.name,
+                        headerFilter = Editor.INPUT
                     ),
                     ColumnDefinition(
-                        title = InventoryItm::description.name,
-                        field = InventoryItm::description.name,
-                        headerFilter = Editor.INPUT,
-                        editorComponentFunction = { _, _, success, _, data ->
-                            TextInput(value = data.description).apply {
-                                size = InputSize.SMALL
-                                onEvent {
-                                    change = {
-                                        editing = false
-                                        data.description = self.value ?: "***"
-                                        AppScope.launch {
-                                            ProductModel.updateProduct(data, "description")
-                                            success(self.value)
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        title = InventoryItm::size.name,
+                        field = InventoryItm::size.name,
+                        headerFilter = Editor.INPUT
                     ),
                     ColumnDefinition(
-                        title = InventoryItm::unit.name,
-                        field = InventoryItm::unit.name,
-                        headerFilter = Editor.INPUT,
-                        editorComponentFunction = { _, _, success, _, data ->
-                            TextInput(value = data.unit).apply {
-                                size = InputSize.SMALL
-                                onEvent {
-                                    change = {
-                                        editing = false
-                                        data.unit = self.value ?: "***"
-                                        AppScope.launch {
-                                            ProductModel.updateProduct(data, "unit")
-                                            success(self.value)
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        title = InventoryItm::upc.name,
+                        field = InventoryItm::upc.name,
+                        headerFilter = Editor.INPUT
                     ),
                     ColumnDefinition(
-                        title = InventoryItm::qty.name,
-//                        field = InventoryItm::qty.name,
-//                        field = "stock",
-//                        headerFilter = Editor.INPUT,
-                        formatterComponentFunction = { cell, onRendered, data ->
-                            val s = data.asDynamic()
-                            val o = Json.decodeFromDynamic<InventoryItm>(s)
-                            console.warn(" o =", o)
-                            Span("${o.qty}")
-                        },
-                        editorComponentFunction = { _, _, success, _, data ->
-                            SpinnerInput(value = data.qty).apply {
-                                size = InputSize.SMALL
-                                onEvent {
-                                    change = {
-                                        editing = false
-                                        data.qty = (self.value ?: 0) as Int
-                                        AppScope.launch {
-                                            console.warn("valor de data =", data)
-                                            ProductModel.updateProduct(data, "stock")
-                                            success(self.value)
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        title = InventoryItm::department.name,
+                        field = InventoryItm::department.name,
+                        headerFilter = Editor.INPUT
                     ),
                 )
             )
@@ -170,8 +98,8 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
         }
 
         flexPanel(direction = FlexDirection.ROW) {
-            button(text = "Create Product").onClick {
-                val modal = DialogEditProduct()
+            button(text = "Upload Product Catalog").onClick {
+                val modal = UploadCatalog()
                 modal.show()
             }
         }

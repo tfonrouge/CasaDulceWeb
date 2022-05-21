@@ -88,7 +88,10 @@ kotlin {
                 implementation(kotlin("reflect"))
                 implementation("io.ktor:ktor-server-netty:$ktorVersion")
                 implementation("io.ktor:ktor-server-auth:$ktorVersion")
+                implementation("io.ktor:ktor-server-call-logging:$ktorVersion")
                 implementation("io.ktor:ktor-server-compression:$ktorVersion")
+                implementation("io.ktor:ktor-server-cors:$ktorVersion")
+                implementation("io.ktor:ktor-server-default-headers:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
                 implementation("org.litote.kmongo:kmongo:4.6.0")
@@ -112,6 +115,7 @@ kotlin {
                 implementation("io.kvision:kvision-bootstrap-spinner:$kvisionVersion")
                 implementation("io.kvision:kvision-bootstrap-dialog:$kvisionVersion")
                 implementation("io.kvision:kvision-bootstrap-icons:$kvisionVersion")
+                implementation("io.kvision:kvision-bootstrap-upload:$kvisionVersion")
                 implementation("io.kvision:kvision-chart:$kvisionVersion")
                 implementation("io.kvision:kvision-datacontainer:$kvisionVersion")
                 implementation("io.kvision:kvision-fontawesome:$kvisionVersion")

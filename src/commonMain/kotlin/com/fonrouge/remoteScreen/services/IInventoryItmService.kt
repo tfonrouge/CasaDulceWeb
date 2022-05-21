@@ -15,8 +15,4 @@ interface IInventoryItmService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<InventoryItm>
-
-    suspend fun createProductWith(inventoryItm: InventoryItm)
-
-    suspend fun updateProduct(inventoryItm: InventoryItm, fieldName: String)
 }
