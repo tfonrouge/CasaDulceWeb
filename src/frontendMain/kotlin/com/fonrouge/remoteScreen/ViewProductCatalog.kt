@@ -10,6 +10,7 @@ import io.kvision.core.onEvent
 import io.kvision.form.InputSize
 import io.kvision.form.spinner.SpinnerInput
 import io.kvision.form.text.TextInput
+import io.kvision.html.Span
 import io.kvision.html.button
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
@@ -19,6 +20,8 @@ import io.kvision.utils.event
 import io.kvision.utils.px
 import kotlinx.browser.window
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromDynamic
 
 class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
@@ -55,7 +58,7 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                 dataLoader = false,
                 columns = listOf(
                     ColumnDefinition(
-                        title = InventoryItm::_id.name,
+                        title = InventoryItm::id.name,
 //                        field = InventoryItm::id.name,
                         field = "_id",
                     ),
@@ -120,16 +123,23 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                         }
                     ),
                     ColumnDefinition(
-                        title = InventoryItm::stock.name,
-                        field = InventoryItm::stock.name,
+                        title = InventoryItm::qty.name,
+//                        field = InventoryItm::qty.name,
+//                        field = "stock",
 //                        headerFilter = Editor.INPUT,
+                        formatterComponentFunction = { cell, onRendered, data ->
+                            val s = data.asDynamic()
+                            val o = Json.decodeFromDynamic<InventoryItm>(s)
+                            console.warn(" o =", o)
+                            Span("${o.qty}")
+                        },
                         editorComponentFunction = { _, _, success, _, data ->
-                            SpinnerInput(value = data.stock).apply {
+                            SpinnerInput(value = data.qty).apply {
                                 size = InputSize.SMALL
                                 onEvent {
                                     change = {
                                         editing = false
-                                        data.stock = (self.value ?: 0) as Int
+                                        data.qty = (self.value ?: 0) as Int
                                         AppScope.launch {
                                             console.warn("valor de data =", data)
                                             ProductModel.updateProduct(data, "stock")

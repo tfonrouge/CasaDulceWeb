@@ -1,15 +1,15 @@
 package com.fonrouge.remoteScreen
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.js.JsExport
 
 @Serializable
-@JsExport
 class InventoryItm(
-//    @SerialName("_id")
-    var _id: String,
+    @SerialName("_id")
+    var id: String,
     var code: String,
     var description: String,
     var unit: String,
-    var stock: Int,
+    @SerialName("stock")
+    var qty: Int,
 )
