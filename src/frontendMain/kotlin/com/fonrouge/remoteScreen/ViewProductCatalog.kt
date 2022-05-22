@@ -13,6 +13,7 @@ import io.kvision.routing.routing
 import io.kvision.tabulator.*
 import io.kvision.utils.event
 import io.kvision.utils.px
+import kotlinx.browser.window
 
 class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
@@ -113,12 +114,12 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
             }
         }
 
-//        timerHandle = window.setInterval(
-//            handler = {
-//                if (!editing) {
-//                    tabRemote.reload()
-//                }
-//            }, timeout = 1000
-//        )
+        timerHandle = window.setInterval(
+            handler = {
+                if (!editing) {
+                    tabRemote.reload()
+                }
+            }, timeout = 2000
+        )
     }
 }

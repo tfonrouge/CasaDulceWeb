@@ -11,10 +11,6 @@ class UploadCatalog : Modal("Upload Product Catalog", size = ModalSize.XLARGE) {
             uploadUrl = "/kv/upload/Products",
             multiple = false,
             label = "Upload excel file"
-        ) {
-            input.ajaxSettings = js("{}")
-            input.ajaxSettings["headers"] = js("{}")
-            input.ajaxSettings["headers"]["Access-Control-Allow-Origin"] = "*"
-        }
+        )
     }
 }

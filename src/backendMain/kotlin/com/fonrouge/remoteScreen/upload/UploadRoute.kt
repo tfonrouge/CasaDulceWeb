@@ -1,7 +1,9 @@
 package com.fonrouge.remoteScreen.upload
 
+import com.fonrouge.remoteScreen.InventoryItm
 import com.fonrouge.remoteScreen.database.inventoryItmColl
 import com.fonrouge.remoteScreen.uploadsDir
+import com.mongodb.client.model.UpdateOneModel
 import com.mongodb.client.model.UpdateOptions
 import io.ktor.http.content.*
 import io.ktor.server.application.*
@@ -100,18 +102,19 @@ suspend fun importProducts(fileName: String) {
     }
     val workbook = WorkbookFactory.create(inputStream)
     val pairLinkList = mutableListOf<Pair<ProductsColValues, Int>>()
+    val buffer = mutableListOf<UpdateOneModel<InventoryItm>>()
+    val bufferLimit = 500
     workbook.getSheetAt(0).rowIterator().forEach { row ->
         if (pairLinkList.size == 0) {
             getPairLinkList(row, pairLinkList)
         } else {
-            println("row = ${row.rowNum}")
             val doc = Document()
             var _id: Any? = null
             pairLinkList.forEach { productsColValuesIntPair ->
                 val cell: Cell? = row.getCell(productsColValuesIntPair.second)
                 val value = try {
                     when (productsColValuesIntPair.first.cellType) {
-                        CellType.CtInt -> cell?.numericCellValue?.toInt()?: 0
+                        CellType.CtInt -> cell?.numericCellValue?.toInt() ?: 0
                         CellType.CtString -> cell?.stringCellValue ?: ""
                     }
                 } catch (e: Exception) {
@@ -123,15 +126,25 @@ suspend fun importProducts(fileName: String) {
                     doc.append(productsColValuesIntPair.first.fieldname, value)
                 }
             }
-            val r = inventoryItmColl.updateOne(
-                filter = Document("_id", _id),
-                update = Document("\$set", doc),
-                options = UpdateOptions().upsert(true)
-            )
-            println(r)
+//            val r = inventoryItmColl.updateOne(
+//                filter = Document("_id", _id),
+//                update = Document("\$set", doc),
+//                options = UpdateOptions().upsert(true)
+//            )
+//            println(r)
+            buffer.add(UpdateOneModel(Document("_id", _id), Document("\$set", doc), UpdateOptions().upsert(true)))
+            if (buffer.size > bufferLimit) {
+                val r = inventoryItmColl.bulkWrite(buffer)
+                println("bulkwrite $r")
+                buffer.clear()
+            }
         }
     }
-
+    if (buffer.size > 0) {
+        val r = inventoryItmColl.bulkWrite(buffer)
+        println("bulkwrite $r")
+        buffer.clear()
+    }
 }
 
 private fun getPairLinkList(row: Row, pairLinkList: MutableList<Pair<ProductsColValues, Int>>) {
