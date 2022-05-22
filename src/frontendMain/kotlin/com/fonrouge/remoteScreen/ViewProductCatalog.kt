@@ -113,12 +113,12 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
             }
         }
 
-        timerHandle = window.setInterval(
-            handler = {
-                if (!editing) {
-                    tabRemote.reload()
-                }
-            }, timeout = 1000
-        )
+//        timerHandle = window.setInterval(
+//            handler = {
+//                if (!editing) {
+//                    tabRemote.reload()
+//                }
+//            }, timeout = 1000
+//        )
     }
 }

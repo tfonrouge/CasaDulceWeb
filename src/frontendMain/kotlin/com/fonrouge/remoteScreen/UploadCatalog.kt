@@ -8,11 +8,14 @@ class UploadCatalog : Modal("Upload Product Catalog", size = ModalSize.XLARGE) {
 
     init {
         upload(
-            uploadUrl = "http://localhost:8000/${apiServicesUrl}/$uploadProductCatalog",
+//            uploadUrl = "http://localhost:8000/${apiServicesUrl}/$uploadProductCatalog",
+            uploadUrl = "/kv/upload/products",
             multiple = false,
             label = "Upload excel file"
         ) {
-
+            input.ajaxSettings = js("{}")
+            input.ajaxSettings["headers"] = js("{}")
+            input.ajaxSettings["headers"]["Access-Control-Allow-Origin"] = "*"
         }
     }
 }
