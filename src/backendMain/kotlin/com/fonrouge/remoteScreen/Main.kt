@@ -25,9 +25,6 @@ const val uploadsDir = "uploads"
 
 @Suppress("unused")
 fun Application.main() {
-
-    Files.createDirectory(Path(uploadsDir))
-
     install(MongoDbPlugin) {
         serverUrl = "dulceserver.dulcesdulcemaria.com"
         serverPort = 27017
@@ -46,17 +43,11 @@ fun Application.main() {
 //        }
     }
     routing {
+        if (!Files.isDirectory(Path(uploadsDir))) {
+            Files.createDirectory(Path(uploadsDir))
+        }
         uploadsRoute()
         applyRoutes(InventoryItmServiceManager)
-        applyRoutes(MyService)
     }
     kvisionInit()
-}
-
-class MyServiceCls
-
-object MyService : KVServiceManager<MyServiceCls>(MyServiceCls::class) {
-    init {
-
-    }
 }

@@ -97,6 +97,8 @@ kotlin {
                 implementation("org.litote.kmongo:kmongo:4.6.0")
                 implementation("org.litote.kmongo:kmongo-coroutine:4.6.0")
                 implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.6.0")
+
+                implementation("org.apache.poi:poi-ooxml:5.2.2")
             }
         }
         val backendTest by getting {

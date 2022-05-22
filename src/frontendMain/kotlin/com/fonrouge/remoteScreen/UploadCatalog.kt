@@ -8,8 +8,7 @@ class UploadCatalog : Modal("Upload Product Catalog", size = ModalSize.XLARGE) {
 
     init {
         upload(
-//            uploadUrl = "http://localhost:8000/${apiServicesUrl}/$uploadProductCatalog",
-            uploadUrl = "/kv/upload/products",
+            uploadUrl = "/kv/upload/Products",
             multiple = false,
             label = "Upload excel file"
         ) {

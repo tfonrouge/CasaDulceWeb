@@ -6,7 +6,6 @@ import com.fonrouge.remoteScreen.services.InventoryItmServiceManager
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
 import io.kvision.core.onEvent
-import io.kvision.form.upload.upload
 import io.kvision.html.button
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
@@ -14,7 +13,6 @@ import io.kvision.routing.routing
 import io.kvision.tabulator.*
 import io.kvision.utils.event
 import io.kvision.utils.px
-import kotlinx.browser.window
 
 class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
@@ -44,13 +42,15 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
         tabRemote = tabulatorRemote(
             serviceManager = InventoryItmServiceManager,
             function = IInventoryItmService::inventoryItmList,
-            types = setOf(TableType.STRIPED, TableType.HOVER, TableType.BORDERED),
+//            types = setOf(TableType.STRIPED, TableType.HOVER, TableType.BORDERED),
             options = TabulatorOptions(
                 layout = Layout.FITCOLUMNS,
                 pagination = true,
                 paginationMode = PaginationMode.REMOTE,
-//                filterMode = FilterMode.REMOTE,
-//                sortMode = SortMode.REMOTE,
+                paginationSize = 10,
+                paginationSizeSelector = arrayOf(10, 20, 30, 40, 50, 100),
+                filterMode = FilterMode.REMOTE,
+                sortMode = SortMode.REMOTE,
                 dataLoader = false,
                 columns = listOf(
                     ColumnDefinition(
@@ -59,8 +59,8 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                         headerFilter = Editor.NUMBER
                     ),
                     ColumnDefinition(
-                        title = InventoryItm::itemName.name,
-                        field = InventoryItm::itemName.name,
+                        title = InventoryItm::name.name,
+                        field = InventoryItm::name.name,
                         headerFilter = Editor.INPUT
                     ),
                     ColumnDefinition(
@@ -74,8 +74,8 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                         headerFilter = Editor.INPUT
                     ),
                     ColumnDefinition(
-                        title = InventoryItm::department.name,
-                        field = InventoryItm::department.name,
+                        title = InventoryItm::departmentName.name,
+                        field = InventoryItm::departmentName.name,
                         headerFilter = Editor.INPUT
                     ),
                 )
