@@ -1,6 +1,9 @@
 package com.fonrouge.remoteScreen.upload
 
+import com.fonrouge.remoteScreen.CatalogType
+import com.fonrouge.remoteScreen.CustomerItm
 import com.fonrouge.remoteScreen.InventoryItm
+import com.fonrouge.remoteScreen.database.customerItmColl
 import com.fonrouge.remoteScreen.database.inventoryItmColl
 import com.fonrouge.remoteScreen.uploadsDir
 import com.mongodb.client.model.UpdateOneModel
@@ -18,13 +21,9 @@ import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.bson.Document
+import org.litote.kmongo.coroutine.CoroutineCollection
 import java.io.File
 import java.io.FileInputStream
-
-private enum class UploadCatalogType {
-    Products,
-    Customers,
-}
 
 fun Route.uploadsRoute() {
 
@@ -34,8 +33,8 @@ fun Route.uploadsRoute() {
     route("/kv/upload") {
 
         post("{catalog}") {
-            val uploadCatalogType = call.parameters["catalog"]?.let {
-                UploadCatalogType.valueOf(it)
+            val catalogType = call.parameters["catalog"]?.let {
+                CatalogType.valueOf(it)
             } ?: return@post
 
             val multipartData = call.receiveMultipart()
@@ -56,9 +55,9 @@ fun Route.uploadsRoute() {
             }
 
             val result = try {
-                when (uploadCatalogType) {
-                    UploadCatalogType.Products -> importProducts(fileName)
-                    UploadCatalogType.Customers -> importCustomers(fileName)
+                when (catalogType) {
+                    CatalogType.Products -> importProducts(inventoryItmColl, inventoryItmMap, fileName)
+                    CatalogType.Customers -> importProducts(customerItmColl, customerItmMap, fileName)
                 }
                 buildJsonObject { put("response", "$fileDescription and imported ok") }
             } catch (e: Exception) {
@@ -69,44 +68,54 @@ fun Route.uploadsRoute() {
     }
 }
 
-fun importCustomers(fileName: String) {
-    val inputStream = FileInputStream(fileName)
-    val workbook = WorkbookFactory.create(inputStream)
-    workbook.getSheetAt(0).rowIterator().forEach { row ->
-        println(row)
-    }
-}
-
 private enum class CellType {
     CtInt,
+    CtLong,
     CtString,
 }
 
-private class ProductsColValues(
+private class ColumnMap(
     val fieldname: String,
     val colName: String,
     val cellType: CellType
 )
 
-private val pairProducts = listOf(
-    ProductsColValues("_id", "Item Number", CellType.CtInt),
-    ProductsColValues("name", "Item Name", CellType.CtString),
-    ProductsColValues("size", "Size", CellType.CtString),
-    ProductsColValues("upc", "UPC", CellType.CtString),
-    ProductsColValues("departmentName", "Department Name", CellType.CtString),
+private val inventoryItmMap = listOf(
+    ColumnMap(InventoryItm::_id.name, "Item Number", CellType.CtInt),
+    ColumnMap(InventoryItm::name.name, "Item Name", CellType.CtString),
+    ColumnMap(InventoryItm::size.name, "Size", CellType.CtString),
+    ColumnMap(InventoryItm::upc.name, "UPC", CellType.CtString),
+    ColumnMap(InventoryItm::departmentName.name, "Department Name", CellType.CtString),
 )
 
-suspend fun importProducts(fileName: String) {
+private val customerItmMap = listOf(
+    ColumnMap(CustomerItm::_id.name, "Customer Reward ID", CellType.CtLong),
+    ColumnMap(CustomerItm::company.name, "Company", CellType.CtString),
+    ColumnMap(CustomerItm::lastName.name, "Last Name", CellType.CtString),
+    ColumnMap(CustomerItm::firstName.name, "First Name", CellType.CtString),
+    ColumnMap(CustomerItm::street.name, "Street", CellType.CtString),
+    ColumnMap(CustomerItm::city.name, "City", CellType.CtString),
+    ColumnMap(CustomerItm::state.name, "State", CellType.CtString),
+    ColumnMap(CustomerItm::zip.name, "ZIP", CellType.CtString),
+    ColumnMap(CustomerItm::phone1.name, "Phone1", CellType.CtString),
+    ColumnMap(CustomerItm::email.name, "EMail", CellType.CtString),
+)
+
+private suspend fun <T : Any> importProducts(
+    collection: CoroutineCollection<T>,
+    columnMapList: List<ColumnMap>,
+    fileName: String
+) {
     val inputStream = withContext(Dispatchers.IO) {
         FileInputStream(fileName)
     }
     val workbook = WorkbookFactory.create(inputStream)
-    val pairLinkList = mutableListOf<Pair<ProductsColValues, Int>>()
-    val buffer = mutableListOf<UpdateOneModel<InventoryItm>>()
+    val pairLinkList = mutableListOf<Pair<ColumnMap, Int>>()
+    val buffer = mutableListOf<UpdateOneModel<T>>()
     val bufferLimit = 500
     workbook.getSheetAt(0).rowIterator().forEach { row ->
         if (pairLinkList.size == 0) {
-            getPairLinkList(row, pairLinkList)
+            getPairLinkList(columnMapList, row, pairLinkList)
         } else {
             val doc = Document()
             var _id: Any? = null
@@ -115,6 +124,7 @@ suspend fun importProducts(fileName: String) {
                 val value = try {
                     when (productsColValuesIntPair.first.cellType) {
                         CellType.CtInt -> cell?.numericCellValue?.toInt() ?: 0
+                        CellType.CtLong -> cell?.numericCellValue?.toLong()?: 0L
                         CellType.CtString -> cell?.stringCellValue ?: ""
                     }
                 } catch (e: Exception) {
@@ -126,29 +136,27 @@ suspend fun importProducts(fileName: String) {
                     doc.append(productsColValuesIntPair.first.fieldname, value)
                 }
             }
-//            val r = inventoryItmColl.updateOne(
-//                filter = Document("_id", _id),
-//                update = Document("\$set", doc),
-//                options = UpdateOptions().upsert(true)
-//            )
-//            println(r)
             buffer.add(UpdateOneModel(Document("_id", _id), Document("\$set", doc), UpdateOptions().upsert(true)))
             if (buffer.size > bufferLimit) {
-                val r = inventoryItmColl.bulkWrite(buffer)
+                val r = collection.bulkWrite(buffer)
                 println("bulkwrite $r")
                 buffer.clear()
             }
         }
     }
     if (buffer.size > 0) {
-        val r = inventoryItmColl.bulkWrite(buffer)
+        val r = collection.bulkWrite(buffer)
         println("bulkwrite $r")
         buffer.clear()
     }
 }
 
-private fun getPairLinkList(row: Row, pairLinkList: MutableList<Pair<ProductsColValues, Int>>) {
-    pairProducts.forEach { pairProduct ->
+private fun getPairLinkList(
+    columnMapList: List<ColumnMap>,
+    row: Row,
+    pairLinkList: MutableList<Pair<ColumnMap, Int>>
+) {
+    columnMapList.forEach { pairProduct ->
         row.cellIterator().forEach { cell ->
             if (pairProduct.colName.equals(other = cell.stringCellValue, ignoreCase = true)) {
                 pairLinkList.add(pairProduct to cell.columnIndex)

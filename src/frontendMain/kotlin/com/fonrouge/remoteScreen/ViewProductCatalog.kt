@@ -1,8 +1,8 @@
 package com.fonrouge.remoteScreen
 
-import com.fonrouge.remoteScreen.services.IInventoryItmService
-import com.fonrouge.remoteScreen.services.InventoryItmService
-import com.fonrouge.remoteScreen.services.InventoryItmServiceManager
+import com.fonrouge.remoteScreen.services.CasaDulceService
+import com.fonrouge.remoteScreen.services.CasaDulceServiceManager
+import com.fonrouge.remoteScreen.services.ICasaDulceService
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
 import io.kvision.core.onEvent
@@ -14,10 +14,11 @@ import io.kvision.tabulator.*
 import io.kvision.utils.event
 import io.kvision.utils.px
 import kotlinx.browser.window
+import kotlinx.coroutines.launch
 
 class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
-    var tabRemote: TabulatorRemote<InventoryItm, InventoryItmService>
+    var tabRemote: TabulatorRemote<InventoryItm, CasaDulceService>
 
     companion object {
         var timerHandle: Int? = null
@@ -25,8 +26,6 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
     }
 
     init {
-
-        setDragDropData("text/plain", "element")
 
         flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.SPACEEVENLY) {
             button("Home").onClick {
@@ -40,9 +39,10 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
             }
             marginBottom = 10.px
         }
+
         tabRemote = tabulatorRemote(
-            serviceManager = InventoryItmServiceManager,
-            function = IInventoryItmService::inventoryItmList,
+            serviceManager = CasaDulceServiceManager,
+            function = ICasaDulceService::inventoryItmList,
 //            types = setOf(TableType.STRIPED, TableType.HOVER, TableType.BORDERED),
             options = TabulatorOptions(
                 layout = Layout.FITCOLUMNS,
@@ -54,6 +54,10 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                 sortMode = SortMode.REMOTE,
                 dataLoader = false,
                 columns = listOf(
+//                    ColumnDefinition(
+//                        title = "#",
+//                        formatter = Formatter.ROWNUM
+//                    ),
                     ColumnDefinition(
                         title = InventoryItm::_id.name,
                         field = InventoryItm::_id.name,
@@ -81,27 +85,15 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                     ),
                 )
             )
-        ) {
-            onEvent {
-                cellEditingTabulator = {
-                    console.warn("cellEditingTabulator")
-                    editing = true
-                }
-                cellEditedTabulator = {
-                    console.warn("cellEditedTabulator")
-                    editing = false
-                }
-                cellEditCancelledTabulator = {
-                    console.warn("cellEditCancelledTabulator")
-                    editing = false
-                }
-            }
-        }
+        )
 
         flexPanel(direction = FlexDirection.ROW) {
             button(text = "Upload Product Catalog").onClick {
-                val modal = UploadCatalog()
-                modal.show()
+                val uploadCatalog = UploadCatalog(CatalogType.Products)
+                AppScope.launch {
+                    uploadCatalog.getResult()
+                    tabRemote.reload()
+                }
             }
         }
 
@@ -116,10 +108,9 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
         timerHandle = window.setInterval(
             handler = {
-                if (!editing) {
-                    tabRemote.reload()
-                }
-            }, timeout = 2000
+                val page = tabRemote.getPage()
+                tabRemote.setPage(page)
+            }, timeout = 5000
         )
     }
 }
