@@ -22,6 +22,7 @@ repositories {
 val kotlinVersion: String by System.getProperties()
 val kvisionVersion: String by System.getProperties()
 val ktorVersion: String by project
+val kmongoVersion: String by project
 val logbackVersion: String by project
 val exposed_version: String by project
 
@@ -50,6 +51,8 @@ kotlin {
                     port = 3000,
                     proxy = mutableMapOf(
                         "/kv/*" to "http://localhost:8000",
+                        "/login" to "http://localhost:8000",
+                        "/logout" to "http://localhost:8000",
                         "/kvws/*" to mapOf("target" to "ws://localhost:8000", "ws" to true)
                     ),
                     static = mutableListOf("$buildDir/processedResources/frontend/main")
@@ -70,7 +73,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api("io.kvision:kvision-server-ktor:$kvisionVersion")
-                implementation("org.litote.kmongo:kmongo-id:4.6.0")
+                implementation("com.ToxicBakery.library.bcrypt:bcrypt:1.0.9")
+                implementation("org.litote.kmongo:kmongo-id:$kmongoVersion")
 //                implementation("org.litote.kmongo:kmongo-id-serialization:4.6.0")
 //                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
             }
@@ -94,9 +98,9 @@ kotlin {
                 implementation("io.ktor:ktor-server-default-headers:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
-                implementation("org.litote.kmongo:kmongo:4.6.0")
-                implementation("org.litote.kmongo:kmongo-coroutine:4.6.0")
-                implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.6.0")
+                implementation("org.litote.kmongo:kmongo:$kmongoVersion")
+                implementation("org.litote.kmongo:kmongo-coroutine:$kmongoVersion")
+                implementation("org.litote.kmongo:kmongo-coroutine-serialization:$kmongoVersion")
 
                 implementation("org.apache.poi:poi-ooxml:5.2.2")
             }
@@ -131,7 +135,7 @@ kotlin {
                 implementation("io.kvision:kvision-tabulator-remote:$kvisionVersion")
                 implementation("io.kvision:kvision-toast:$kvisionVersion")
 
-                implementation("org.litote.kmongo:kmongo-id:4.6.0")
+                implementation("org.litote.kmongo:kmongo-id:$kmongoVersion")
             }
             kotlin.srcDir("build/generated-src/frontend")
         }

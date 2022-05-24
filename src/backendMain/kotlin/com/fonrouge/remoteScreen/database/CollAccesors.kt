@@ -16,6 +16,10 @@ val customerItmColl by lazy {
     mongoDatabase.getCollection<CustomerItm>(collectionName = "customerItms")
 }
 
+val userItmColl by lazy {
+    mongoDatabase.getCollection<UserItm>(collectionName = "userItms")
+}
+
 suspend inline fun <reified T : Any> CoroutineCollection<T>.buildRemoteData(
     page: Int?,
     size: Int?,

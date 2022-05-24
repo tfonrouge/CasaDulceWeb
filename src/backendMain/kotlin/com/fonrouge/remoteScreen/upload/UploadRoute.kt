@@ -71,6 +71,7 @@ fun Route.uploadsRoute() {
 private enum class CellType {
     CtInt,
     CtLong,
+    CtDouble,
     CtString,
 }
 
@@ -124,7 +125,8 @@ private suspend fun <T : Any> importProducts(
                 val value = try {
                     when (productsColValuesIntPair.first.cellType) {
                         CellType.CtInt -> cell?.numericCellValue?.toInt() ?: 0
-                        CellType.CtLong -> cell?.numericCellValue?.toLong()?: 0L
+                        CellType.CtLong -> cell?.numericCellValue?.toLong() ?: 0L
+                        CellType.CtDouble -> cell?.numericCellValue ?: 0.0
                         CellType.CtString -> cell?.stringCellValue ?: ""
                     }
                 } catch (e: Exception) {

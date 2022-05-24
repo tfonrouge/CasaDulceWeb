@@ -8,7 +8,7 @@ class CustomerItm(
     val firstName: String,
     val street: String,
     val city: String,
-    val state:String,
+    val state: String,
     val zip: String,
     val phone1: String?,
     val email: String,

@@ -1,6 +1,6 @@
 package com.fonrouge.remoteScreen
 
- enum class CatalogType {
+enum class CatalogType {
     Products,
     Customers,
 }
