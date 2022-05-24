@@ -10,9 +10,9 @@ object Model {
 
     val obsProfile = ObservableValue(UserProfile())
 
-    suspend fun ping(hello: String) {
-        Security.withAuth {
-            Toast.success(casaDulceService.ping(hello))
+    suspend fun ping(hello: String) : String {
+        return Security.withAuth {
+            casaDulceService.ping(hello)
         }
     }
 

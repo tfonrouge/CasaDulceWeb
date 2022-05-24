@@ -9,6 +9,9 @@ import io.kvision.routing.Routing
 import io.kvision.routing.routing
 import io.kvision.state.ObservableValue
 import io.kvision.state.bind
+import io.kvision.toast.Toast
+import io.kvision.toast.ToastOptions
+import io.kvision.toast.ToastPosition
 import io.kvision.utils.px
 import io.kvision.utils.rem
 import kotlinx.browser.document
@@ -82,7 +85,10 @@ class App : Application() {
             }
         }
         AppScope.launch {
-            Model.ping("hello")
+            Toast.success(
+                message = Model.ping("hello"),
+                options = ToastOptions(positionClass = ToastPosition.BOTTOMCENTER)
+            )
         }
 //        routing.resolve("")
     }
