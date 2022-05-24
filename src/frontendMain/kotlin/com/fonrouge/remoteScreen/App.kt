@@ -57,7 +57,7 @@ class App : Application() {
                     h1("Casa Dulce: ${it.name}")
                     div().bind(Model.obsProfile) {
                         if (it.username != null) {
-                            button(text = "Logout", icon = "fas fa-exit", style = ButtonStyle.OUTLINEDANGER) {
+                            button(text = "Logout", icon = "fas fa-sign-out-alt", style = ButtonStyle.OUTLINEDANGER) {
                                 marginRight = 1.rem
                             }.onClick {
                                 document.location?.href = "/logout"
