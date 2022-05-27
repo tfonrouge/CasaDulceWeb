@@ -2,7 +2,7 @@ package com.fonrouge.remoteScreen
 
 @kotlinx.serialization.Serializable
 class CustomerItm(
-    val _id: Long,
+    val _id: String,
     val company: String,
     val lastName: String,
     val firstName: String,

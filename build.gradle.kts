@@ -75,8 +75,6 @@ kotlin {
                 api("io.kvision:kvision-server-ktor:$kvisionVersion")
                 implementation("com.ToxicBakery.library.bcrypt:bcrypt:1.0.9")
                 implementation("org.litote.kmongo:kmongo-id:$kmongoVersion")
-//                implementation("org.litote.kmongo:kmongo-id-serialization:4.6.0")
-//                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
             }
             kotlin.srcDir("build/generated-src/common")
         }
@@ -103,6 +101,9 @@ kotlin {
                 implementation("org.litote.kmongo:kmongo-coroutine-serialization:$kmongoVersion")
 
                 implementation("org.apache.poi:poi-ooxml:5.2.2")
+
+                implementation("org.litote.kmongo:kmongo-id-serialization:4.6.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
             }
         }
         val backendTest by getting {
@@ -119,6 +120,7 @@ kotlin {
                 implementation("io.kvision:kvision-bootstrap-css:$kvisionVersion")
                 implementation("io.kvision:kvision-bootstrap-select-remote:$kvisionVersion")
                 implementation("io.kvision:kvision-bootstrap-spinner:$kvisionVersion")
+                implementation("io.kvision:kvision-bootstrap-datetime:$kvisionVersion")
                 implementation("io.kvision:kvision-bootstrap-dialog:$kvisionVersion")
                 implementation("io.kvision:kvision-bootstrap-icons:$kvisionVersion")
                 implementation("io.kvision:kvision-bootstrap-upload:$kvisionVersion")

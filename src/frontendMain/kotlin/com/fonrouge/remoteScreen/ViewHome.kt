@@ -13,13 +13,13 @@ class ViewHome : FlexPanel(
     init {
         flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.SPACEEVENLY) {
             button("Product Catalog").onClick {
-                routing.navigate("/productCatalog")
+                routing.navigate("/${State.ProductCatalog}")
             }
             button("Customer Catalog").onClick {
-                routing.navigate("/customerCatalog")
+                routing.navigate("/${State.CustomerCatalog}")
             }
             button("Customer Order List").onClick {
-                routing.navigate("/customerOrderList")
+                routing.navigate("/${State.CustomerOrderHdrList}")
             }
         }
     }

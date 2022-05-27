@@ -1,6 +1,8 @@
 package com.fonrouge.remoteScreen.database
 
 import com.fonrouge.remoteScreen.CustomerItm
+import com.fonrouge.remoteScreen.CustomerOrderHdr
+import com.fonrouge.remoteScreen.CustomerOrderItm
 import com.fonrouge.remoteScreen.InventoryItm
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
@@ -14,6 +16,14 @@ val inventoryItmColl by lazy {
 
 val customerItmColl by lazy {
     mongoDatabase.getCollection<CustomerItm>(collectionName = "customerItms")
+}
+
+val customerOrderHdrColl by lazy {
+    mongoDatabase.getCollection<CustomerOrderHdr>(collectionName = "customerOrderHdrs")
+}
+
+val customerOrderItmColl by lazy {
+    mongoDatabase.getCollection<CustomerOrderItm>(collectionName = "customerOrderItms")
 }
 
 val userItmColl by lazy {

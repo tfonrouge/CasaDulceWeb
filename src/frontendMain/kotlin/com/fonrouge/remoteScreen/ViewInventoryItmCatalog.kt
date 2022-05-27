@@ -16,13 +16,12 @@ import io.kvision.utils.px
 import kotlinx.browser.window
 import kotlinx.coroutines.launch
 
-class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
+class ViewInventoryItmCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
     var tabRemote: TabulatorRemote<InventoryItm, CasaDulceService>
 
     companion object {
         var timerHandle: Int? = null
-        var editing = false
     }
 
     init {
@@ -32,10 +31,10 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                 routing.navigate("")
             }
             button("Customer Catalog").onClick {
-                routing.navigate("/customerCatalog")
+                routing.navigate("/${State.CustomerCatalog}")
             }
             button("Customer Order List").onClick {
-                routing.navigate("/customerOrderList")
+                routing.navigate("/${State.CustomerOrderHdrList}")
             }
             marginBottom = 10.px
         }
@@ -43,7 +42,6 @@ class ViewProductCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
         tabRemote = tabulatorRemote(
             serviceManager = CasaDulceServiceManager,
             function = ICasaDulceService::inventoryItmList,
-//            types = setOf(TableType.STRIPED, TableType.HOVER, TableType.BORDERED),
             options = TabulatorOptions(
                 layout = Layout.FITCOLUMNS,
                 pagination = true,

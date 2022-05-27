@@ -51,20 +51,16 @@ fun Application.main() {
             userParamName = "username"
             passwordParamName = "password"
             validate { credentials ->
-                userItmColl
-                    .find(
-                        UserItm::userName eq credentials.name,
-                    )
-                    .collation(collation = collation)
-                    .first()?.let {
-                        if (Bcrypt.verify(credentials.password, it.password.encodeToByteArray())) {
-                            userItmColl.updateOne(
-                                filter = UserItm::_id eq it._id,
-                                update = set(UserItm::lastAccess setTo Date())
-                            )
-                            UserIdPrincipal(credentials.name)
-                        } else null
-                    }
+                userItmColl.find(
+                    UserItm::userName eq credentials.name,
+                ).collation(collation = collation).first()?.let {
+                    if (Bcrypt.verify(credentials.password, it.password.encodeToByteArray())) {
+                        userItmColl.updateOne(
+                            filter = UserItm::_id eq it._id, update = set(UserItm::lastAccess setTo Date())
+                        )
+                        UserIdPrincipal(credentials.name)
+                    } else null
+                }
             }
             skipWhen { call -> call.sessions.get<UserProfile>() != null }
         }
@@ -76,10 +72,8 @@ fun Application.main() {
         authenticate {
             post("login") {
                 val result = call.principal<UserIdPrincipal>()?.let { userIdPrincipal ->
-                    userItmColl
-                        .find(UserItm::userName eq userIdPrincipal.name)
-                        .collation(collation)
-                        .first()?.let { user ->
+                    userItmColl.find(UserItm::userName eq userIdPrincipal.name).collation(collation).first()
+                        ?.let { user ->
                             val profile = UserProfile(
                                 id = user._id.toString(),
                                 name = user.fullName,

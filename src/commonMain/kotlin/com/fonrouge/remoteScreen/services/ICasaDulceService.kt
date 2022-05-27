@@ -1,11 +1,10 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.remoteScreen.CustomerItm
-import com.fonrouge.remoteScreen.InventoryItm
-import com.fonrouge.remoteScreen.UserProfile
+import com.fonrouge.remoteScreen.*
 import io.kvision.annotations.KVService
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
+import io.kvision.remote.RemoteOption
 import io.kvision.remote.RemoteSorter
 
 @KVService
@@ -30,4 +29,26 @@ interface ICasaDulceService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<CustomerItm>
+
+    suspend fun customerOrderHdrList(
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
+    ): RemoteData<CustomerOrderHdr>
+
+    suspend fun customerOrderItmByHdrList(
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
+    ): RemoteData<CustomerOrderItm>
+
+    suspend fun selectCustomerItm(
+        search: String?,
+        initial: String?,
+        state: String?
+    ): List<RemoteOption>
 }

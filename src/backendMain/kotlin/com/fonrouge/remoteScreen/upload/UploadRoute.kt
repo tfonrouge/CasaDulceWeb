@@ -18,6 +18,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.apache.poi.ss.usermodel.Cell
+import org.apache.poi.ss.usermodel.CellType.*
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.bson.Document
@@ -90,7 +91,7 @@ private val inventoryItmMap = listOf(
 )
 
 private val customerItmMap = listOf(
-    ColumnMap(CustomerItm::_id.name, "Customer Reward ID", CellType.CtLong),
+    ColumnMap(CustomerItm::_id.name, "Customer Reward ID", CellType.CtString),
     ColumnMap(CustomerItm::company.name, "Company", CellType.CtString),
     ColumnMap(CustomerItm::lastName.name, "Last Name", CellType.CtString),
     ColumnMap(CustomerItm::firstName.name, "First Name", CellType.CtString),
@@ -124,10 +125,39 @@ private suspend fun <T : Any> importProducts(
                 val cell: Cell? = row.getCell(productsColValuesIntPair.second)
                 val value = try {
                     when (productsColValuesIntPair.first.cellType) {
-                        CellType.CtInt -> cell?.numericCellValue?.toInt() ?: 0
-                        CellType.CtLong -> cell?.numericCellValue?.toLong() ?: 0L
-                        CellType.CtDouble -> cell?.numericCellValue ?: 0.0
-                        CellType.CtString -> cell?.stringCellValue ?: ""
+                        CellType.CtInt -> {
+                            if (cell?.cellType == NUMERIC) {
+                                cell.numericCellValue.toInt()
+                            } else {
+                                0
+                            }
+                        }
+                        CellType.CtLong -> {
+                            if (cell?.cellType == NUMERIC) {
+                                cell.numericCellValue.toLong()
+                            } else {
+                                0L
+                            }
+                        }
+                        CellType.CtDouble -> {
+                            if (cell?.cellType == NUMERIC) {
+                                cell.numericCellValue
+                            } else {
+                                0.0
+                            }
+                        }
+                        CellType.CtString -> {
+                            when(cell?.cellType) {
+                                _NONE -> ""
+                                NUMERIC -> cell.numericCellValue.toLong().toString()
+                                STRING -> cell.stringCellValue
+                                FORMULA -> cell.stringCellValue
+                                BLANK -> ""
+                                BOOLEAN -> "${cell.booleanCellValue}"
+                                ERROR -> "error"
+                                else -> ""
+                            }
+                        }
                     }
                 } catch (e: Exception) {
                     println(e.message)

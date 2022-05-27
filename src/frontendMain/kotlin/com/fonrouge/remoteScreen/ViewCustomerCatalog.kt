@@ -30,10 +30,10 @@ class ViewCustomerCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                 routing.navigate("")
             }
             button("Product Catalog").onClick {
-                routing.navigate("/productCatalog")
+                routing.navigate("/${State.ProductCatalog}")
             }
             button("Customer Order List").onClick {
-                routing.navigate("/customerOrderList")
+                routing.navigate("/${State.CustomerOrderHdrList}")
             }
         }
 

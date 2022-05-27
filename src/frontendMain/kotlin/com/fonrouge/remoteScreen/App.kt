@@ -3,6 +3,7 @@ package com.fonrouge.remoteScreen
 import io.kvision.*
 import io.kvision.core.*
 import io.kvision.html.*
+import io.kvision.navigo.Match
 import io.kvision.panel.flexPanel
 import io.kvision.panel.root
 import io.kvision.routing.Routing
@@ -22,31 +23,40 @@ import kotlinx.coroutines.launch
 
 val AppScope = CoroutineScope(window.asCoroutineDispatcher())
 
+class WebState(
+    val state: State,
+    val match: Match? = null
+)
+
+enum class State {
+    Home,
+    CustomerOrderHdrList,
+    CustomerOrderHdrItem,
+    ProductCatalog,
+    CustomerCatalog
+}
+
 class App : Application() {
 
-    enum class State {
-        Home,
-        CustomerOrderList,
-        ProductCatalog,
-        CustomerCatalog
-    }
-
-    private val obs: ObservableValue<State> = ObservableValue(State.Home)
+    private val webState: ObservableValue<WebState> = ObservableValue(WebState(State.Home))
 
     override fun start(state: Map<String, Any>) {
 
         Routing.init()
 
         routing
-            .on("/", { obs.value = State.Home })
-            .on("/customerOrderList", { obs.value = State.CustomerOrderList })
-            .on("/productCatalog", { obs.value = State.ProductCatalog })
-            .on("/customerCatalog", { obs.value = State.CustomerCatalog })
+            .on("/", { webState.value = WebState(State.Home) })
+            .on("/${State.CustomerOrderHdrList}", { webState.value = WebState(State.CustomerOrderHdrList) })
+            .on("/${State.CustomerOrderHdrItem}", {
+                webState.value = WebState(state = State.CustomerOrderHdrItem, match = it)
+            })
+            .on("/${State.ProductCatalog}", { webState.value = WebState(State.ProductCatalog) })
+            .on("/${State.CustomerCatalog}", { webState.value = WebState(State.CustomerCatalog) })
             .resolve()
 
         root("kvapp") {
             margin = 1.rem
-            header().bind(obs) {
+            header().bind(webState) {
                 flexPanel(
                     direction = FlexDirection.ROW,
                     justify = JustifyContent.SPACEBETWEEN,
@@ -56,8 +66,9 @@ class App : Application() {
                     image("Logotipo-Casa-Dulce.png") {
                         height = 5.rem
                         marginRight = 1.rem
+                        onClick { routing.navigate("/") }
                     }
-                    h1("Casa Dulce: ${it.name}")
+                    h1("Casa Dulce: ${it.state.name}")
                     div().bind(Model.obsProfile) {
                         if (it.username != null) {
                             button(text = "Logout", icon = "fas fa-sign-out-alt", style = ButtonStyle.OUTLINEDANGER) {
@@ -75,12 +86,13 @@ class App : Application() {
                     marginBottom = 1.rem
                 }
             }
-            main().bind(obs) {
-                when (it) {
+            main().bind(webState) {
+                when (it.state) {
                     State.Home -> add(ViewHome())
-                    State.CustomerOrderList -> add(ViewCustomerOrderList())
-                    State.ProductCatalog -> add(ViewProductCatalog())
+                    State.CustomerOrderHdrList -> add(ViewCustomerOrderHdrList())
+                    State.ProductCatalog -> add(ViewInventoryItmCatalog())
                     State.CustomerCatalog -> add(ViewCustomerCatalog())
+                    State.CustomerOrderHdrItem -> add(ViewCustomerOrderHdrItem(it.match))
                 }
             }
         }
