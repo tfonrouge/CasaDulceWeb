@@ -147,7 +147,7 @@ private suspend fun <T : Any> importProducts(
                             }
                         }
                         CellType.CtString -> {
-                            when(cell?.cellType) {
+                            when (cell?.cellType) {
                                 _NONE -> ""
                                 NUMERIC -> cell.numericCellValue.toLong().toString()
                                 STRING -> cell.stringCellValue

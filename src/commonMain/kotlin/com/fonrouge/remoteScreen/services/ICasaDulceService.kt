@@ -51,4 +51,16 @@ interface ICasaDulceService {
         initial: String?,
         state: String?
     ): List<RemoteOption>
+
+    suspend fun createNewCustomerOrderHdr(): CustomerOrderHdr
+
+    suspend fun addCustomerOrderItm(customerOrderItm: CustomerOrderItm)
+
+    suspend fun selectInventoryItm(
+        search: String?,
+        initial: String?,
+        state: String?
+    ): List<RemoteOption>
+
+    suspend fun getInventoryItm(_id: Int?): InventoryItm
 }
