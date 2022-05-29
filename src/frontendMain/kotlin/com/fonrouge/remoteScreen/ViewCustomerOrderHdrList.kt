@@ -1,8 +1,8 @@
 package com.fonrouge.remoteScreen
 
-import com.fonrouge.remoteScreen.services.CasaDulceService
-import com.fonrouge.remoteScreen.services.CasaDulceServiceManager
-import com.fonrouge.remoteScreen.services.ICasaDulceService
+import com.fonrouge.remoteScreen.services.CustomerOrderHdrService
+import com.fonrouge.remoteScreen.services.CustomerOrderHdrServiceManager
+import com.fonrouge.remoteScreen.services.ICustomerOrderHdrService
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
 import io.kvision.html.button
@@ -13,7 +13,7 @@ import io.kvision.tabulator.*
 
 class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
 
-    var tabRemote: TabulatorRemote<CustomerOrderHdr, CasaDulceService>
+    var tabRemote: TabulatorRemote<CustomerOrderHdr, CustomerOrderHdrService>
 
     companion object {
         var timerHandle: Int? = null
@@ -33,8 +33,8 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
         }
 
         tabRemote = tabulatorRemote(
-            serviceManager = CasaDulceServiceManager,
-            function = ICasaDulceService::customerOrderHdrList,
+            serviceManager = CustomerOrderHdrServiceManager,
+            function = ICustomerOrderHdrService::customerOrderHdrList,
             options = TabulatorOptions(
                 layout = Layout.FITCOLUMNS,
                 pagination = true,
@@ -66,7 +66,7 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                     ),
                     ColumnDefinition(
                         title = CustomerItm::company.name,
-                        field = "customerItm.company",
+                        field = "customer.company",
                         headerFilter = Editor.INPUT
                     ),
                 )
@@ -75,7 +75,7 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
 
         flexPanel(direction = FlexDirection.ROW) {
             button(text = "Create new Customer Order").onClick {
-                routing.navigate("${State.CustomerOrderHdrItem}?action=new")
+                routing.navigate("${State.CustomerOrderHdrItem}?action=${ViewAction.create}")
             }
         }
     }

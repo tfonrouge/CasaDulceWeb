@@ -10,18 +10,11 @@ import io.kvision.form.select.SelectRemote
 import io.kvision.form.select.selectRemote
 import io.kvision.form.spinner.spinner
 import io.kvision.form.time.dateTime
-import io.kvision.html.Button
-import io.kvision.html.ButtonStyle
 import io.kvision.html.button
 import io.kvision.html.div
-import io.kvision.modal.Dialog
-import io.kvision.modal.ModalSize
 import io.kvision.navigo.Match
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
-import io.kvision.tabulator.*
-import io.kvision.toolbar.buttonGroup
-import io.kvision.toolbar.toolbar
 import io.kvision.utils.px
 import io.kvision.utils.rem
 import kotlinx.coroutines.launch
@@ -30,10 +23,11 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
 
     private var formPanel: FormPanel<CustomerOrderHdr>
     private lateinit var selectCustomer: SelectRemote<CasaDulceService>
-    private lateinit var tabRemote: TabulatorRemote<CustomerOrderItm, CasaDulceService>
-    private lateinit var customerOrderHdr: CustomerOrderHdr
+    internal lateinit var customerOrderHdr: CustomerOrderHdr
 
     init {
+
+        hide()
 
         console.warn("match =", match)
 
@@ -52,7 +46,7 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
                 label = "Customer:",
                 serviceManager = CasaDulceServiceManager,
                 function = ICasaDulceService::selectCustomerItm,
-            ).bind(key = CustomerOrderHdr::customer_id)
+            ).bindCustom(key = CustomerOrderHdr::customer, required = true)
         }
 
         div {
@@ -60,88 +54,26 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
             borderBottom = Border(width = 2.px, style = BorderStyle.DOUBLE, color = Color("blue"))
         }
 
-        toolbar {
-            marginTop = 1.rem
-            buttonGroup {
-                button(text = "", icon = "fas fa-plus").onClick {
-                    val dialog = Dialog<CustomerOrderItm>(
-                        caption = "New item",
-                        size = ModalSize.LARGE,
-                        centered = true
-                    )
-                    dialog.apply {
-                        add(
-                            ViewCustomerOrderItmItem(
-                                action = "new",
-                                customerOrderHdr_id = customerOrderHdr._id,
-                                dialog = this
-                            )
-                        )
-                    }
-                    AppScope.launch {
-                        dialog.getResult()?.let {
-                            it.customerOrderHdr_id = customerOrderHdr._id
-                            console.warn("****", it)
-                            tabRemote.reload()
-                        }
-                    }
-                }
-            }
-        }
-
-        tabRemote = tabulatorRemote(
-            serviceManager = CasaDulceServiceManager,
-            function = ICasaDulceService::customerOrderItmByHdrList,
-            options = TabulatorOptions(
-                columns = listOf(
-                    ColumnDefinition(
-                        title = "#",
-                        formatter = Formatter.ROWSELECTION
-                    ),
-                    ColumnDefinition(
-                        title = "",
-                        formatterComponentFunction = { cell, onRendered, data ->
-                            console.warn("DATA =", data.asDynamic()._id)
-                            Button(text = "", icon = "fas fa-edit", style = ButtonStyle.OUTLINEPRIMARY)
-                        }
-                    ),
-                    ColumnDefinition(
-                        title = "#",
-                        formatter = Formatter.ROWNUM
-                    ),
-                    ColumnDefinition(
-                        title = "Inv Item Name",
-                        field = "inventoryItm.name",
-                    ),
-                    ColumnDefinition(
-                        title = "Inv Item UPC",
-                        field = "inventoryItm.upc"
-                    ),
-                    ColumnDefinition(
-                        title = "Qty",
-                        field = CustomerOrderItm::qty.name
-                    ),
-                    ColumnDefinition(
-                        title = "Size",
-                        field = CustomerOrderItm::size.name
-                    ),
-                )
-            )
-        )
+        add(ViewCustomerOrderItmList(this))
 
         flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.FLEXEND) {
             button(text = "Submit and create New Customer Order").onClick {
                 if (formPanel.validate()) {
-                    this@ViewCustomerOrderHdrItem.hide()
+                    AppScope.launch {
+                        val json = formPanel.getSimpleJson()
+                        Model.updateCustomerOrderHdr(customerOrderHdr._id, json)
+                        this@ViewCustomerOrderHdrItem.hide()
+                    }
                 }
             }
         }
 
-        if (match?.params["action"] == "new") {
+        if (match?.params["action"] == "${ViewAction.create}") {
             AppScope.launch {
                 Model.createNewCustomerOrderHdr().let {
                     customerOrderHdr = it
-                    formPanel.setData(it)
+                    formPanel.setData(customerOrderHdr)
+                    this@ViewCustomerOrderHdrItem.show()
                 }
             }
         }

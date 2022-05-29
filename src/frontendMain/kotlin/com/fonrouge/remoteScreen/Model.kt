@@ -1,11 +1,17 @@
 package com.fonrouge.remoteScreen
 
 import com.fonrouge.remoteScreen.services.CasaDulceService
+import com.fonrouge.remoteScreen.services.CustomerOrderHdrService
+import com.fonrouge.remoteScreen.services.CustomerOrderItmService
+import com.fonrouge.remoteScreen.services.InventoryItmService
 import io.kvision.state.ObservableValue
 
 object Model {
 
     private val casaDulceService = CasaDulceService()
+    private val customerOrderHdrService = CustomerOrderHdrService()
+    private val customerOrderItmService = CustomerOrderItmService()
+    private val inventoryItmService = InventoryItmService()
 
     val obsProfile = ObservableValue(UserProfile())
 
@@ -21,15 +27,21 @@ object Model {
 
     suspend fun createNewCustomerOrderHdr(): CustomerOrderHdr {
         return Security.withAuth {
-            casaDulceService.createNewCustomerOrderHdr()
+            customerOrderHdrService.createNewCustomerOrderHdr()
+        }
+    }
+
+    suspend fun updateCustomerOrderHdr(_id: String, json: String): Boolean {
+        return Security.withAuth {
+            customerOrderHdrService.updateCustomerOrderHdr(_id, json)
         }
     }
 
     suspend fun addCustomerOrderItm(customerOrderItm: CustomerOrderItm) {
-        casaDulceService.addCustomerOrderItm(customerOrderItm)
+        customerOrderItmService.addCustomerOrderItm(customerOrderItm)
     }
 
     suspend fun getInventoryItm(_id: Int?): InventoryItm {
-        return casaDulceService.getInventoryItm(_id)
+        return inventoryItmService.getInventoryItm(_id)
     }
 }

@@ -1,8 +1,8 @@
 package com.fonrouge.remoteScreen
 
-import com.fonrouge.remoteScreen.services.CasaDulceService
-import com.fonrouge.remoteScreen.services.CasaDulceServiceManager
-import com.fonrouge.remoteScreen.services.ICasaDulceService
+import com.fonrouge.remoteScreen.services.IInventoryItmService
+import com.fonrouge.remoteScreen.services.InventoryItmService
+import com.fonrouge.remoteScreen.services.InventoryItmServiceManager
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
 import io.kvision.core.onEvent
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class ViewInventoryItmCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
-    var tabRemote: TabulatorRemote<InventoryItm, CasaDulceService>
+    var tabRemote: TabulatorRemote<InventoryItm, InventoryItmService>
 
     companion object {
         var timerHandle: Int? = null
@@ -40,8 +40,8 @@ class ViewInventoryItmCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
         }
 
         tabRemote = tabulatorRemote(
-            serviceManager = CasaDulceServiceManager,
-            function = ICasaDulceService::inventoryItmList,
+            serviceManager = InventoryItmServiceManager,
+            function = IInventoryItmService::inventoryItmList,
             options = TabulatorOptions(
                 layout = Layout.FITCOLUMNS,
                 pagination = true,
