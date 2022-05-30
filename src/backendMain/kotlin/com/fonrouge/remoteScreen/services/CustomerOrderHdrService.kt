@@ -2,9 +2,10 @@ package com.fonrouge.remoteScreen.services
 
 import com.fonrouge.remoteScreen.CustomerItm
 import com.fonrouge.remoteScreen.CustomerOrderHdr
-import com.fonrouge.remoteScreen.CustomerOrderItm
-import com.fonrouge.remoteScreen.InventoryItm
-import com.fonrouge.remoteScreen.database.*
+import com.fonrouge.remoteScreen.database.AggLookup
+import com.fonrouge.remoteScreen.database.buildRemoteData
+import com.fonrouge.remoteScreen.database.customerItmColl
+import com.fonrouge.remoteScreen.database.customerOrderHdrColl
 import com.google.inject.Inject
 import io.ktor.server.application.*
 import io.kvision.remote.RemoteData
@@ -30,46 +31,50 @@ actual class CustomerOrderHdrService : ICustomerOrderHdrService {
         state: String?
     ): RemoteData<CustomerOrderHdr> {
 
-        val aggInfo = AggInfo(
+        val aggLookup: AggLookup<CustomerOrderHdr, CustomerItm> = AggLookup(
             from = customerItmColl,
-            localField = CustomerOrderHdr::customer,
-            foreignField = CustomerItm::_id
+            localField = CustomerOrderHdr::customerItm_id,
+            foreignField = CustomerItm::_id,
+            newAs = CustomerOrderHdr::customerItm
         )
 
-        return customerOrderHdrColl.buildRemoteData(page, size, filter, sorter, state, aggInfo)
+        return customerOrderHdrColl.buildRemoteData(page, size, filter, sorter, state, aggLookup)
     }
 
     override suspend fun createNewCustomerOrderHdr(): CustomerOrderHdr {
 
         val userProfileId = getProfile().id ?: ""
 
-        var customerOrderHdr: CustomerOrderHdr? =
+        val customerOrderHdr: CustomerOrderHdr? =
             customerOrderHdrColl.findOne(
                 CustomerOrderHdr::userProfile eq userProfileId,
                 CustomerOrderHdr::status eq "$"
             )
 
-        if (customerOrderHdr == null) {
-            val docId = customerOrderHdrColl.find().descendingSort(CustomerOrderHdr::docId).limit(1).first()?.let {
-                it.docId + 1
-            } ?: 1
-            customerOrderHdr = CustomerOrderHdr(
-                _id = ObjectId.get().toHexString(),
-                docId = docId,
-                customer = null,
-                created = LocalDateTime.now(),
-                status = "$",
-                userProfile = userProfileId
-            )
-            customerOrderHdrColl.insertOne(customerOrderHdr)
+        if (customerOrderHdr != null) return customerOrderHdr
+
+        val docId = customerOrderHdrColl.find().descendingSort(CustomerOrderHdr::docId).limit(1).first()?.let {
+            it.docId + 1
+        } ?: 1
+
+        return CustomerOrderHdr(
+            _id = ObjectId.get().toHexString(),
+            docId = docId,
+            created = LocalDateTime.now(),
+            customerItm_id = null,
+            status = "$",
+            userProfile = userProfileId
+        ).also {
+            customerOrderHdrColl.insertOne(it)
         }
-        return customerOrderHdr
     }
 
-    override suspend fun updateCustomerOrderHdr(_id: String, json: String): Boolean {
-        val d = Document()
-            .append("\$set", Document.parse(json))
-        val r = customerOrderHdrColl.updateOne(CustomerOrderHdr::_id eq _id, update = d)
+    override suspend fun updateCustomerOrderHdr(customerOrderHdr: CustomerOrderHdr): Boolean {
+        val r = customerOrderHdrColl.updateOne(
+            filter = Document(CustomerOrderHdr::_id.name, customerOrderHdr._id),
+            target = customerOrderHdr
+        )
+        println("RESULT = $r")
         return r.upsertedId != null
     }
 }

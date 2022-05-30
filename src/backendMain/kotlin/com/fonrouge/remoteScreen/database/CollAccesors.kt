@@ -52,10 +52,11 @@ val userItmColl by lazy {
     mongoDatabase.getCollection<UserItm>(collectionName = "userItms")
 }
 
-class AggInfo<S : Any, T : Any>(
+class AggLookup<S : Any, T : Any>(
     val from: CoroutineCollection<T>,
-    val localField: KProperty1<S, T?>,
-    val foreignField: KProperty1<T, *>
+    val localField: KProperty1<S, Any?>,
+    val foreignField: KProperty1<T, *>,
+    val newAs: KProperty1<S, T?>,
 )
 
 suspend inline fun <reified T : Any> CoroutineCollection<T>.buildRemoteData(
@@ -64,7 +65,7 @@ suspend inline fun <reified T : Any> CoroutineCollection<T>.buildRemoteData(
     filter: List<RemoteFilter>?,
     sorter: List<RemoteSorter>?,
     state: String?,
-    aggInfo: AggInfo<*, *>? = null,
+    aggLookup: AggLookup<*, *>? = null,
 ): RemoteData<T> {
 
     val nPage = page ?: 1
@@ -86,18 +87,18 @@ suspend inline fun <reified T : Any> CoroutineCollection<T>.buildRemoteData(
     }
 
     pipeline.add(Document("\$match", filterValue))
-    aggInfo?.let {
+    aggLookup?.let {
         pipeline.add(
             lookup(
-                from = aggInfo.from.collection.namespace.collectionName,
-                localField = aggInfo.localField.name,
-                foreignField = aggInfo.foreignField.name,
-                newAs = aggInfo.localField.name
+                from = aggLookup.from.collection.namespace.collectionName,
+                localField = aggLookup.localField.name,
+                foreignField = aggLookup.foreignField.name,
+                newAs = aggLookup.newAs.name
             )
         )
         pipeline.add(
             unwind(
-                fieldName = "\$${aggInfo.localField.name}",
+                fieldName = "\$${aggLookup.newAs.name}",
                 unwindOptions = UnwindOptions().preserveNullAndEmptyArrays(true)
             )
         )

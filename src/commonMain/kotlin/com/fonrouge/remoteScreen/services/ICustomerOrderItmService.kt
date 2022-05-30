@@ -17,5 +17,5 @@ interface ICustomerOrderItmService {
         state: String?
     ): RemoteData<CustomerOrderItm>
 
-    suspend fun addCustomerOrderItm(customerOrderItm: CustomerOrderItm) : Boolean
+    suspend fun addCustomerOrderItm(customerOrderItm: CustomerOrderItm): Boolean
 }

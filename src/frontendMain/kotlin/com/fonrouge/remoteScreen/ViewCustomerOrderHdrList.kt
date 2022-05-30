@@ -66,7 +66,7 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                     ),
                     ColumnDefinition(
                         title = CustomerItm::company.name,
-                        field = "customer.company",
+                        field = "customerItm.company",
                         headerFilter = Editor.INPUT
                     ),
                 )

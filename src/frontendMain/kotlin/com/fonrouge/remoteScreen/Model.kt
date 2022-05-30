@@ -31,9 +31,9 @@ object Model {
         }
     }
 
-    suspend fun updateCustomerOrderHdr(_id: String, json: String): Boolean {
+    suspend fun updateCustomerOrderHdr(customerOrderHdr: CustomerOrderHdr): Boolean {
         return Security.withAuth {
-            customerOrderHdrService.updateCustomerOrderHdr(_id, json)
+            customerOrderHdrService.updateCustomerOrderHdr(customerOrderHdr)
         }
     }
 

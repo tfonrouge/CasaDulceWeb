@@ -1,7 +1,5 @@
 package com.fonrouge.remoteScreen
 
-import com.fonrouge.remoteScreen.services.CasaDulceServiceManager
-import com.fonrouge.remoteScreen.services.ICasaDulceService
 import com.fonrouge.remoteScreen.services.IInventoryItmService
 import com.fonrouge.remoteScreen.services.InventoryItmServiceManager
 import io.kvision.core.FlexDirection
@@ -17,7 +15,6 @@ import io.kvision.html.button
 import io.kvision.modal.Dialog
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -60,9 +57,7 @@ class ViewCustomerOrderItmItem(action: ViewAction, customerOrderHdr_id: String, 
         val map: MutableMap<KClass<*>, KSerializer<*>> = mutableMapOf()
         map.set(key = InventoryItm::class, value = KSerializer1)
 
-        formPanel = formPanel(
-//            customSerializers = map
-        ) {
+        formPanel = formPanel {
             selectRemote(
                 serviceManager = InventoryItmServiceManager,
                 function = IInventoryItmService::selectInventoryItm,
@@ -96,7 +91,7 @@ class ViewCustomerOrderItmItem(action: ViewAction, customerOrderHdr_id: String, 
                 CustomerOrderItm(
                     _id = "",
                     customerOrderHdr_id = customerOrderHdr_id,
-                    inventoryItm = null,
+                    inventoryItm_id = "",
                     qty = 1,
                     size = ""
                 )

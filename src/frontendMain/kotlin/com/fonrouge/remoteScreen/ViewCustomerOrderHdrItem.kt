@@ -46,7 +46,7 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
                 label = "Customer:",
                 serviceManager = CasaDulceServiceManager,
                 function = ICasaDulceService::selectCustomerItm,
-            ).bindCustom(key = CustomerOrderHdr::customer, required = true)
+            ).bind(key = CustomerOrderHdr::customerItm_id, required = true)
         }
 
         div {
@@ -60,8 +60,9 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
             button(text = "Submit and create New Customer Order").onClick {
                 if (formPanel.validate()) {
                     AppScope.launch {
-                        val json = formPanel.getSimpleJson()
-                        Model.updateCustomerOrderHdr(customerOrderHdr._id, json)
+                        val customerOrderHdr1 = formPanel.getData()
+                        console.warn("D =", customerOrderHdr1)
+                        Model.updateCustomerOrderHdr(customerOrderHdr1)
                         this@ViewCustomerOrderHdrItem.hide()
                     }
                 }

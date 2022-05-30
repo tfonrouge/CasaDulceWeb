@@ -2,7 +2,7 @@ package com.fonrouge.remoteScreen.services
 
 import com.fonrouge.remoteScreen.CustomerOrderItm
 import com.fonrouge.remoteScreen.InventoryItm
-import com.fonrouge.remoteScreen.database.AggInfo
+import com.fonrouge.remoteScreen.database.AggLookup
 import com.fonrouge.remoteScreen.database.buildRemoteData
 import com.fonrouge.remoteScreen.database.customerOrderItmColl
 import com.fonrouge.remoteScreen.database.inventoryItmColl
@@ -23,10 +23,11 @@ actual class CustomerOrderItmService : ICustomerOrderItmService {
         state: String?
     ): RemoteData<CustomerOrderItm> {
 
-        val aggInfo = AggInfo(
+        val aggLookup = AggLookup(
             from = inventoryItmColl,
-            localField = CustomerOrderItm::inventoryItm,
-            foreignField = InventoryItm::_id
+            localField = CustomerOrderItm::inventoryItm_id,
+            foreignField = InventoryItm::_id,
+            newAs = CustomerOrderItm::inventoryItm
         )
 
         return customerOrderItmColl.buildRemoteData(
@@ -35,7 +36,7 @@ actual class CustomerOrderItmService : ICustomerOrderItmService {
             filter = filter,
             sorter = sorter,
             state = state,
-            aggInfo = aggInfo
+            aggLookup = aggLookup
         )
     }
 

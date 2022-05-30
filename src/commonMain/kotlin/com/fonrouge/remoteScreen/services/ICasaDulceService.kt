@@ -1,6 +1,7 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.remoteScreen.*
+import com.fonrouge.remoteScreen.CustomerItm
+import com.fonrouge.remoteScreen.UserProfile
 import io.kvision.annotations.KVService
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
