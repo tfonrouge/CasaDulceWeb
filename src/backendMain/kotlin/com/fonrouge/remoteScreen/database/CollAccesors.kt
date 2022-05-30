@@ -72,7 +72,7 @@ suspend inline fun <reified T : Any> CoroutineCollection<T>.buildRemoteData(
 
     val pipeline = mutableListOf<Bson>()
 
-    val filterValue = (match as? Document)?: Document()
+    val filterValue = (match as? Document) ?: Document()
 
     if (filter != null && filter.isNotEmpty()) {
         filter.forEach { remoteFilter ->
