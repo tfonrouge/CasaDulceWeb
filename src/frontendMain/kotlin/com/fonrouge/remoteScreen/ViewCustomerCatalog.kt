@@ -1,27 +1,24 @@
 package com.fonrouge.remoteScreen
 
-import com.fonrouge.remoteScreen.services.CasaDulceService
-import com.fonrouge.remoteScreen.services.CasaDulceServiceManager
-import com.fonrouge.remoteScreen.services.ICasaDulceService
+import com.fonrouge.remoteScreen.services.CustomerItmService
+import com.fonrouge.remoteScreen.services.CustomerItmServiceManager
+import com.fonrouge.remoteScreen.services.ICustomerItmService
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
-import io.kvision.core.onEvent
 import io.kvision.html.button
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
 import io.kvision.routing.routing
 import io.kvision.tabulator.*
-import io.kvision.utils.event
 import kotlinx.browser.window
 import kotlinx.coroutines.launch
 
 class ViewCustomerCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
-    var tabRemote: TabulatorRemote<CustomerItm, CasaDulceService>
+    private var tabRemote: TabulatorRemote<CustomerItm, CustomerItmService>
 
     companion object {
         var timerHandle: Int? = null
-        var editing = false
     }
 
     init {
@@ -38,8 +35,8 @@ class ViewCustomerCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
         }
 
         tabRemote = tabulatorRemote(
-            serviceManager = CasaDulceServiceManager,
-            function = ICasaDulceService::customerItmList,
+            serviceManager = CustomerItmServiceManager,
+            function = ICustomerItmService::customerItmList,
 //            types = setOf(TableType.STRIPED, TableType.HOVER, TableType.BORDERED),
             options = TabulatorOptions(
                 layout = Layout.FITCOLUMNS,
@@ -116,15 +113,6 @@ class ViewCustomerCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                     uploadCatalog.getResult()
                     tabRemote.reload()
                 }
-            }
-        }
-
-        onEvent {
-            event("show.bs.modal") {
-                console.warn("focusing...")
-            }
-            hide = {
-                console.warn("hidding...")
             }
         }
 

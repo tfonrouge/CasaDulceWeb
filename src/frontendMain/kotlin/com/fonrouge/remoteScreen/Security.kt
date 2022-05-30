@@ -25,7 +25,6 @@ class LoginWindow : Dialog<Credentials>(closeButton = false, escape = false, ani
     private val cancelButton: Button
 
     init {
-        console.warn("entering LoginWindow")
         loginPanel = formPanel {
             add(Credentials::username, Text(label = "Login:"), required = true)
             add(Credentials::password, Password(label = "Password:"), required = true)
@@ -86,7 +85,6 @@ class LoginWindow : Dialog<Credentials>(closeButton = false, escape = false, ani
         addButton(cancelButton)
 //        addButton(registerButton)
         hideRegisterForm()
-        console.warn("leaving LoginWindow")
     }
 
     private fun showRegisterForm() {
@@ -144,6 +142,6 @@ object Security : SecurityMgr() {
     }
 
     override suspend fun afterLogin() {
-        Model.readProfile()
+        ModelCasaDulce.readProfile()
     }
 }

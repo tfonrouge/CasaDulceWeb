@@ -13,5 +13,5 @@ data class CustomerOrderHdr(
     val status: String,
     val userProfile: String
 ) : IBase<String> {
-    val customerItm: CustomerItm? = null
+    var customerItm: CustomerItm? = null
 }

@@ -1,6 +1,6 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.remoteScreen.InventoryItm
+import com.fonrouge.remoteScreen.CustomerItm
 import io.kvision.annotations.KVService
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
@@ -8,21 +8,19 @@ import io.kvision.remote.RemoteOption
 import io.kvision.remote.RemoteSorter
 
 @KVService
-interface IInventoryItmService {
+interface ICustomerItmService {
 
-    suspend fun inventoryItmList(
+    suspend fun customerItmList(
         page: Int?,
         size: Int?,
         filter: List<RemoteFilter>?,
         sorter: List<RemoteSorter>?,
         state: String?
-    ): RemoteData<InventoryItm>
+    ): RemoteData<CustomerItm>
 
-    suspend fun selectInventoryItm(
+    suspend fun selectCustomerItm(
         search: String?,
         initial: String?,
         state: String?
     ): List<RemoteOption>
-
-    suspend fun getInventoryItm(_id: String): InventoryItm
 }

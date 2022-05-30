@@ -1,8 +1,8 @@
 package com.fonrouge.remoteScreen
 
-import com.fonrouge.remoteScreen.services.CasaDulceService
-import com.fonrouge.remoteScreen.services.CasaDulceServiceManager
-import com.fonrouge.remoteScreen.services.ICasaDulceService
+import com.fonrouge.remoteScreen.services.CustomerItmService
+import com.fonrouge.remoteScreen.services.CustomerItmServiceManager
+import com.fonrouge.remoteScreen.services.ICustomerItmService
 import io.kvision.core.*
 import io.kvision.form.FormPanel
 import io.kvision.form.formPanel
@@ -15,21 +15,21 @@ import io.kvision.html.div
 import io.kvision.navigo.Match
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
+import io.kvision.routing.routing
 import io.kvision.utils.px
 import io.kvision.utils.rem
+import kotlinx.browser.window
 import kotlinx.coroutines.launch
 
 class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirection.COLUMN) {
 
     private var formPanel: FormPanel<CustomerOrderHdr>
-    private lateinit var selectCustomer: SelectRemote<CasaDulceService>
+    private lateinit var selectCustomer: SelectRemote<CustomerItmService>
     internal lateinit var customerOrderHdr: CustomerOrderHdr
 
     init {
 
         hide()
-
-        console.warn("match =", match)
 
         marginLeft = 2.rem
         marginRight = 2.rem
@@ -37,15 +37,15 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
         formPanel = formPanel {
             flexPanel(direction = FlexDirection.ROW) {
                 spinner(label = "Doc Id:").bind(key = CustomerOrderHdr::docId, required = true)
-                dateTime(label = "Created:", format = "MMM DD, YYYY hh:mm a").bind(
-                    key = CustomerOrderHdr::created,
-                    required = true
-                )
+                dateTime(label = "Created:", format = "MMM DD, YYYY hh:mm a")
+                    .bind(key = CustomerOrderHdr::created, required = true)
             }
             selectCustomer = selectRemote(
                 label = "Customer:",
-                serviceManager = CasaDulceServiceManager,
-                function = ICasaDulceService::selectCustomerItm,
+                serviceManager = CustomerItmServiceManager,
+                function = ICustomerItmService::selectCustomerItm,
+                stateFunction = { "JuanaLaCubana" },
+//                preload = true
             ).bind(key = CustomerOrderHdr::customerItm_id, required = true)
         }
 
@@ -61,22 +61,47 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
                 if (formPanel.validate()) {
                     AppScope.launch {
                         val customerOrderHdr1 = formPanel.getData()
-                        console.warn("D =", customerOrderHdr1)
-                        Model.updateCustomerOrderHdr(customerOrderHdr1)
-                        this@ViewCustomerOrderHdrItem.hide()
+                        ModelCustomerOrderHdr.updateCustomerOrderHdr(customerOrderHdr1)
+                        routing.navigate("/${State.CustomerOrderHdrList}")
                     }
                 }
             }
         }
 
-        if (match?.params["action"] == "${ViewAction.create}") {
-            AppScope.launch {
-                Model.createNewCustomerOrderHdr().let {
-                    customerOrderHdr = it
+        AppScope.launch {
+            when (match?.action) {
+                ViewAction.create -> {
+                    ModelCustomerOrderHdr.createNewCustomerOrderHdr().let {
+                        customerOrderHdr = it
+                        formPanel.setData(customerOrderHdr)
+                        this@ViewCustomerOrderHdrItem.show()
+                    }
+                }
+                ViewAction.update -> {
+                    customerOrderHdr = ModelCustomerOrderHdr.customerOrderHdrItem(match.params["_id"] as String)
                     formPanel.setData(customerOrderHdr)
                     this@ViewCustomerOrderHdrItem.show()
+                    window.setTimeout(
+                        handler = {
+                            selectCustomer.buttonLabel = customerOrderHdr.customerItm?.company ?: "?"
+                        },
+                        timeout = 500
+                    )
                 }
+                null -> {}
             }
         }
     }
 }
+
+var SelectRemote<*>.buttonLabel: String
+    get() {
+        val button = input.getElementJQuery()?.next()
+        return button?.prop("title").toString()
+    }
+    set(value) {
+        val button = input.getElementJQuery()?.next()
+        button?.removeClass("bs-placeholder")
+        button?.prop("title", value)
+        button?.find(".filter-option-inner-inner")?.html(value)
+    }

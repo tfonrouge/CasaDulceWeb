@@ -16,35 +16,6 @@ import io.kvision.modal.Dialog
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
 import kotlinx.coroutines.launch
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
-import kotlin.reflect.KClass
-
-object KSerializer1 : KSerializer<InventoryItm> {
-
-    override fun deserialize(decoder: Decoder): InventoryItm {
-        val _id = decoder.decodeInt()
-
-        var inventoryItm = InventoryItm(0, "", "", "", "")
-        AppScope.launch {
-            console.warn(">>> getInventoryItm")
-            inventoryItm = Model.getInventoryItm(_id)
-            console.warn(">>> getInventoryItm", inventoryItm)
-        }
-        console.warn("returning from deserialize", inventoryItm)
-        return inventoryItm
-    }
-
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("SInventoryItm", PrimitiveKind.STRING)
-
-    override fun serialize(encoder: Encoder, value: InventoryItm) {
-        encoder.encodeString(value = value._id.toString())
-    }
-}
 
 class ViewCustomerOrderItmItem(action: ViewAction, customerOrderHdr_id: String, dialog: Dialog<CustomerOrderItm>?) :
     FlexPanel(direction = FlexDirection.COLUMN) {
@@ -53,9 +24,6 @@ class ViewCustomerOrderItmItem(action: ViewAction, customerOrderHdr_id: String, 
     private lateinit var textSize: Text
 
     init {
-
-        val map: MutableMap<KClass<*>, KSerializer<*>> = mutableMapOf()
-        map.set(key = InventoryItm::class, value = KSerializer1)
 
         formPanel = formPanel {
             selectRemote(
@@ -66,14 +34,14 @@ class ViewCustomerOrderItmItem(action: ViewAction, customerOrderHdr_id: String, 
                 onEvent {
                     change = {
                         AppScope.launch {
-                            Model.getInventoryItm(self.value?.toIntOrNull()).let {
+                            ModelInventoryItm.getInventoryItm(self.value ?: "").let {
                                 textSize.value = it.size
                             }
                         }
                     }
                 }
-            }.bindCustom(key = CustomerOrderItm::inventoryItm, required = true)
-//            }.bind(key = CustomerOrderItm::inventoryItm_id, required = true)
+            }.bind(key = CustomerOrderItm::inventoryItm_id, required = true)
+
             flexPanel(direction = FlexDirection.ROW, spacing = 20) {
                 spinner(label = "Qty:")
                     .bind(key = CustomerOrderItm::qty, required = true) { spinner ->
@@ -102,11 +70,9 @@ class ViewCustomerOrderItmItem(action: ViewAction, customerOrderHdr_id: String, 
             button(text = "Add Inventory Item to Customer Order").onClick {
                 if (formPanel.validate()) {
                     AppScope.launch {
-                        val j = formPanel.getDataJson()
-                        console.warn("getDataJson =", j)
-                        val o = formPanel.getData()
-                        o.let {
-                            Model.addCustomerOrderItm(it)
+                        formPanel.getData().let {
+                            console.warn("adding...", it)
+                            ModelCustomerOrderItm.addCustomerOrderItm(it)
                             dialog?.setResult(it)
                         }
                     }

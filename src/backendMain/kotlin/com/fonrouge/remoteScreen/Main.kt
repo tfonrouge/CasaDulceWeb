@@ -4,10 +4,7 @@ import com.fonrouge.remoteScreen.database.MongoDbPlugin
 import com.fonrouge.remoteScreen.database.UserItm
 import com.fonrouge.remoteScreen.database.collation
 import com.fonrouge.remoteScreen.database.userItmColl
-import com.fonrouge.remoteScreen.services.CasaDulceServiceManager
-import com.fonrouge.remoteScreen.services.CustomerOrderHdrServiceManager
-import com.fonrouge.remoteScreen.services.CustomerOrderItmServiceManager
-import com.fonrouge.remoteScreen.services.InventoryItmServiceManager
+import com.fonrouge.remoteScreen.services.*
 import com.fonrouge.remoteScreen.upload.uploadsRoute
 import com.toxicbakery.bcrypt.Bcrypt
 import io.ktor.http.*
@@ -97,6 +94,7 @@ fun Application.main() {
                 call.respondRedirect("/")
             }
             applyRoutes(CasaDulceServiceManager)
+            applyRoutes(CustomerItmServiceManager)
             applyRoutes(CustomerOrderHdrServiceManager)
             applyRoutes(CustomerOrderItmServiceManager)
             applyRoutes(InventoryItmServiceManager)

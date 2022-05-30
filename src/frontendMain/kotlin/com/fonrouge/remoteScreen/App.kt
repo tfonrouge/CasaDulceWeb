@@ -69,14 +69,14 @@ class App : Application() {
                         onClick { routing.navigate("/") }
                     }
                     h1("Casa Dulce: ${it.state.name}")
-                    div().bind(Model.obsProfile) {
+                    div().bind(ModelCasaDulce.obsProfile) {
                         if (it.username != null) {
                             button(text = "Logout", icon = "fas fa-sign-out-alt", style = ButtonStyle.OUTLINEDANGER) {
                                 marginRight = 1.rem
                             }.onClick {
                                 document.location?.href = "/logout"
                             }
-                            label(content = Model.obsProfile.value.name) {
+                            label(content = ModelCasaDulce.obsProfile.value.name) {
                                 colorName = Col.DARKGRAY
                             }
                         } else {
@@ -98,7 +98,7 @@ class App : Application() {
         }
         AppScope.launch {
             Toast.success(
-                message = Model.ping("hello"),
+                message = ModelCasaDulce.ping("hello"),
                 options = ToastOptions(positionClass = ToastPosition.BOTTOMCENTER)
             )
         }

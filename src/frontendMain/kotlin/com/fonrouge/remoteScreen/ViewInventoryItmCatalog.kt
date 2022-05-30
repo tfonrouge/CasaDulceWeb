@@ -5,13 +5,11 @@ import com.fonrouge.remoteScreen.services.InventoryItmService
 import com.fonrouge.remoteScreen.services.InventoryItmServiceManager
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
-import io.kvision.core.onEvent
 import io.kvision.html.button
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
 import io.kvision.routing.routing
 import io.kvision.tabulator.*
-import io.kvision.utils.event
 import io.kvision.utils.px
 import kotlinx.browser.window
 import kotlinx.coroutines.launch
@@ -92,15 +90,6 @@ class ViewInventoryItmCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                     uploadCatalog.getResult()
                     tabRemote.reload()
                 }
-            }
-        }
-
-        onEvent {
-            event("show.bs.modal") {
-                console.warn("focusing...")
-            }
-            hide = {
-                console.warn("hidding...")
             }
         }
 

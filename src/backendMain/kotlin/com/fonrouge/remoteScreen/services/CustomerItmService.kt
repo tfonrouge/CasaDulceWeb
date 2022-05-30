@@ -1,8 +1,8 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.remoteScreen.InventoryItm
+import com.fonrouge.remoteScreen.CustomerItm
 import com.fonrouge.remoteScreen.database.buildRemoteData
-import com.fonrouge.remoteScreen.database.inventoryItmColl
+import com.fonrouge.remoteScreen.database.customerItmColl
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
 import io.kvision.remote.RemoteOption
@@ -11,37 +11,39 @@ import org.litote.kmongo.eq
 import org.litote.kmongo.or
 import org.litote.kmongo.regex
 
-actual class InventoryItmService : IInventoryItmService {
+actual class CustomerItmService : ICustomerItmService {
 
-    override suspend fun inventoryItmList(
+    override suspend fun customerItmList(
         page: Int?,
         size: Int?,
         filter: List<RemoteFilter>?,
         sorter: List<RemoteSorter>?,
         state: String?
-    ): RemoteData<InventoryItm> {
-        return inventoryItmColl.buildRemoteData(page, size, filter, sorter, state)
+    ): RemoteData<CustomerItm> {
+        return customerItmColl.buildRemoteData(page, size, filter, sorter, state)
     }
 
-    override suspend fun selectInventoryItm(search: String?, initial: String?, state: String?): List<RemoteOption> {
-        val list = mutableListOf<InventoryItm>()
+    override suspend fun selectCustomerItm(search: String?, initial: String?, state: String?): List<RemoteOption> {
+        println("$search, $initial, $state")
+        val list = mutableListOf<CustomerItm>()
         list.addAll(
             if (search == null && initial != null) {
-                inventoryItmColl.find(InventoryItm::_id eq initial).toList()
+                customerItmColl.find(CustomerItm::_id eq initial).toList()
             } else if (search != null) {
-                inventoryItmColl.find(
+                customerItmColl.find(
                     or(
-                        InventoryItm::_id eq search,
-                        InventoryItm::name.regex(search, "i"),
-                        InventoryItm::upc.regex(search, "i"),
+                        CustomerItm::_id.regex(search, "i"),
+                        CustomerItm::company.regex(search, "i"),
+                        CustomerItm::firstName.regex(search, "i"),
+                        CustomerItm::lastName.regex(search, "i"),
                     )
                 ).limit(100).toList()
             } else listOf()
         )
         val result = list.map {
             RemoteOption(
-                value = it._id.toString(),
-                content = "<b>upc</b>: ${it.upc} <b>name</b>: ${it.name} - <i>${it._id}</i>"
+                value = it._id,
+                content = "<b>co</b>: ${it.company} <b>fn</b>: ${it.firstName} <b>ln</b>: ${it.lastName} - <i>${it._id}</i>"
             )
         }.toMutableList()
         if (result.size == 100) {
@@ -58,10 +60,5 @@ actual class InventoryItmService : IInventoryItmService {
             )
         }
         return result
-    }
-
-    override suspend fun getInventoryItm(_id: String): InventoryItm {
-        /* will throw exception if not found */
-        return inventoryItmColl.findOne(InventoryItm::_id eq _id)!!
     }
 }

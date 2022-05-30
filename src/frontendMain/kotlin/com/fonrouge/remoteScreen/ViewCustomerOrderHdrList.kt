@@ -5,6 +5,7 @@ import com.fonrouge.remoteScreen.services.CustomerOrderHdrServiceManager
 import com.fonrouge.remoteScreen.services.ICustomerOrderHdrService
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
+import io.kvision.html.Button
 import io.kvision.html.button
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
@@ -50,9 +51,13 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
 //                        formatter = Formatter.ROWNUM
 //                    ),
                     ColumnDefinition(
-                        title = CustomerOrderHdr::_id.name,
-                        field = CustomerOrderHdr::_id.name,
-                        headerFilter = Editor.INPUT
+                        title = "",
+                        formatterComponentFunction = { _, _, data ->
+                            Button(text = "", icon = "fas fa-edit").onClick {
+                                val _id = data.asDynamic()["_id"] as String
+                                routing.navigate("/${State.CustomerOrderHdrItem}?action=${ViewAction.update}&_id=$_id")
+                            }
+                        }
                     ),
                     ColumnDefinition(
                         title = CustomerOrderHdr::docId.name,

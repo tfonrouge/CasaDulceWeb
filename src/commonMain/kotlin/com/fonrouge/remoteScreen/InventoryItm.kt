@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class InventoryItm(
-    var _id: Int,
+    var _id: String,
     var name: String,
     var size: String,
     var upc: String,

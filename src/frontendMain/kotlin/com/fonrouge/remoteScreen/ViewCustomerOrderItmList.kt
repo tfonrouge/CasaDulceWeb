@@ -44,7 +44,6 @@ class ViewCustomerOrderItmList(viewCustomerOrderHdrItem: ViewCustomerOrderHdrIte
                     AppScope.launch {
                         dialog.getResult()?.let {
                             it.customerOrderHdr_id = viewCustomerOrderHdrItem.customerOrderHdr._id
-                            console.warn("****", it)
                             tabRemote.reload()
                         }
                     }
@@ -65,7 +64,6 @@ class ViewCustomerOrderItmList(viewCustomerOrderHdrItem: ViewCustomerOrderHdrIte
                     ColumnDefinition(
                         title = "",
                         formatterComponentFunction = { cell, onRendered, data ->
-                            console.warn("DATA =", data.asDynamic()._id)
                             Button(text = "", icon = "fas fa-edit", style = ButtonStyle.OUTLINEPRIMARY)
                         }
                     ),

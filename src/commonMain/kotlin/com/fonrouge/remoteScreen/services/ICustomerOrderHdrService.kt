@@ -9,6 +9,8 @@ import io.kvision.remote.RemoteSorter
 @KVService
 interface ICustomerOrderHdrService {
 
+    suspend fun customerOrderHdrItem(_id: String): CustomerOrderHdr
+
     suspend fun customerOrderHdrList(
         page: Int?,
         size: Int?,
