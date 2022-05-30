@@ -20,7 +20,7 @@ actual class CustomerItmService : ICustomerItmService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<CustomerItm> {
-        return customerItmColl.buildRemoteData(page, size, filter, sorter, state)
+        return customerItmColl.buildRemoteData(page, size, filter, sorter)
     }
 
     override suspend fun selectCustomerItm(search: String?, initial: String?, state: String?): List<RemoteOption> {

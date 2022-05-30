@@ -62,7 +62,7 @@ suspend inline fun <reified T : Any> CoroutineCollection<T>.buildRemoteData(
     size: Int?,
     filter: List<RemoteFilter>?,
     sorter: List<RemoteSorter>?,
-    state: String?,
+    match: Bson? = null,
     aggLookup: AggLookup<*, *>? = null,
 ): RemoteData<T> {
 
@@ -72,7 +72,7 @@ suspend inline fun <reified T : Any> CoroutineCollection<T>.buildRemoteData(
 
     val pipeline = mutableListOf<Bson>()
 
-    val filterValue = Document()
+    val filterValue = (match as? Document)?: Document()
 
     if (filter != null && filter.isNotEmpty()) {
         filter.forEach { remoteFilter ->

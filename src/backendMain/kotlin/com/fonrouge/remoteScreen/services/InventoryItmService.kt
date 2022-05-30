@@ -20,7 +20,7 @@ actual class InventoryItmService : IInventoryItmService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<InventoryItm> {
-        return inventoryItmColl.buildRemoteData(page, size, filter, sorter, state)
+        return inventoryItmColl.buildRemoteData(page, size, filter, sorter)
     }
 
     override suspend fun selectInventoryItm(search: String?, initial: String?, state: String?): List<RemoteOption> {

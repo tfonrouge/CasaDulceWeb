@@ -10,7 +10,7 @@ data class CustomerOrderHdr(
     val customerItm_id: String?,
     @Contextual
     val created: LocalDateTime,
-    val status: String,
+    var status: String,
     val userProfile: String
 ) : IBase<String> {
     var customerItm: CustomerItm? = null

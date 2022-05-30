@@ -10,6 +10,8 @@ import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
 import io.kvision.remote.RemoteSorter
 import org.bson.types.ObjectId
+import org.litote.kmongo.eq
+import org.litote.kmongo.match
 
 actual class CustomerOrderItmService : ICustomerOrderItmService {
 
@@ -28,12 +30,13 @@ actual class CustomerOrderItmService : ICustomerOrderItmService {
             newAs = CustomerOrderItm::inventoryItm
         )
 
+
         return customerOrderItmColl.buildRemoteData(
             page = page,
             size = size,
             filter = filter,
             sorter = sorter,
-            state = state,
+            match = state?.let { match(CustomerOrderItm::customerOrderHdr_id eq state) },
             aggLookup = aggLookup
         )
     }

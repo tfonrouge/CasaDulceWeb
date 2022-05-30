@@ -39,7 +39,7 @@ actual class CustomerOrderHdrService : ICustomerOrderHdrService {
         state: String?
     ): RemoteData<CustomerOrderHdr> {
 
-        return customerOrderHdrColl.buildRemoteData(page, size, filter, sorter, state, aggLookup)
+        return customerOrderHdrColl.buildRemoteData(page, size, filter, sorter, aggLookup = aggLookup)
     }
 
     override suspend fun createNewCustomerOrderHdr(): CustomerOrderHdr {
@@ -72,6 +72,8 @@ actual class CustomerOrderHdrService : ICustomerOrderHdrService {
 
     override suspend fun updateCustomerOrderHdr(customerOrderHdr: CustomerOrderHdr): Boolean {
         customerOrderHdr.customerItm = null
+        if (customerOrderHdr.status == "$")
+            customerOrderHdr.status = "1"
         val r = customerOrderHdrColl.updateOne(
             filter = Document(CustomerOrderHdr::_id.name, customerOrderHdr._id),
             target = customerOrderHdr

@@ -8,6 +8,7 @@ import io.kvision.form.FormPanel
 import io.kvision.form.formPanel
 import io.kvision.form.select.SelectRemote
 import io.kvision.form.select.selectRemote
+import io.kvision.form.select.simpleSelect
 import io.kvision.form.spinner.spinner
 import io.kvision.form.time.dateTime
 import io.kvision.html.button
@@ -35,10 +36,12 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
         marginRight = 2.rem
 
         formPanel = formPanel {
-            flexPanel(direction = FlexDirection.ROW) {
+            flexPanel(direction = FlexDirection.ROW, spacing = 20) {
                 spinner(label = "Doc Id:").bind(key = CustomerOrderHdr::docId, required = true)
                 dateTime(label = "Created:", format = "MMM DD, YYYY hh:mm a")
                     .bind(key = CustomerOrderHdr::created, required = true)
+                simpleSelect(label = "Status", options = listOf("$" to "New Order", "1" to "Pending Order"))
+                    .bind(key = CustomerOrderHdr::status)
             }
             selectCustomer = selectRemote(
                 label = "Customer:",
