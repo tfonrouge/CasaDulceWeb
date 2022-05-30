@@ -72,7 +72,7 @@ suspend inline fun <reified T : Any> CoroutineCollection<T>.buildRemoteData(
 
     val pipeline = mutableListOf<Bson>()
 
-    val filterValue = (match as? Document) ?: Document()
+    val filterValue = Document()
 
     if (filter != null && filter.isNotEmpty()) {
         filter.forEach { remoteFilter ->
@@ -84,6 +84,9 @@ suspend inline fun <reified T : Any> CoroutineCollection<T>.buildRemoteData(
         }
     }
 
+    match?.let {
+        pipeline.add(match)
+    }
     pipeline.add(Document("\$match", filterValue))
     aggLookup?.addToPipeline(pipeline)
     pipeline.add(Document("\$skip", nSkip))
