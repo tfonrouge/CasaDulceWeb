@@ -17,6 +17,8 @@ import io.kvision.navigo.Match
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
 import io.kvision.routing.routing
+import io.kvision.toast.Toast
+import io.kvision.utils.delete
 import io.kvision.utils.px
 import io.kvision.utils.rem
 import kotlinx.browser.window
@@ -40,8 +42,10 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
                 spinner(label = "Doc Id:").bind(key = CustomerOrderHdr::docId, required = true)
                 dateTime(label = "Created:", format = "MMM DD, YYYY hh:mm a")
                     .bind(key = CustomerOrderHdr::created, required = true)
-                simpleSelect(label = "Status", options = listOf("$" to "New Order", "1" to "Pending Order"))
+
+                simpleSelect(label = "Status", options = CustomerOrderHdr.customerOrderHdrStatusList)
                     .bind(key = CustomerOrderHdr::status)
+
             }
             selectCustomer = selectRemote(
                 label = "Customer:",
@@ -59,7 +63,7 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
 
         add(ViewCustomerOrderItmList(this))
 
-        flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.FLEXEND) {
+        flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.SPACEBETWEEN) {
             button(text = "Submit and create New Customer Order").onClick {
                 if (formPanel.validate()) {
                     AppScope.launch {
@@ -68,9 +72,12 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
                         routing.navigate("/${State.CustomerOrderHdrList}")
                     }
                 }
+                Toast.success("Successfully Created")
+            }
+            button(text = "Delete Order").onClick {
+                Toast.success("Order Deleted")
             }
         }
-
         AppScope.launch {
             when (match?.action) {
                 ViewAction.create -> {

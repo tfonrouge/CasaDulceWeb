@@ -5,12 +5,18 @@ import com.fonrouge.remoteScreen.services.CustomerOrderHdrServiceManager
 import com.fonrouge.remoteScreen.services.ICustomerOrderHdrService
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
+import io.kvision.core.onClick
+import io.kvision.form.select.select
 import io.kvision.html.Button
+import io.kvision.html.Span
 import io.kvision.html.button
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
 import io.kvision.routing.routing
 import io.kvision.tabulator.*
+import io.kvision.toast.Toast
+import io.kvision.utils.delete
+import kotlinx.coroutines.delay
 
 class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
 
@@ -46,10 +52,10 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                 sortMode = SortMode.REMOTE,
                 dataLoader = false,
                 columns = listOf(
-//                    ColumnDefinition(
-//                        title = "#",
-//                        formatter = Formatter.ROWNUM
-//                    ),
+/*                    ColumnDefinition(
+                        title = "#",
+                        formatter = Formatter.ROWSELECTION
+                    ),*/
                     ColumnDefinition(
                         title = "",
                         formatterComponentFunction = { _, _, data ->
@@ -76,15 +82,23 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                     ),
                     ColumnDefinition(
                         title = "Status",
-                        field = CustomerOrderHdr::status.name
-                    )
+                        field = "status"
+/*
+                        formatterComponentFunction = {cell, onRendered, data ->
+                            Span("JuanaLaCubana: ${data.status}")
+                        }
+*/
+                    ),
                 )
             )
         )
 
-        flexPanel(direction = FlexDirection.ROW) {
+        flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.SPACEAROUND) {
             button(text = "Create new Customer Order").onClick {
                 routing.navigate("${State.CustomerOrderHdrItem}?action=${ViewAction.create}")
+            }
+            button(text = "Delete Customer Order").onClick {
+                Toast.success("Successfully Deleted")
             }
         }
     }
