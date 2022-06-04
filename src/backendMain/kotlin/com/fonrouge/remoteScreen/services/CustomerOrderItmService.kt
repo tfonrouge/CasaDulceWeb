@@ -48,4 +48,9 @@ actual class CustomerOrderItmService : ICustomerOrderItmService {
         println("RESULT = $r")
         return r.insertedId != null
     }
+
+    override suspend fun deleteCustomerOrderItm(_id: String): Boolean {
+        val deleteResult = customerOrderItmColl.deleteOne(CustomerOrderItm::_id eq _id)
+        return deleteResult.deletedCount == 1L
+    }
 }

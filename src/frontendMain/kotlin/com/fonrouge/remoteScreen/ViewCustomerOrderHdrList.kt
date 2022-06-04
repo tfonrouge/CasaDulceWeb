@@ -82,7 +82,8 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                     ),
                     ColumnDefinition(
                         title = "Status",
-                        field = "status"
+                        field = "statusLabel"
+//                        field = CustomerOrderHdr::statusLabel.name
 /*
                         formatterComponentFunction = {cell, onRendered, data ->
                             Span("JuanaLaCubana: ${data.status}")

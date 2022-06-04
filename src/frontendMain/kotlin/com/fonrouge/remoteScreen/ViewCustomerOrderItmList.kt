@@ -5,8 +5,12 @@ import com.fonrouge.remoteScreen.services.CustomerOrderItmServiceManager
 import com.fonrouge.remoteScreen.services.ICustomerOrderItmService
 import io.kvision.core.FlexDirection
 import io.kvision.html.Button
+import io.kvision.html.ButtonSize
 import io.kvision.html.ButtonStyle
 import io.kvision.html.button
+import io.kvision.i18n.I18n
+import io.kvision.modal.Alert
+import io.kvision.modal.Confirm
 import io.kvision.modal.Dialog
 import io.kvision.modal.ModalSize
 import io.kvision.panel.FlexPanel
@@ -22,11 +26,13 @@ class ViewCustomerOrderItmList(viewCustomerOrderHdrItem: ViewCustomerOrderHdrIte
     private lateinit var tabRemote: TabulatorRemote<CustomerOrderItm, CustomerOrderItmService>
 
     init {
-
         toolbar {
             marginTop = 1.rem
+            marginBottom = 1.rem
             buttonGroup {
-                button(text = "", icon = "fas fa-plus").onClick {
+                button(text = "", icon = "fas fa-folder-plus", style = ButtonStyle.OUTLINEPRIMARY) {
+                    size = ButtonSize.LARGE
+                }.onClick {
                     val dialog = Dialog<CustomerOrderItm>(
                         caption = "New item",
                         size = ModalSize.LARGE,
@@ -64,7 +70,37 @@ class ViewCustomerOrderItmList(viewCustomerOrderHdrItem: ViewCustomerOrderHdrIte
                     ColumnDefinition(
                         title = "",
                         formatterComponentFunction = { cell, onRendered, data ->
-                            Button(text = "", icon = "fas fa-edit", style = ButtonStyle.OUTLINEPRIMARY)
+                            Button(text = "", icon = "fas fa-edit", style = ButtonStyle.OUTLINESUCCESS)
+                        }
+                    ),
+                    ColumnDefinition(
+                        title = "",
+                        formatterComponentFunction = { cell, onRendered, data ->
+                            Button(text = "", icon = "fas fa-trash-can", style = ButtonStyle.OUTLINEDANGER).onClick {
+                                AppScope.launch {
+                                    Confirm.show(
+                                        caption = I18n.tr("Confirm Delete"),
+                                        text = "Are you sure to delete item id '${data._id}' item '${data.inventoryItm?.name}'",
+                                        yesTitle = I18n.tr("Yes"),
+                                        noTitle = I18n.tr("No"),
+                                        cancelTitle = I18n.tr("Cancel"),
+                                        noCallback = {
+                                            Alert.show(I18n.tr("Result"), I18n.tr("You pressed NO button."))
+                                        }
+                                    ) {
+                                        AppScope.launch {
+                                            val _id = data._id
+                                            console.warn("data._id", data._id)
+                                            if( ModelCustomerOrderItm.deleteCustomerOrderItm(_id)) {
+                                                tabRemote.reload()
+                                                Alert.show(I18n.tr("Result"), I18n.tr("Item deleted ok"))
+                                            } else {
+                                                Alert.show(I18n.tr("Result"), I18n.tr("Item NOT deleted"))
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     ),
                     ColumnDefinition(

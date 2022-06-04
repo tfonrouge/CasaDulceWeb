@@ -1,6 +1,9 @@
 package com.fonrouge.remoteScreen
 
+import kotlin.js.JsExport
+
 @kotlinx.serialization.Serializable
+@JsExport
 class CustomerOrderItm(
     var _id: String,
     var customerOrderHdr_id: String,

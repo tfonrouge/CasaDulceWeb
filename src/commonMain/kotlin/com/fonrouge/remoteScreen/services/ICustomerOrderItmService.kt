@@ -16,6 +16,6 @@ interface ICustomerOrderItmService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<CustomerOrderItm>
-
     suspend fun addCustomerOrderItm(customerOrderItm: CustomerOrderItm): Boolean
+    suspend fun deleteCustomerOrderItm(_id: String): Boolean
 }
