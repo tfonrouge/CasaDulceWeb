@@ -12,4 +12,9 @@ object ModelCustomerOrderItm {
     suspend fun deleteCustomerOrderItm(_id: String): Boolean {
         return customerOrderItmService.deleteCustomerOrderItm(_id)
     }
+
+    suspend fun updateFieldQty(_id: String, value: Int) {
+        customerOrderItmService.updateFieldQty(_id, value)
+    }
+
 }
