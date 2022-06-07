@@ -6,6 +6,7 @@ import com.fonrouge.remoteScreen.services.ICustomerOrderItmService
 import io.kvision.core.FlexDirection
 import io.kvision.core.onEvent
 import io.kvision.form.spinner.SpinnerInput
+import io.kvision.form.text.textInput
 import io.kvision.html.Button
 import io.kvision.html.ButtonSize
 import io.kvision.html.ButtonStyle
@@ -138,7 +139,22 @@ class ViewCustomerOrderItmList(viewCustomerOrderHdrItem: ViewCustomerOrderHdrIte
                     ),
                     ColumnDefinition(
                         title = "Size",
-                        field = CustomerOrderItm::size.name
+                        field = CustomerOrderItm::size.name,
+                        editorComponentFunction = { cell, onRendered, success, cancel, data ->
+                            console.warn("value", data.size)
+                            textInput(value = data.size).apply {
+                                onEvent {
+                                    blur = {
+                                        self.value?.let { size ->
+                                            AppScope.launch {
+                                                ModelCustomerOrderItm.updateFieldSize(data._id, size.toString())
+                                                success(self.value)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     ),
                 )
             )

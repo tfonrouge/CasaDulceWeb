@@ -20,5 +20,6 @@ interface ICustomerOrderItmService {
     suspend fun addCustomerOrderItm(customerOrderItm: CustomerOrderItm): Boolean
     suspend fun deleteCustomerOrderItm(_id: String): Boolean
     suspend fun updateFieldQty(_id: String, value: Int): Boolean
+    suspend fun updateFieldSize(_id: String, value: String)
 
 }

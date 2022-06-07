@@ -16,5 +16,8 @@ object ModelCustomerOrderItm {
     suspend fun updateFieldQty(_id: String, value: Int) {
         customerOrderItmService.updateFieldQty(_id, value)
     }
+    suspend fun updateFieldSize(_id: String, value: String){
+        customerOrderItmService.updateFieldSize(_id, value)
+    }
 
 }

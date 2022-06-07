@@ -74,9 +74,6 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
                 }
                 Toast.success("Successfully Created")
             }
-            button(text = "Delete Order").onClick {
-                Toast.success("Order Deleted")
-            }
         }
         AppScope.launch {
             when (match?.action) {

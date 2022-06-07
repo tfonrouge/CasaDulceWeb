@@ -9,7 +9,7 @@ class CustomerOrderItm(
     var customerOrderHdr_id: String,
     var inventoryItm_id: String,
     var qty: Int,
-    val size: String,
+    var size: String,
 ) {
     var inventoryItm: InventoryItm? = null
 }

@@ -10,9 +10,11 @@ import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
 import io.kvision.remote.RemoteSorter
 import org.bson.types.ObjectId
+import org.litote.kmongo.coroutine.updateOne
 import org.litote.kmongo.eq
 import org.litote.kmongo.match
 import org.litote.kmongo.setValue
+import org.litote.kmongo.setValueOnInsert
 
 actual class CustomerOrderItmService : ICustomerOrderItmService {
 
@@ -61,5 +63,12 @@ actual class CustomerOrderItmService : ICustomerOrderItmService {
             update = setValue(property = CustomerOrderItm::qty, value = value)
         )
         return result.modifiedCount == 1L
+    }
+
+    override suspend fun updateFieldSize(_id: String, value: String) {
+    val result = customerOrderItmColl.updateOne(
+        filter = CustomerOrderItm::_id eq _id,
+        update = setValue(property = CustomerOrderItm::size, value = value)
+        )
     }
 }

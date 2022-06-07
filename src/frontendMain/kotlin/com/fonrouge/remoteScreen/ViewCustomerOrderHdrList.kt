@@ -82,8 +82,8 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                     ),
                     ColumnDefinition(
                         title = "Status",
-                        field = "statusLabel"
-//                        field = CustomerOrderHdr::statusLabel.name
+                        field = "statusLabel",
+
 /*
                         formatterComponentFunction = {cell, onRendered, data ->
                             Span("JuanaLaCubana: ${data.status}")
@@ -94,12 +94,9 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
             )
         )
 
-        flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.SPACEAROUND) {
+        flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.FLEXSTART) {
             button(text = "Create new Customer Order").onClick {
                 routing.navigate("${State.CustomerOrderHdrItem}?action=${ViewAction.create}")
-            }
-            button(text = "Delete Customer Order").onClick {
-                Toast.success("Successfully Deleted")
             }
         }
     }
