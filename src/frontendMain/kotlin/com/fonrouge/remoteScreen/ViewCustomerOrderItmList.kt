@@ -4,6 +4,8 @@ import com.fonrouge.remoteScreen.services.CustomerOrderItmService
 import com.fonrouge.remoteScreen.services.CustomerOrderItmServiceManager
 import com.fonrouge.remoteScreen.services.ICustomerOrderItmService
 import io.kvision.core.FlexDirection
+import io.kvision.core.onEvent
+import io.kvision.form.spinner.SpinnerInput
 import io.kvision.html.Button
 import io.kvision.html.ButtonSize
 import io.kvision.html.ButtonStyle
@@ -91,7 +93,7 @@ class ViewCustomerOrderItmList(viewCustomerOrderHdrItem: ViewCustomerOrderHdrIte
                                         AppScope.launch {
                                             val _id = data._id
                                             console.warn("data._id", data._id)
-                                            if( ModelCustomerOrderItm.deleteCustomerOrderItm(_id)) {
+                                            if (ModelCustomerOrderItm.deleteCustomerOrderItm(_id)) {
                                                 tabRemote.reload()
                                                 Alert.show(I18n.tr("Result"), I18n.tr("Item deleted ok"))
                                             } else {
@@ -117,7 +119,22 @@ class ViewCustomerOrderItmList(viewCustomerOrderHdrItem: ViewCustomerOrderHdrIte
                     ),
                     ColumnDefinition(
                         title = "Qty",
-                        field = CustomerOrderItm::qty.name
+                        field = CustomerOrderItm::qty.name,
+                        editorComponentFunction = { cell, onRendered, success, cancel, data ->
+                            console.warn("value", data.qty)
+                            SpinnerInput(value = data.qty).apply {
+                                onEvent {
+                                    blur = {
+                                        self.value?.let { qty ->
+                                            AppScope.launch {
+                                                ModelCustomerOrderItm.updateFieldQty(data._id, qty.toInt())
+                                                success(self.value)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     ),
                     ColumnDefinition(
                         title = "Size",
