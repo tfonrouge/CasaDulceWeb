@@ -12,6 +12,7 @@ import io.kvision.remote.RemoteSorter
 import org.bson.types.ObjectId
 import org.litote.kmongo.eq
 import org.litote.kmongo.match
+import org.litote.kmongo.setValue
 
 actual class CustomerOrderItmService : ICustomerOrderItmService {
 
@@ -52,5 +53,13 @@ actual class CustomerOrderItmService : ICustomerOrderItmService {
     override suspend fun deleteCustomerOrderItm(_id: String): Boolean {
         val deleteResult = customerOrderItmColl.deleteOne(CustomerOrderItm::_id eq _id)
         return deleteResult.deletedCount == 1L
+    }
+
+    override suspend fun updateFieldQty(_id: String, value: Int) : Boolean {
+        val result = customerOrderItmColl.updateOne(
+            filter = CustomerOrderItm::_id eq _id,
+            update = setValue(property = CustomerOrderItm::qty, value = value)
+        )
+        return result.modifiedCount == 1L
     }
 }
