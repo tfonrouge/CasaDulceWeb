@@ -8,18 +8,18 @@ import kotlin.js.JsExport
 @kotlinx.serialization.Serializable
 @JsExport
 data class CustomerOrderHdr(
-    override val _id: String,
-    val docId: Int,
-    val customerItm_id: String?,
+    override var _id: String,
+    var docId: Int,
+    var customerItm_id: String?,
     @Contextual
-    val created: LocalDateTime,
+    var created: LocalDateTime,
     var status: String,
-    val userProfile: String
+    var userProfile: String
 ) : IBase<String> {
     var customerItm: CustomerItm? = null
 
     @EncodeDefault
-    val statusLabel: String = customerOrderHdrStatusList.find { it.first == status }?.second ?: "?"
+    var statusLabel: String = customerOrderHdrStatusList.find { it.first == status }?.second ?: "?"
 }
 
 val customerOrderHdrStatusList = listOf(
