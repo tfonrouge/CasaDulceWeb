@@ -3,8 +3,10 @@ package com.fonrouge.remoteScreen
 import io.kvision.types.LocalDateTime
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.EncodeDefault
+import kotlin.js.JsExport
 
 @kotlinx.serialization.Serializable
+@JsExport
 data class CustomerOrderHdr(
     override val _id: String,
     val docId: Int,
@@ -18,13 +20,11 @@ data class CustomerOrderHdr(
 
     @EncodeDefault
     val statusLabel: String = customerOrderHdrStatusList.find { it.first == status }?.second ?: "?"
-
-    companion object {
-        val customerOrderHdrStatusList = listOf(
-            "1" to "Pending Order",
-            "0" to "Finished Order",
-            "C" to "Cancelled Order",
-            "$" to "New Order"
-        )
-    }
 }
+
+val customerOrderHdrStatusList = listOf(
+    "1" to "Pending Order",
+    "0" to "Finished Order",
+    "C" to "Cancelled Order",
+    "$" to "New Order"
+)

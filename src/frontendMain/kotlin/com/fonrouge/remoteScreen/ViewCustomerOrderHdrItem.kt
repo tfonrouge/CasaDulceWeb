@@ -43,7 +43,7 @@ class ViewCustomerOrderHdrItem(match: Match?) : FlexPanel(direction = FlexDirect
                 dateTime(label = "Created:", format = "MMM DD, YYYY hh:mm a")
                     .bind(key = CustomerOrderHdr::created, required = true)
 
-                simpleSelect(label = "Status", options = CustomerOrderHdr.customerOrderHdrStatusList)
+                simpleSelect(label = "Status", options = customerOrderHdrStatusList)
                     .bind(key = CustomerOrderHdr::status)
 
             }

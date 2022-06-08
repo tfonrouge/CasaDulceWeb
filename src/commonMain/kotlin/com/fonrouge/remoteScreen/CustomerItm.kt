@@ -1,6 +1,9 @@
 package com.fonrouge.remoteScreen
 
+import kotlin.js.JsExport
+
 @kotlinx.serialization.Serializable
+@JsExport
 class CustomerItm(
     val _id: String,
     val company: String,
