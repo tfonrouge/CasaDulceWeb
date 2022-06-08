@@ -65,8 +65,7 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                         title = "",
                         formatterComponentFunction = { _, _, data ->
                             Button(text = "", icon = "fas fa-edit").onClick {
-                                val _id = data.asDynamic()["_id"] as String
-                                routing.navigate("/${State.CustomerOrderHdrItem}?action=${ViewAction.update}&_id=$_id")
+                                routing.navigate("/${State.CustomerOrderHdrItem}?action=${ViewAction.update}&_id=${data._id}")
                             }
                         }
                     ),
