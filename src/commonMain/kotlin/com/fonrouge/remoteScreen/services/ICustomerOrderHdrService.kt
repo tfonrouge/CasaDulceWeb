@@ -22,4 +22,6 @@ interface ICustomerOrderHdrService {
     suspend fun createNewCustomerOrderHdr(): CustomerOrderHdr
 
     suspend fun updateCustomerOrderHdr(customerOrderHdr: CustomerOrderHdr): Boolean
+
+    suspend fun deleteCustomerOrderHdr(_id: String) : Boolean
 }

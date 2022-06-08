@@ -21,4 +21,10 @@ object ModelCustomerOrderHdr {
             customerOrderHdrService.updateCustomerOrderHdr(customerOrderHdr)
         }
     }
+
+    suspend fun deleteCustomerOrderHdr(_id: String): Boolean {
+        return Security.withAuth {
+            customerOrderHdrService.deleteCustomerOrderHdr(_id)
+        }
+    }
 }

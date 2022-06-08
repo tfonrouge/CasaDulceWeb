@@ -8,8 +8,12 @@ import io.kvision.core.JustifyContent
 import io.kvision.core.onClick
 import io.kvision.form.select.select
 import io.kvision.html.Button
+import io.kvision.html.ButtonStyle
 import io.kvision.html.Span
 import io.kvision.html.button
+import io.kvision.i18n.I18n
+import io.kvision.modal.Alert
+import io.kvision.modal.Confirm
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
 import io.kvision.routing.routing
@@ -17,10 +21,11 @@ import io.kvision.tabulator.*
 import io.kvision.toast.Toast
 import io.kvision.utils.delete
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
 
-    var tabRemote: TabulatorRemote<CustomerOrderHdr, CustomerOrderHdrService>
+    lateinit var tabRemote: TabulatorRemote<CustomerOrderHdr, CustomerOrderHdrService>
 
     companion object {
         var timerHandle: Int? = null
@@ -62,6 +67,36 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                             Button(text = "", icon = "fas fa-edit").onClick {
                                 val _id = data.asDynamic()["_id"] as String
                                 routing.navigate("/${State.CustomerOrderHdrItem}?action=${ViewAction.update}&_id=$_id")
+                            }
+                        }
+                    ),
+                    ColumnDefinition(
+                        title = "",
+                        formatterComponentFunction = { cell, onRendered, data ->
+                            Button(text = "", icon = "fas fa-trash-can", style = ButtonStyle.OUTLINEDANGER).onClick {
+                                AppScope.launch {
+                                    Confirm.show(
+                                        caption = I18n.tr("Confirm Delete"),
+                                        text = "Are you sure to delete item id '${data._id}' item '${data.docId}'",
+                                        yesTitle = I18n.tr("Yes"),
+                                        noTitle = I18n.tr("No"),
+                                        cancelTitle = I18n.tr("Cancel"),
+                                        noCallback = {
+                                            Alert.show(I18n.tr("Result"), I18n.tr("You pressed NO button."))
+                                        }
+                                    ) {
+                                        AppScope.launch {
+                                            val _id = data._id
+                                            console.warn("data._id", data._id)
+                                            if (ModelCustomerOrderHdr.deleteCustomerOrderHdr(_id)) {
+                                                tabRemote.reload()
+                                                Alert.show(I18n.tr("Result"), I18n.tr("Item deleted ok"))
+                                            } else {
+                                                Alert.show(I18n.tr("Result"), I18n.tr("Item NOT deleted"))
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     ),
