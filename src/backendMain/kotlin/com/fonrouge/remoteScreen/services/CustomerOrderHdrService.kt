@@ -2,6 +2,7 @@ package com.fonrouge.remoteScreen.services
 
 import com.fonrouge.remoteScreen.CustomerItm
 import com.fonrouge.remoteScreen.CustomerOrderHdr
+import com.fonrouge.remoteScreen.CustomerOrderItm
 import com.fonrouge.remoteScreen.database.*
 import com.google.inject.Inject
 import io.ktor.server.application.*
@@ -80,5 +81,14 @@ actual class CustomerOrderHdrService : ICustomerOrderHdrService {
         )
         println("RESULT = $r")
         return r.upsertedId != null
+    }
+
+    override suspend fun deleteCustomerOrderHdr(_id: String): Boolean {
+        var result = customerOrderItmColl.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
+        if (result.wasAcknowledged()) {
+            result = customerOrderHdrColl.deleteOne(CustomerOrderHdr::_id eq _id)
+            return result.deletedCount == 1L
+        }
+        return false
     }
 }
