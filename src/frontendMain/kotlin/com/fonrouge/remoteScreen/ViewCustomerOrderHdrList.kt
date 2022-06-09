@@ -76,7 +76,7 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                                 AppScope.launch {
                                     Confirm.show(
                                         caption = I18n.tr("Confirm Delete"),
-                                        text = "Are you sure to delete item id '${data._id}' item '${data.docId}'",
+                                        text = "Are you sure to delete item id '${data._id}' docId '${data.docId}'",
                                         yesTitle = I18n.tr("Yes"),
                                         noTitle = I18n.tr("No"),
                                         cancelTitle = I18n.tr("Cancel"),
