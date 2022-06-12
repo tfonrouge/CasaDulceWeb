@@ -5,6 +5,7 @@ import com.fonrouge.remoteScreen.services.InventoryItmService
 import com.fonrouge.remoteScreen.services.InventoryItmServiceManager
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
+import io.kvision.html.Span
 import io.kvision.html.button
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
@@ -13,6 +14,8 @@ import io.kvision.tabulator.*
 import io.kvision.utils.px
 import kotlinx.browser.window
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromDynamic
 
 class ViewInventoryItmCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
 
@@ -65,9 +68,14 @@ class ViewInventoryItmCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                         headerFilter = Editor.INPUT
                     ),
                     ColumnDefinition(
-                        title = InventoryItm::size.name,
-                        field = InventoryItm::size.name,
-                        headerFilter = Editor.INPUT
+                        title = InventoryItm::sizeData.name,
+//                        field = InventoryItm::sizeData.name,
+                        headerFilter = Editor.INPUT,
+                        formatterComponentFunction = { cell, onRendered, data ->
+                            val o = Json.decodeFromDynamic<InventoryItm>(data.asDynamic())
+                            console.warn("DATA", o)
+                            Span(o.sizeData)
+                        }
                     ),
                     ColumnDefinition(
                         title = InventoryItm::upc.name,

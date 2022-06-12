@@ -85,7 +85,7 @@ private class ColumnMap(
 private val inventoryItmMap = listOf(
     ColumnMap(InventoryItm::_id.name, "Item Number", CellType.CtString),
     ColumnMap(InventoryItm::name.name, "Item Name", CellType.CtString),
-    ColumnMap(InventoryItm::size.name, "Size", CellType.CtString),
+    ColumnMap(InventoryItm::sizeData.name, "Size", CellType.CtString),
     ColumnMap(InventoryItm::upc.name, "UPC", CellType.CtString),
     ColumnMap(InventoryItm::departmentName.name, "Department Name", CellType.CtString),
 )
