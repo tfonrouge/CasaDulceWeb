@@ -18,8 +18,15 @@ data class CustomerOrderHdr(
 ) : IBase<String> {
     var customerItm: CustomerItm? = null
 
+    //    var statusLabel: String = customerOrderHdrStatusList.find { it.first == status }?.second ?: "?"
     @EncodeDefault
-    var statusLabel: String = customerOrderHdrStatusList.find { it.first == status }?.second ?: "?"
+    var statusLabel: String = "?"
+        get() {
+            return customerOrderHdrStatusList.find { it.first == status }?.second ?: "?"
+        }
+        set(value) {
+            field = value
+        }
 }
 
 val customerOrderHdrStatusList = listOf(

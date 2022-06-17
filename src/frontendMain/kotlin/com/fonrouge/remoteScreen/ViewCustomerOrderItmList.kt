@@ -72,13 +72,13 @@ class ViewCustomerOrderItmList(viewCustomerOrderHdrItem: ViewCustomerOrderHdrIte
                     ),
                     ColumnDefinition(
                         title = "",
-                        formatterComponentFunction = { cell, onRendered, data ->
+                        formatterComponentFunction = { _, _, data ->
                             Button(text = "", icon = "fas fa-edit", style = ButtonStyle.OUTLINESUCCESS)
                         }
                     ),
                     ColumnDefinition(
                         title = "",
-                        formatterComponentFunction = { cell, onRendered, data ->
+                        formatterComponentFunction = { _, _, data ->
                             Button(text = "", icon = "fas fa-trash-can", style = ButtonStyle.OUTLINEDANGER).onClick {
                                 AppScope.launch {
                                     Confirm.show(
