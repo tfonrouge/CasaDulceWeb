@@ -35,7 +35,7 @@ class ViewCustomerOrderItmItem(action: ViewAction, customerOrderHdr_id: String, 
                     change = {
                         AppScope.launch {
                             ModelInventoryItm.getInventoryItm(self.value ?: "").let {
-                                textSize.value = it.sizeData
+                                textSize.value = it.size
                             }
                         }
                     }
