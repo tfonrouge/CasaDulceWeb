@@ -5,8 +5,6 @@ import com.fonrouge.remoteScreen.services.CustomerOrderHdrServiceManager
 import com.fonrouge.remoteScreen.services.ICustomerOrderHdrService
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
-import io.kvision.core.onClick
-import io.kvision.form.select.select
 import io.kvision.html.Button
 import io.kvision.html.ButtonStyle
 import io.kvision.html.Span
@@ -18,9 +16,6 @@ import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
 import io.kvision.routing.routing
 import io.kvision.tabulator.*
-import io.kvision.toast.Toast
-import io.kvision.utils.delete
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
@@ -116,7 +111,8 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                     ),
                     ColumnDefinition(
                         title = CustomerOrderHdr::status.name,
-                        field = CustomerOrderHdr::statusLabel.name,
+//                        field = CustomerOrderHdr::statusLabel.name, // this need to have property declared as var
+                        formatterComponentFunction = { _, _, data -> Span(data.statusLabel) }
                     ),
                 )
             )
