@@ -75,7 +75,7 @@ kotlin {
                 api("io.kvision:kvision-server-ktor:$kvisionVersion")
                 implementation("com.ToxicBakery.library.bcrypt:bcrypt:1.0.9")
                 implementation("org.litote.kmongo:kmongo-id:$kmongoVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
             }
             kotlin.srcDir("build/generated-src/common")
         }
