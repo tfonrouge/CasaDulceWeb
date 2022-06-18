@@ -18,7 +18,6 @@ import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
 import io.kvision.routing.routing
 import io.kvision.toast.Toast
-import io.kvision.utils.delete
 import io.kvision.utils.px
 import io.kvision.utils.rem
 import kotlinx.browser.window

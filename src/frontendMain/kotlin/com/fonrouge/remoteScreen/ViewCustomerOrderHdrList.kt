@@ -116,17 +116,7 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                     ),
                     ColumnDefinition(
                         title = CustomerOrderHdr::status.name,
-//                        field = CustomerOrderHdr::statusLabel.name,
-                        formatterComponentFunction = { cell, onRendered, data ->
-                            console.warn("DEBUG: data", data, "statusLabel", data.statusLabel)
-                            val s = customerOrderHdrStatusList.find { it.first == data.status }?.second
-                            Span(s)
-                        }
-/*
-                        formatterComponentFunction = {cell, onRendered, data ->
-                            Span("JuanaLaCubana: ${data.status}")
-                        }
-*/
+                        field = CustomerOrderHdr::statusLabel.name,
                     ),
                 )
             )
