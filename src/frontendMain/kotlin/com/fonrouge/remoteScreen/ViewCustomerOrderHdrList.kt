@@ -7,6 +7,7 @@ import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
 import io.kvision.html.Button
 import io.kvision.html.ButtonStyle
+import io.kvision.html.Span
 import io.kvision.html.button
 import io.kvision.i18n.I18n
 import io.kvision.modal.Alert
