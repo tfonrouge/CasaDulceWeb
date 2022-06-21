@@ -2,7 +2,6 @@ package com.fonrouge.remoteScreen
 
 import io.kvision.types.LocalDateTime
 import kotlinx.serialization.Contextual
-import kotlinx.serialization.EncodeDefault
 import kotlin.js.JsExport
 
 @kotlinx.serialization.Serializable
@@ -18,8 +17,10 @@ data class CustomerOrderHdr(
 ) : IBase<String> {
     var customerItm: CustomerItm? = null
 
-    @EncodeDefault
-    var statusLabel: String = customerOrderHdrStatusList.find { it.first == status }?.second ?: "?"
+    val statusLabel: String
+        get() {
+            return customerOrderHdrStatusList.find { it.first == status }?.second ?: "?"
+        }
 }
 
 val customerOrderHdrStatusList = listOf(

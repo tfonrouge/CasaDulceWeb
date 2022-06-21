@@ -65,7 +65,7 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                     ),
                     ColumnDefinition(
                         title = "",
-                        formatterComponentFunction = { cell, onRendered, data ->
+                        formatterComponentFunction = { _, _, data ->
                             Button(text = "", icon = "fas fa-trash-can", style = ButtonStyle.OUTLINEDANGER).onClick {
                                 AppScope.launch {
                                     Confirm.show(
@@ -109,14 +109,9 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                         headerFilter = Editor.INPUT
                     ),
                     ColumnDefinition(
-                        title = "Status",
-                        field = "statusLabel",
-
-/*
-                        formatterComponentFunction = {cell, onRendered, data ->
-                            Span("JuanaLaCubana: ${data.status}")
-                        }
-*/
+                        title = CustomerOrderHdr::status.name,
+//                        field = CustomerOrderHdr::statusLabel.name, // this need to have property declared as var
+                        formatterComponentFunction = { _, _, data -> Span(data.statusLabel) }
                     ),
                 )
             )

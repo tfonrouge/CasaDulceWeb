@@ -68,13 +68,13 @@ class ViewInventoryItmCatalog : FlexPanel(direction = FlexDirection.COLUMN) {
                         headerFilter = Editor.INPUT
                     ),
                     ColumnDefinition(
-                        title = InventoryItm::sizeData.name,
+                        title = InventoryItm::size.name,
 //                        field = InventoryItm::sizeData.name,
                         headerFilter = Editor.INPUT,
                         formatterComponentFunction = { cell, onRendered, data ->
                             val o = Json.decodeFromDynamic<InventoryItm>(data.asDynamic())
                             console.warn("DATA", o)
-                            Span(o.sizeData)
+                            Span(o.size)
                         }
                     ),
                     ColumnDefinition(
