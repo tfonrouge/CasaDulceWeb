@@ -5,7 +5,6 @@ import com.fonrouge.remoteScreen.services.CustomerOrderHdrServiceManager
 import com.fonrouge.remoteScreen.services.ICustomerOrderHdrService
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
-import io.kvision.core.onClick
 import io.kvision.html.Button
 import io.kvision.html.ButtonStyle
 import io.kvision.html.Span
@@ -19,13 +18,8 @@ import io.kvision.routing.routing
 import io.kvision.tabulator.*
 import kotlinx.coroutines.launch
 
-class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
-
+class ViewDeliverList : FlexPanel(direction = FlexDirection.COLUMN) {
     lateinit var tabRemote: TabulatorRemote<CustomerOrderHdr, CustomerOrderHdrService>
-
-    companion object {
-        var timerHandle: Int? = null
-    }
 
     init {
         flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.SPACEEVENLY) {
@@ -37,9 +31,6 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
             }
             button("Customer Catalog").onClick {
                 routing.navigate("/${State.CustomerCatalog}")
-            }
-            button("DeliverList").onClick {
-                routing.navigate("/${State.DeliverOrderList}")
             }
         }
 
@@ -59,13 +50,11 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
 /*                    ColumnDefinition(
                         title = "#",
                         formatter = Formatter.ROWSELECTION
-                    ),*/
+                    ),
                     ColumnDefinition(
                         title = "",
                         formatterComponentFunction = { _, _, data ->
-                            Button(text = "", icon = "fas fa-edit").onClick {
-                                routing.navigate("/${State.CustomerOrderHdrItem}?action=${ViewAction.update}&_id=${data._id}")
-                            }
+                            Button(text = "", icon = "fas fa-edit")
                         }
                     ),
                     ColumnDefinition(
@@ -98,23 +87,25 @@ class ViewCustomerOrderHdrList : FlexPanel(direction = FlexDirection.COLUMN) {
                             }
                         }
                     ),
+
+ */
                     ColumnDefinition(
-                        title = CustomerOrderHdr::docId.name,
-                        field = CustomerOrderHdr::docId.name,
+                        title = DeliveryOrderItm::customerOrderItm_id.name,
+                        field = DeliveryOrderItm::customerOrderItm_id.name,
                         headerFilter = Editor.INPUT
                     ),
                     ColumnDefinition(
-                        title = CustomerOrderHdr::created.name,
-                        field = CustomerOrderHdr::created.name,
+                        title = DeliveryOrderItm::qtyDelivered.name,
+                        field = DeliveryOrderItm::qtyDelivered.name,
                         headerFilter = Editor.INPUT
                     ),
                     ColumnDefinition(
-                        title = CustomerItm::company.name,
-                        field = "customerItm.company",
+                        title = DeliveryOrderItm::dateDelivered.name,
+                        field = "DeliveryOrderItm.name",
                         headerFilter = Editor.INPUT
                     ),
                     ColumnDefinition(
-                        title = CustomerOrderHdr::status.name,
+                        title = DeliveryOrderItm::status.name,
 //                        field = CustomerOrderHdr::statusLabel.name, // this need to have property declared as var
                         formatterComponentFunction = { _, _, data -> Span(data.statusLabel) }
                     ),

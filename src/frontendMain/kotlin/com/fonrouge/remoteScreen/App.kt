@@ -33,7 +33,8 @@ enum class State {
     CustomerOrderHdrList,
     CustomerOrderHdrItem,
     ProductCatalog,
-    CustomerCatalog
+    CustomerCatalog,
+    DeliverOrderList
 }
 
 class App : Application() {
@@ -52,6 +53,7 @@ class App : Application() {
             })
             .on("/${State.ProductCatalog}", { webState.value = WebState(State.ProductCatalog) })
             .on("/${State.CustomerCatalog}", { webState.value = WebState(State.CustomerCatalog) })
+            .on("/${State.DeliverOrderList}", { webState.value = WebState(State.DeliverOrderList) })
             .resolve()
 
         root("kvapp") {
@@ -93,6 +95,7 @@ class App : Application() {
                     State.ProductCatalog -> add(ViewInventoryItmCatalog())
                     State.CustomerCatalog -> add(ViewCustomerCatalog())
                     State.CustomerOrderHdrItem -> add(ViewCustomerOrderHdrItem(it.match))
+                    State.DeliverOrderList -> add(ViewDeliverList())
                 }
             }
         }
