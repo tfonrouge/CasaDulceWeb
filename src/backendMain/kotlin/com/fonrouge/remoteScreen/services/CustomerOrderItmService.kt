@@ -10,11 +10,9 @@ import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
 import io.kvision.remote.RemoteSorter
 import org.bson.types.ObjectId
-import org.litote.kmongo.coroutine.updateOne
 import org.litote.kmongo.eq
 import org.litote.kmongo.match
 import org.litote.kmongo.setValue
-import org.litote.kmongo.setValueOnInsert
 
 actual class CustomerOrderItmService : ICustomerOrderItmService {
 

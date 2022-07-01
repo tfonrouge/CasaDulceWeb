@@ -12,6 +12,10 @@ data class DeliveryOrderItm(
     val status: String
 ) {
     val customerOrderItm: CustomerOrderItm? = null
+    val statusDeliver: String
+        get() {
+            return deliveryStatusList.find { it.first == status }?.second ?: "?"
+        }
 }
 
 val deliveryStatusList = listOf(

@@ -3,7 +3,6 @@ package com.fonrouge.remoteScreen.services
 import com.fonrouge.remoteScreen.CustomerItm
 import com.fonrouge.remoteScreen.CustomerOrderHdr
 import com.fonrouge.remoteScreen.CustomerOrderItm
-import com.fonrouge.remoteScreen.customerOrderHdrStatusList
 import com.fonrouge.remoteScreen.database.*
 import com.google.inject.Inject
 import io.ktor.server.application.*

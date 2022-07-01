@@ -1,25 +1,19 @@
 package com.fonrouge.remoteScreen
 
-import com.fonrouge.remoteScreen.services.CustomerOrderHdrService
-import com.fonrouge.remoteScreen.services.CustomerOrderHdrServiceManager
-import com.fonrouge.remoteScreen.services.ICustomerOrderHdrService
+import com.fonrouge.remoteScreen.services.DeliveryService
+import com.fonrouge.remoteScreen.services.DeliveryServiceManager
+import com.fonrouge.remoteScreen.services.IDeliveryService
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
-import io.kvision.html.Button
-import io.kvision.html.ButtonStyle
 import io.kvision.html.Span
 import io.kvision.html.button
-import io.kvision.i18n.I18n
-import io.kvision.modal.Alert
-import io.kvision.modal.Confirm
 import io.kvision.panel.FlexPanel
 import io.kvision.panel.flexPanel
 import io.kvision.routing.routing
 import io.kvision.tabulator.*
-import kotlinx.coroutines.launch
 
 class ViewDeliverList : FlexPanel(direction = FlexDirection.COLUMN) {
-    lateinit var tabRemote: TabulatorRemote<CustomerOrderHdr, CustomerOrderHdrService>
+    lateinit var tabRemote: TabulatorRemote<DeliveryOrderItm, DeliveryService>
 
     init {
         flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.SPACEEVENLY) {
@@ -35,8 +29,8 @@ class ViewDeliverList : FlexPanel(direction = FlexDirection.COLUMN) {
         }
 
         tabRemote = tabulatorRemote(
-            serviceManager = CustomerOrderHdrServiceManager,
-            function = ICustomerOrderHdrService::customerOrderHdrList,
+            serviceManager = DeliveryServiceManager,
+            function = IDeliveryService::DeliveryOrderItm,
             options = TabulatorOptions(
                 layout = Layout.FITCOLUMNS,
                 pagination = true,
@@ -90,8 +84,13 @@ class ViewDeliverList : FlexPanel(direction = FlexDirection.COLUMN) {
 
  */
                     ColumnDefinition(
-                        title = DeliveryOrderItm::customerOrderItm_id.name,
-                        field = DeliveryOrderItm::customerOrderItm_id.name,
+                        title = DeliveryOrderItm::customerOrderItm.name,
+                        field = DeliveryOrderItm::customerOrderItm.name,
+                        headerFilter = Editor.INPUT
+                    ),
+                    ColumnDefinition(
+                        title = DeliveryOrderItm::customerOrderItm.name,
+                        field = DeliveryOrderItm::customerOrderItm.name,
                         headerFilter = Editor.INPUT
                     ),
                     ColumnDefinition(
@@ -107,16 +106,10 @@ class ViewDeliverList : FlexPanel(direction = FlexDirection.COLUMN) {
                     ColumnDefinition(
                         title = DeliveryOrderItm::status.name,
 //                        field = CustomerOrderHdr::statusLabel.name, // this need to have property declared as var
-                        formatterComponentFunction = { _, _, data -> Span(data.statusLabel) }
+                        formatterComponentFunction = { _, _, data -> Span(data.statusDeliver) }
                     ),
                 )
             )
         )
-
-        flexPanel(direction = FlexDirection.ROW, justify = JustifyContent.FLEXSTART) {
-            button(text = "Create new Customer Order").onClick {
-                routing.navigate("${State.CustomerOrderHdrItem}?action=${ViewAction.create}")
-            }
-        }
     }
 }
