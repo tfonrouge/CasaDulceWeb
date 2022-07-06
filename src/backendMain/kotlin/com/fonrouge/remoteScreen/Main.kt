@@ -98,6 +98,7 @@ fun Application.main() {
             applyRoutes(CustomerOrderHdrServiceManager)
             applyRoutes(CustomerOrderItmServiceManager)
             applyRoutes(InventoryItmServiceManager)
+            applyRoutes(DeliveryServiceManager)
             uploadsRoute()
         }
     }

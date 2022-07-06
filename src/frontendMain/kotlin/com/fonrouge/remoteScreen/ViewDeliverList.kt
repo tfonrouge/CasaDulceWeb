@@ -30,7 +30,7 @@ class ViewDeliverList : FlexPanel(direction = FlexDirection.COLUMN) {
 
         tabRemote = tabulatorRemote(
             serviceManager = DeliveryServiceManager,
-            function = IDeliveryService::DeliveryOrderItm,
+            function = IDeliveryService::DeliveryOrderList,
             options = TabulatorOptions(
                 layout = Layout.FITCOLUMNS,
                 pagination = true,

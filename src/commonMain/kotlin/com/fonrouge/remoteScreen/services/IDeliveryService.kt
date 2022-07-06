@@ -9,7 +9,7 @@ import io.kvision.remote.RemoteSorter
 @KVService
 interface IDeliveryService {
 
-    suspend fun DeliveryOrderItm(
+    suspend fun DeliveryOrderList(
         page: Int?,
         size: Int?,
         filter: List<RemoteFilter>?,

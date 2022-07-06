@@ -42,6 +42,10 @@ val customerOrderItmColl by lazy {
     }
 }
 
+val deliveryOrderColl by lazy {
+    mongoDatabase.getCollection<DeliveryOrderItm>(collectionName = "deliveryOrders")
+}
+
 val userItmColl by lazy {
     mongoDatabase.getCollection<UserItm>(collectionName = "userItms")
 }
