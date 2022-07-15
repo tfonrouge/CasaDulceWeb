@@ -1,5 +1,6 @@
 package com.fonrouge.remoteScreen.services
 
+import com.fonrouge.remoteScreen.CustomerItm
 import com.fonrouge.remoteScreen.DeliveryOrderItm
 import io.kvision.annotations.KVService
 import io.kvision.remote.RemoteData
@@ -8,6 +9,15 @@ import io.kvision.remote.RemoteSorter
 
 @KVService
 interface IDeliveryService {
+
+    suspend fun deliverItemList(
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
+    ): RemoteData<CustomerItm>
+
 
     suspend fun DeliveryOrderList(
         page: Int?,

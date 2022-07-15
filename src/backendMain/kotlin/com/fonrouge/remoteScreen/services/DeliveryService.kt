@@ -23,6 +23,16 @@ actual class DeliveryService : IDeliveryService {
         newAs = DeliveryOrderItm::customerItm
     )
 
+    override suspend fun deliverItemList(
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
+    ): RemoteData<CustomerItm> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun DeliveryOrderList(
         page: Int?,
         size: Int?,
