@@ -1,5 +1,7 @@
 package com.fonrouge.remoteScreen
 
+import com.fonrouge.remoteScreen.services.DeliverItemService
+
 object ModelDeliverItem {
 
     private val deliverItemService = DeliverItemService()

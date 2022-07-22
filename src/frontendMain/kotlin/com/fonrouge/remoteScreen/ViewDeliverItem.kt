@@ -1,5 +1,6 @@
 package com.fonrouge.remoteScreen
 
+import com.fonrouge.remoteScreen.services.DeliverItemServiceManager
 import com.fonrouge.remoteScreen.services.IDeliverItemService
 import io.kvision.core.FlexDirection
 import io.kvision.core.JustifyContent
