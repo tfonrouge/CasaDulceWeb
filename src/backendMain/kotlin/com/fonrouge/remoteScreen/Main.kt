@@ -1,9 +1,9 @@
 package com.fonrouge.remoteScreen
 
-import com.fonrouge.remoteScreen.database.MongoDbPlugin
+import com.fonrouge.fsLib.mongoDb.MongoDbPlugin
+import com.fonrouge.fsLib.mongoDb.collation
 import com.fonrouge.remoteScreen.database.UserItm
-import com.fonrouge.remoteScreen.database.collation
-import com.fonrouge.remoteScreen.database.userItmColl
+import com.fonrouge.remoteScreen.database.userItmDb
 import com.fonrouge.remoteScreen.services.*
 import com.fonrouge.remoteScreen.upload.uploadsRoute
 import com.toxicbakery.bcrypt.Bcrypt
@@ -51,11 +51,11 @@ fun Application.main() {
             userParamName = "username"
             passwordParamName = "password"
             validate { credentials ->
-                userItmColl.find(
+                userItmDb.collection.find(
                     UserItm::userName eq credentials.name,
                 ).collation(collation = collation).first()?.let {
                     if (Bcrypt.verify(credentials.password, it.password.encodeToByteArray())) {
-                        userItmColl.updateOne(
+                        userItmDb.collection.updateOne(
                             filter = UserItm::_id eq it._id, update = set(UserItm::lastAccess setTo Date())
                         )
                         UserIdPrincipal(credentials.name)
@@ -72,7 +72,7 @@ fun Application.main() {
         authenticate {
             post("login") {
                 val result = call.principal<UserIdPrincipal>()?.let { userIdPrincipal ->
-                    userItmColl.find(UserItm::userName eq userIdPrincipal.name).collation(collation).first()
+                    userItmDb.collection.find(UserItm::userName eq userIdPrincipal.name).collation(collation).first()
                         ?.let { user ->
                             val profile = UserProfile(
                                 id = user._id.toString(),

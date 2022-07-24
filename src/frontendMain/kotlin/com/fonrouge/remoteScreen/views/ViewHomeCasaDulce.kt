@@ -5,6 +5,7 @@ import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewHome
 import com.fonrouge.remoteScreen.config.ConfigViewCasaDulceHome
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerItm
+import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderHdr
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListInventoryItm
 import com.fonrouge.remoteScreen.model.Model
 import com.fonrouge.remoteScreen.model.Model.userProfile
@@ -40,17 +41,11 @@ class ViewHomeCasaDulce(
                 if (!userProfile.name.isNullOrEmpty()) {
                     navbar {
                         nav {
-                            navLink("Archivo", icon = "fas fa-file")
                             dropDown(
-                                text = "Administración",
+                                text = "Customer Orders",
                                 elements = listOf(
+                                    ConfigViewListCustomerOrderHdr.labelUrl
                                 ),
-                                forNavbar = true
-                            )
-                            dropDown(
-                                text = "Producción",
-                                elements = listOf(),
-                                icon = "fas fa-star",
                                 forNavbar = true
                             )
                             dropDown(
@@ -60,14 +55,6 @@ class ViewHomeCasaDulce(
                                     ConfigViewListCustomerItm.labelUrl,
                                 ),
                                 icon = "fas fa-rep",
-                                forNavbar = true
-                            )
-                            dropDown(
-                                text = "Taller Mecánico",
-                                icon = "fas fa-cube",
-//                                elements = docTallerList.map { e -> Pair(e.label, e.navigoUrl) } +
-//                                        listOf(Pair("", DD.SEPARATOR.option)) +
-//                                        itmTallerList.map { e -> Pair(e.label, e.navigoUrl) },
                                 forNavbar = true
                             )
                         }
