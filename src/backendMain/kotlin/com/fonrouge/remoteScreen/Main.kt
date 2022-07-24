@@ -67,7 +67,6 @@ fun Application.main() {
             skipWhen { call -> call.sessions.get<UserProfile>() != null }
         }
     }
-    FSLocalDateTimeSerializer.descriptor
     routing {
         if (!Files.isDirectory(Path(uploadsDir))) {
             Files.createDirectory(Path(uploadsDir))
