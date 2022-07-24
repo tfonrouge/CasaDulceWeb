@@ -1,6 +1,7 @@
 package com.fonrouge.remoteScreen.services
 
 import com.fonrouge.remoteScreen.UserProfile
+import com.fonrouge.remoteScreen.userProfile
 import com.google.inject.Inject
 import io.ktor.server.application.*
 import io.ktor.server.sessions.*
@@ -13,8 +14,8 @@ actual class UserProfileService : IUserProfileService {
 }
 
 suspend fun <RESP> ApplicationCall.withProfile(block: suspend (UserProfile) -> RESP): RESP {
-    val userProfile = this.sessions.get<UserProfile>()
+    userProfile = this.sessions.get<UserProfile>()
     return userProfile?.let {
-        block(userProfile)
+        block(it)
     } ?: throw IllegalStateException("User Profile not set!")
 }

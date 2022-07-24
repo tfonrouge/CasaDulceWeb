@@ -1,12 +1,13 @@
 package com.fonrouge.remoteScreen.database
 
+import com.fonrouge.fsLib.annotations.Collection
 import com.fonrouge.fsLib.model.base.BaseModel
 import kotlinx.serialization.Contextual
 import org.litote.kmongo.Id
 import java.util.*
 
 @kotlinx.serialization.Serializable
-@com.fonrouge.fsLib.Collection("userItms")
+@Collection("userItms")
 class UserItm(
     @Contextual
     override val _id: Id<UserItm>,

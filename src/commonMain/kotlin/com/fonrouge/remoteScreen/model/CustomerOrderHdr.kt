@@ -1,31 +1,38 @@
+@file:OptIn(ExperimentalJsExport::class)
+
 package com.fonrouge.remoteScreen.model
 
+import com.fonrouge.fsLib.annotations.Collection
 import com.fonrouge.fsLib.serializers.FSLocalDateTimeSerializer
 import io.kvision.types.LocalDateTime
 import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
+import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 @JsExport
-@com.fonrouge.fsLib.Collection("customerOrderHdrs")
+@Collection("customerOrderHdrs")
 data class CustomerOrderHdr(
-    override var _id: String,
-    override var numId: Int,
-    var customerItm_id: String?,
+    override var _id: String = "",
+    override var numId: Int = 0,
+    var customerItm_id: String,
+    @Suppress("NON_EXPORTABLE_TYPE")
     @Serializable(with = FSLocalDateTimeSerializer::class)
-//    @Contextual
     var created: LocalDateTime,
     var status: String = "$",
-    var userProfile: String
+    var userProfile: String = ""
 ) : DocumentWithNumId<String> {
 
-    @EncodeDefault(mode = EncodeDefault.Mode.NEVER)
+    @EncodeDefault(EncodeDefault.Mode.NEVER)
     var customerItm: CustomerItm? = null
 
-    val statusLabel: String
+    @EncodeDefault(EncodeDefault.Mode.NEVER)
+    val statusLabel: String?
         get() {
-            return customerOrderHdrStatusList.find { it.first == status }?.second ?: "?"
+            return customerOrderHdrStatusList.find { it.first == status }?.second
         }
 }
 

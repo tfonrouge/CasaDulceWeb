@@ -1,14 +1,18 @@
 package com.fonrouge.remoteScreen.services
 
 import com.fonrouge.fsLib.model.CrudAction
+import com.fonrouge.fsLib.model.CrudAction.*
 import com.fonrouge.fsLib.model.ItemContainer
 import com.fonrouge.fsLib.model.ItemContainerCallType
+import com.fonrouge.fsLib.model.ItemContainerCallType.Action
+import com.fonrouge.fsLib.model.ItemContainerCallType.Query
 import com.fonrouge.remoteScreen.database.customerOrderHdrDb
 import com.fonrouge.remoteScreen.database.customerOrderItmDb
 import com.fonrouge.remoteScreen.database.getNextNumId
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.model.InventoryItm
+import org.bson.types.ObjectId
 import org.litote.kmongo.eq
 import org.litote.kmongo.match
 
@@ -19,22 +23,22 @@ actual class DataItemService : IDataItemService {
         customerOrderHdr: CustomerOrderHdr?,
         itemContainerCallType: ItemContainerCallType
     ): ItemContainer<CustomerOrderHdr> {
-        customerOrderHdr?.customerItm = null
         return when (itemContainerCallType) {
-            ItemContainerCallType.Query -> when (crudAction) {
-                CrudAction.Create -> ItemContainer(result = true)
-                CrudAction.Read, CrudAction.Update -> ItemContainer(
+            Query -> when (crudAction) {
+                Create -> ItemContainer(result = true)
+                Read, Update -> ItemContainer(
                     item = customerOrderHdrDb.getItem(match = match(CustomerOrderHdr::_id eq _id))
                 )
-                CrudAction.Delete -> ItemContainer(result = true)
+                Delete -> ItemContainer(result = true)
             }
-            ItemContainerCallType.Action -> when (crudAction) {
-                CrudAction.Create -> {
+            Action -> when (crudAction) {
+                Create -> {
+                    customerOrderHdr?._id = ObjectId().toHexString()
                     customerOrderHdr?.numId = getNextNumId(customerOrderHdrDb)
                     customerOrderHdrDb.insertOne(customerOrderHdr)
                 }
-                CrudAction.Update -> customerOrderHdrDb.updateOne(_id = _id, item = customerOrderHdr)
-                CrudAction.Delete -> {
+                Update -> customerOrderHdrDb.updateOne(_id = _id, item = customerOrderHdr)
+                Delete -> {
                     var result = customerOrderItmDb.collection.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
                     if (result.wasAcknowledged()) {
                         result = customerOrderHdrDb.collection.deleteOne(CustomerOrderHdr::_id eq _id)

@@ -10,3 +10,5 @@ data class UserProfile(
     val password: String? = null,
     val password2: String? = null,
 )
+
+var userProfile: UserProfile? = null

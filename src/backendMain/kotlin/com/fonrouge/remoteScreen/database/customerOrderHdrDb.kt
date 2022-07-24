@@ -20,6 +20,9 @@ val customerOrderHdrDb = mongoDbCollection<CustomerOrderHdr>(
 ) {
     runBlocking {
         collection.ensureUniqueIndex(
+            properties = arrayOf(CustomerOrderHdr::numId)
+        )
+        collection.ensureUniqueIndex(
             properties = arrayOf(CustomerOrderHdr::userProfile, CustomerOrderHdr::status),
             indexOptions = IndexOptions().partialFilterExpression(CustomerOrderHdr::status eq "$")
         )
