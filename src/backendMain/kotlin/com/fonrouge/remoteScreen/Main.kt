@@ -93,12 +93,11 @@ fun Application.main() {
                 call.sessions.clear<UserProfile>()
                 call.respondRedirect("/")
             }
+            applyRoutes(UserProfileServiceManager)
             applyRoutes(CasaDulceServiceManager)
-            applyRoutes(CustomerItmServiceManager)
-            applyRoutes(CustomerOrderHdrServiceManager)
-            applyRoutes(CustomerOrderItmServiceManager)
-            applyRoutes(InventoryItmServiceManager)
-            applyRoutes(DeliveryServiceManager)
+            applyRoutes(DataItemServiceManager)
+            applyRoutes(DataListServiceManager)
+            applyRoutes(SelectServiceManager)
             uploadsRoute()
         }
     }

@@ -1,14 +1,17 @@
 package com.fonrouge.remoteScreen
 
+import com.fonrouge.fsLib.apiLib.AppScope
+import com.fonrouge.fsLib.apiLib.KVWebManager
+import com.fonrouge.fsLib.apiLib.showView
+import com.fonrouge.fsLib.layout.centeredMessage
+import com.fonrouge.remoteScreen.config.ConfigViewCasaDulceHome
+import com.fonrouge.remoteScreen.config.ConfigViewImpl
 import io.kvision.*
 import io.kvision.core.*
 import io.kvision.html.*
-import io.kvision.navigo.Match
 import io.kvision.panel.flexPanel
 import io.kvision.panel.root
-import io.kvision.routing.Routing
 import io.kvision.routing.routing
-import io.kvision.state.ObservableValue
 import io.kvision.state.bind
 import io.kvision.toast.Toast
 import io.kvision.toast.ToastOptions
@@ -16,49 +19,29 @@ import io.kvision.toast.ToastPosition
 import io.kvision.utils.px
 import io.kvision.utils.rem
 import kotlinx.browser.document
-import kotlinx.browser.window
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 
-val AppScope = CoroutineScope(window.asCoroutineDispatcher())
-
-class WebState(
-    val state: State,
-    val match: Match? = null
-)
-
-enum class State {
-    Home,
-    CustomerOrderHdrList,
-    CustomerOrderHdrItem,
-    ProductCatalog,
-    CustomerCatalog,
-    DeliverOrderList
-}
+const val version = "1.0"
 
 class App : Application() {
 
-    private val webState: ObservableValue<WebState> = ObservableValue(WebState(State.Home))
-
     override fun start(state: Map<String, Any>) {
 
-        Routing.init()
+        require("app.css")
 
-        routing
-            .on("/", { webState.value = WebState(State.Home) })
-            .on("/${State.CustomerOrderHdrList}", { webState.value = WebState(State.CustomerOrderHdrList) })
-            .on("/${State.CustomerOrderHdrItem}", {
-                webState.value = WebState(state = State.CustomerOrderHdrItem, match = it)
-            })
-            .on("/${State.ProductCatalog}", { webState.value = WebState(State.ProductCatalog) })
-            .on("/${State.CustomerCatalog}", { webState.value = WebState(State.CustomerCatalog) })
-            .on("/${State.DeliverOrderList}", { webState.value = WebState(State.DeliverOrderList) })
-            .resolve()
+        KVWebManager.initialize {
+            refreshViewListPeriodic = true
+            refreshViewItemPeriodic = true
+            frontEndAppName = "Casa Dulce"
+            frontEndVersion = version
+            motto = "Estamos para servirle..."
+            configViewHome = ConfigViewCasaDulceHome
+            iConfigView = ConfigViewImpl()
+        }
 
         root("kvapp") {
             margin = 1.rem
-            header().bind(webState) {
+            header().bind(KVWebManager.viewStateObservableValue) {
                 flexPanel(
                     direction = FlexDirection.ROW,
                     justify = JustifyContent.SPACEBETWEEN,
@@ -70,7 +53,7 @@ class App : Application() {
                         marginRight = 1.rem
                         onClick { routing.navigate("/") }
                     }
-                    h1("Casa Dulce: ${it.state.name}")
+                    h1("Casa Dulce: ${it}")
                     div().bind(ModelCasaDulce.obsProfile) {
                         if (it.username != null) {
                             button(text = "Logout", icon = "fas fa-sign-out-alt", style = ButtonStyle.OUTLINEDANGER) {
@@ -88,14 +71,11 @@ class App : Application() {
                     marginBottom = 1.rem
                 }
             }
-            main().bind(webState) {
-                when (it.state) {
-                    State.Home -> add(ViewHome())
-                    State.CustomerOrderHdrList -> add(ViewCustomerOrderHdrList())
-                    State.ProductCatalog -> add(ViewInventoryItmCatalog())
-                    State.CustomerCatalog -> add(ViewCustomerCatalog())
-                    State.CustomerOrderHdrItem -> add(ViewCustomerOrderHdrItem(it.match))
-                    State.DeliverOrderList -> add(ViewDeliverList())
+            main().bind(KVWebManager.viewStateObservableValue) { viewState ->
+                if (viewState != null) {
+                    showView(viewState)
+                } else {
+                    centeredMessage("Page not Found ... ")
                 }
             }
         }
@@ -119,11 +99,9 @@ fun main() {
         BootstrapSpinnerModule,
         BootstrapIconsModule,
         FontAwesomeModule,
-        ImaskModule,
         RichTextModule,
         ChartModule,
         TabulatorModule,
-        MomentModule,
         ToastModule,
         PrintModule,
         CoreModule

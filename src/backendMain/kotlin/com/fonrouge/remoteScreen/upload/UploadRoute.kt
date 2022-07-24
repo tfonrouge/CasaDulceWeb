@@ -3,8 +3,8 @@ package com.fonrouge.remoteScreen.upload
 import com.fonrouge.remoteScreen.CatalogType
 import com.fonrouge.remoteScreen.CustomerItm
 import com.fonrouge.remoteScreen.InventoryItm
-import com.fonrouge.remoteScreen.database.customerItmColl
-import com.fonrouge.remoteScreen.database.inventoryItmColl
+import com.fonrouge.remoteScreen.database.customerItmDb
+import com.fonrouge.remoteScreen.database.inventoryItmDb
 import com.fonrouge.remoteScreen.uploadsDir
 import com.mongodb.client.model.UpdateOneModel
 import com.mongodb.client.model.UpdateOptions
@@ -57,8 +57,8 @@ fun Route.uploadsRoute() {
 
             val result = try {
                 when (catalogType) {
-                    CatalogType.Products -> importProducts(inventoryItmColl, inventoryItmMap, fileName)
-                    CatalogType.Customers -> importProducts(customerItmColl, customerItmMap, fileName)
+                    CatalogType.Products -> importProducts(inventoryItmDb.collection, inventoryItmMap, fileName)
+                    CatalogType.Customers -> importProducts(customerItmDb.collection, customerItmMap, fileName)
                 }
                 buildJsonObject { put("response", "$fileDescription and imported ok") }
             } catch (e: Exception) {

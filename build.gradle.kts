@@ -21,8 +21,7 @@ repositories {
 // Versions
 val kotlinVersion: String by System.getProperties()
 val kvisionVersion: String by System.getProperties()
-val ktorVersion: String by project
-val kmongoVersion: String by project
+val fsLibVersion: String by project
 val logbackVersion: String by project
 val exposed_version: String by project
 
@@ -72,10 +71,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("io.kvision:kvision-server-ktor:$kvisionVersion")
+                implementation("com.fonrouge.fsLib:FSLib:$fsLibVersion")
                 implementation("com.ToxicBakery.library.bcrypt:bcrypt:1.0.9")
-                implementation("org.litote.kmongo:kmongo-id:$kmongoVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
             }
             kotlin.srcDir("build/generated-src/common")
         }
@@ -89,22 +86,9 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
                 implementation(kotlin("reflect"))
-                implementation("io.ktor:ktor-server-netty:$ktorVersion")
-                implementation("io.ktor:ktor-server-auth:$ktorVersion")
-                implementation("io.ktor:ktor-server-call-logging:$ktorVersion")
-                implementation("io.ktor:ktor-server-compression:$ktorVersion")
-                implementation("io.ktor:ktor-server-cors:$ktorVersion")
-                implementation("io.ktor:ktor-server-default-headers:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
-                implementation("org.litote.kmongo:kmongo:$kmongoVersion")
-                implementation("org.litote.kmongo:kmongo-coroutine:$kmongoVersion")
-                implementation("org.litote.kmongo:kmongo-coroutine-serialization:$kmongoVersion")
-
                 implementation("org.apache.poi:poi-ooxml:5.2.2")
-
-                implementation("org.litote.kmongo:kmongo-id-serialization:4.6.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
             }
         }
         val backendTest by getting {
@@ -116,29 +100,7 @@ kotlin {
         val frontendMain by getting {
             resources.srcDir(webDir)
             dependencies {
-                implementation("io.kvision:kvision:$kvisionVersion")
-                implementation("io.kvision:kvision-bootstrap:$kvisionVersion")
-                implementation("io.kvision:kvision-bootstrap-css:$kvisionVersion")
-                implementation("io.kvision:kvision-bootstrap-select-remote:$kvisionVersion")
-                implementation("io.kvision:kvision-bootstrap-spinner:$kvisionVersion")
-                implementation("io.kvision:kvision-bootstrap-datetime:$kvisionVersion")
-                implementation("io.kvision:kvision-bootstrap-dialog:$kvisionVersion")
-                implementation("io.kvision:kvision-bootstrap-icons:$kvisionVersion")
-                implementation("io.kvision:kvision-bootstrap-upload:$kvisionVersion")
-                implementation("io.kvision:kvision-chart:$kvisionVersion")
-                implementation("io.kvision:kvision-datacontainer:$kvisionVersion")
-                implementation("io.kvision:kvision-fontawesome:$kvisionVersion")
-                implementation("io.kvision:kvision-imask:$kvisionVersion")
-                implementation("io.kvision:kvision-moment:$kvisionVersion")
-                implementation("io.kvision:kvision-print:$kvisionVersion")
-                implementation("io.kvision:kvision-redux-kotlin:$kvisionVersion")
-                implementation("io.kvision:kvision-richtext:$kvisionVersion")
-                implementation("io.kvision:kvision-routing-navigo-ng:$kvisionVersion")
-                implementation("io.kvision:kvision-simple-select-remote:$kvisionVersion")
-                implementation("io.kvision:kvision-tabulator-remote:$kvisionVersion")
-                implementation("io.kvision:kvision-toast:$kvisionVersion")
 
-                implementation("org.litote.kmongo:kmongo-id:$kmongoVersion")
             }
             kotlin.srcDir("build/generated-src/frontend")
         }

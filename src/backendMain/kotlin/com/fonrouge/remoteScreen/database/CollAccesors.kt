@@ -12,23 +12,8 @@ import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 import org.litote.kmongo.match
 
-val inventoryItmColl: CoroutineCollection<InventoryItm> by lazy {
-    mongoDatabase.getCollection(collectionName = "inventoryItms")
-}
-
 val customerItmColl by lazy {
     mongoDatabase.getCollection<CustomerItm>(collectionName = "customerItms")
-}
-
-val customerOrderHdrColl by lazy {
-    mongoDatabase.getCollection<CustomerOrderHdr>(collectionName = "customerOrderHdrs").also {
-        runBlocking {
-            it.ensureUniqueIndex(
-                properties = arrayOf(CustomerOrderHdr::userProfile, CustomerOrderHdr::status),
-                indexOptions = IndexOptions().partialFilterExpression(CustomerOrderHdr::status eq "$")
-            )
-        }
-    }
 }
 
 val customerOrderItmColl by lazy {

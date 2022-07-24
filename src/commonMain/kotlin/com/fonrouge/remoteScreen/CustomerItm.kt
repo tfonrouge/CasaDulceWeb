@@ -1,11 +1,13 @@
 package com.fonrouge.remoteScreen
 
+import com.fonrouge.fsLib.model.base.BaseModel
 import kotlin.js.JsExport
 
 @kotlinx.serialization.Serializable
 @JsExport
+@com.fonrouge.fsLib.Collection("customerItms")
 class CustomerItm(
-    var _id: String,
+    override var _id: String,
     var company: String,
     var lastName: String,
     var firstName: String,
@@ -15,4 +17,4 @@ class CustomerItm(
     var zip: String,
     var phone1: String?,
     var email: String,
-)
+) : BaseModel<String>
