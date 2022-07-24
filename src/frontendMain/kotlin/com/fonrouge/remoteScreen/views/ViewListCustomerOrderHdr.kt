@@ -3,8 +3,8 @@ package com.fonrouge.remoteScreen.views
 import com.fonrouge.fsLib.layout.tabulatorCommon
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewList
-import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderHdr
+import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.services.DataListService
 import com.fonrouge.remoteScreen.services.DataListServiceManager

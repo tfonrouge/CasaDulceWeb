@@ -1,7 +1,6 @@
 package com.fonrouge.remoteScreen;
 
 import java.util.Scanner;
-import java.lang.Math;
 
 public class SimpleCalculator {
     public static void main(String[] args) {
@@ -13,21 +12,21 @@ public class SimpleCalculator {
         float newProduct;//new product price with shipping included
         String choice; // users choice to continue runnig the do/while loop.
 
-            // create an object of Scanner class
-            Scanner input = new Scanner(System.in);
-            Scanner yesNo = new Scanner(System.in);// scans whether user wants to calculate prices.
+        // create an object of Scanner class
+        Scanner input = new Scanner(System.in);
+        Scanner yesNo = new Scanner(System.in);// scans whether user wants to calculate prices.
 
-            // ask user to enter Invoice Total
-            System.out.println("What is your invoice total?");
-            invoiceTotal = input.nextDouble();
+        // ask user to enter Invoice Total
+        System.out.println("What is your invoice total?");
+        invoiceTotal = input.nextDouble();
 
-            // ask user to enter shipping cost
-            System.out.println("Please enter your shipping cost");
-            shippingTotal = input.nextDouble();
+        // ask user to enter shipping cost
+        System.out.println("Please enter your shipping cost");
+        shippingTotal = input.nextDouble();
 
-            // displays the shpping percentage
-            shipPercentage = (float) (((invoiceTotal + shippingTotal) - invoiceTotal) / (invoiceTotal));
-            System.out.println("Your shipping percentage is " + (shipPercentage * 100) + "%");// / 100.0 +"%");
+        // displays the shpping percentage
+        shipPercentage = (float) (((invoiceTotal + shippingTotal) - invoiceTotal) / (invoiceTotal));
+        System.out.println("Your shipping percentage is " + (shipPercentage * 100) + "%");// / 100.0 +"%");
 
 
         do {
@@ -79,7 +78,7 @@ public class SimpleCalculator {
         while (choice.equals("y")); // end of the while loop.
 
 
-            System.out.println("Goodbye for now.");
-            input.close();
-        }
+        System.out.println("Goodbye for now.");
+        input.close();
+    }
 }

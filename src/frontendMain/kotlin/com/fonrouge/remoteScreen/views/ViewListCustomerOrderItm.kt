@@ -4,8 +4,8 @@ import com.fonrouge.fsLib.apiLib.AppScope
 import com.fonrouge.fsLib.layout.tabulatorCommon
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewList
-import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderItm
+import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.services.DataListService
 import com.fonrouge.remoteScreen.services.DataListServiceManager
 import io.kvision.core.Container
@@ -17,7 +17,8 @@ import io.kvision.html.ButtonStyle
 import io.kvision.i18n.I18n
 import io.kvision.modal.Alert
 import io.kvision.modal.Confirm
-import io.kvision.tabulator.*
+import io.kvision.tabulator.ColumnDefinition
+import io.kvision.tabulator.Formatter
 import kotlinx.coroutines.launch
 
 class ViewListCustomerOrderItm(

@@ -1,10 +1,10 @@
 package com.fonrouge.remoteScreen.upload
 
 import com.fonrouge.remoteScreen.CatalogType
-import com.fonrouge.remoteScreen.model.CustomerItm
-import com.fonrouge.remoteScreen.model.InventoryItm
 import com.fonrouge.remoteScreen.database.customerItmDb
 import com.fonrouge.remoteScreen.database.inventoryItmDb
+import com.fonrouge.remoteScreen.model.CustomerItm
+import com.fonrouge.remoteScreen.model.InventoryItm
 import com.fonrouge.remoteScreen.uploadsDir
 import com.mongodb.client.model.UpdateOneModel
 import com.mongodb.client.model.UpdateOptions

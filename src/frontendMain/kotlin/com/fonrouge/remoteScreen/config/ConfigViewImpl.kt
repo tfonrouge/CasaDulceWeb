@@ -26,6 +26,7 @@ class ConfigViewImpl : IConfigView {
             label = "Inventory Item",
             viewFunc = ::ViewItemInventoryItm
         ) {}
+
         /* list */
         val ConfigViewListCustomerOrderHdr = object : ConfigViewList<CustomerOrderHdr, ViewListCustomerOrderHdr>(
             name = CustomerOrderHdr::class.simpleName!!,

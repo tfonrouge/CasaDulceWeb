@@ -5,9 +5,9 @@ import com.fonrouge.fsLib.layout.tabulatorCommon
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewList
 import com.fonrouge.remoteScreen.CatalogType
-import com.fonrouge.remoteScreen.model.InventoryItm
 import com.fonrouge.remoteScreen.UploadCatalog
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListInventoryItm
+import com.fonrouge.remoteScreen.model.InventoryItm
 import com.fonrouge.remoteScreen.services.DataListService
 import com.fonrouge.remoteScreen.services.DataListServiceManager
 import io.kvision.core.Container
