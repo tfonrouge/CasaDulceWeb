@@ -1,9 +1,9 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.remoteScreen.CustomerItm
-import com.fonrouge.remoteScreen.InventoryItm
 import com.fonrouge.remoteScreen.database.customerItmDb
 import com.fonrouge.remoteScreen.database.inventoryItmDb
+import com.fonrouge.remoteScreen.model.CustomerItm
+import com.fonrouge.remoteScreen.model.InventoryItm
 import io.kvision.remote.RemoteOption
 import org.bson.conversions.Bson
 import org.litote.kmongo.eq
@@ -27,9 +27,11 @@ actual class SelectService : ISelectService {
         }
         val list = customerItmDb.collection.find(or(filter)).limit(100).toList()
         val result = list.map {
+            val s = "<b>co</b>: ${it.company} <b>fn</b>: ${it.firstName} <b>ln</b>: ${it.lastName} - <i>${it._id}</i>"
             RemoteOption(
                 value = it._id,
-                content = "<b>co</b>: ${it.company} <b>fn</b>: ${it.firstName} <b>ln</b>: ${it.lastName} - <i>${it._id}</i>"
+                text = s,
+                content = s
             )
         }.toMutableList()
         if (result.size == 100) {
@@ -62,9 +64,11 @@ actual class SelectService : ISelectService {
         }
         val list = inventoryItmDb.collection.find(or(filter)).limit(100).toList()
         val result = list.map {
+            val s = "<b>upc</b>: ${it.upc} <b>name</b>: ${it.name} - <i>${it._id}</i>"
             RemoteOption(
                 value = it._id.toString(),
-                content = "<b>upc</b>: ${it.upc} <b>name</b>: ${it.name} - <i>${it._id}</i>"
+                text = s,
+                content = s
             )
         }.toMutableList()
         if (result.size == 100) {

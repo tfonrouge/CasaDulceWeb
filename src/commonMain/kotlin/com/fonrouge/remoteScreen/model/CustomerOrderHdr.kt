@@ -1,22 +1,26 @@
 package com.fonrouge.remoteScreen.model
 
-import com.fonrouge.remoteScreen.CustomerItm
+import com.fonrouge.fsLib.serializers.FSLocalDateTimeSerializer
 import io.kvision.types.LocalDateTime
-import kotlinx.serialization.Contextual
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.Serializable
 import kotlin.js.JsExport
 
-@kotlinx.serialization.Serializable
+@Serializable
 @JsExport
 @com.fonrouge.fsLib.Collection("customerOrderHdrs")
 data class CustomerOrderHdr(
     override var _id: String,
     override var numId: Int,
     var customerItm_id: String?,
-    @Contextual
+    @Serializable(with = FSLocalDateTimeSerializer::class)
+//    @Contextual
     var created: LocalDateTime,
     var status: String = "$",
     var userProfile: String
 ) : DocumentWithNumId<String> {
+
+    @EncodeDefault(mode = EncodeDefault.Mode.NEVER)
     var customerItm: CustomerItm? = null
 
     val statusLabel: String

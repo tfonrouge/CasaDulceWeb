@@ -4,7 +4,7 @@ import com.fonrouge.fsLib.apiLib.AppScope
 import com.fonrouge.fsLib.layout.tabulatorCommon
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewList
-import com.fonrouge.remoteScreen.CustomerOrderItm
+import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderItm
 import com.fonrouge.remoteScreen.services.DataListService
 import com.fonrouge.remoteScreen.services.DataListServiceManager

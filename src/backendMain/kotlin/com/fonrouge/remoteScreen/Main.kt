@@ -2,6 +2,7 @@ package com.fonrouge.remoteScreen
 
 import com.fonrouge.fsLib.mongoDb.MongoDbPlugin
 import com.fonrouge.fsLib.mongoDb.collation
+import com.fonrouge.fsLib.serializers.FSLocalDateTimeSerializer
 import com.fonrouge.remoteScreen.database.UserItm
 import com.fonrouge.remoteScreen.database.userItmDb
 import com.fonrouge.remoteScreen.services.*
@@ -19,6 +20,7 @@ import io.ktor.server.sessions.*
 import io.kvision.remote.applyRoutes
 import io.kvision.remote.kvisionInit
 import org.litote.kmongo.eq
+import org.litote.kmongo.serialization.LocalDateTimeSerializer
 import org.litote.kmongo.set
 import org.litote.kmongo.setTo
 import java.nio.file.Files
@@ -65,6 +67,7 @@ fun Application.main() {
             skipWhen { call -> call.sessions.get<UserProfile>() != null }
         }
     }
+    FSLocalDateTimeSerializer.descriptor
     routing {
         if (!Files.isDirectory(Path(uploadsDir))) {
             Files.createDirectory(Path(uploadsDir))

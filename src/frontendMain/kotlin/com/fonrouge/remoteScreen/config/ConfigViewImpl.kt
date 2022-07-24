@@ -3,8 +3,10 @@ package com.fonrouge.remoteScreen.config
 import com.fonrouge.fsLib.apiLib.IConfigView
 import com.fonrouge.fsLib.config.ConfigViewItem
 import com.fonrouge.fsLib.config.ConfigViewList
-import com.fonrouge.remoteScreen.*
+import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
+import com.fonrouge.remoteScreen.model.CustomerOrderItm
+import com.fonrouge.remoteScreen.model.InventoryItm
 import com.fonrouge.remoteScreen.views.*
 
 class ConfigViewImpl : IConfigView {

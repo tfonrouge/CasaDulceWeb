@@ -1,4 +1,4 @@
-package com.fonrouge.remoteScreen
+package com.fonrouge.remoteScreen.model
 
 import io.kvision.types.LocalDateTime
 import kotlinx.serialization.Contextual

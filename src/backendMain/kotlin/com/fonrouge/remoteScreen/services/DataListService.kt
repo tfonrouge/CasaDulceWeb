@@ -1,8 +1,9 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.remoteScreen.CustomerItm
-import com.fonrouge.remoteScreen.CustomerOrderItm
-import com.fonrouge.remoteScreen.InventoryItm
+import com.fonrouge.fsLib.mongoDb.ModelLookup
+import com.fonrouge.remoteScreen.model.CustomerItm
+import com.fonrouge.remoteScreen.model.CustomerOrderItm
+import com.fonrouge.remoteScreen.model.InventoryItm
 import com.fonrouge.remoteScreen.database.customerItmDb
 import com.fonrouge.remoteScreen.database.customerOrderHdrDb
 import com.fonrouge.remoteScreen.database.customerOrderItmDb
@@ -44,7 +45,14 @@ actual class DataListService : IDataListService {
             filter = filter,
             sorter = sorter,
         )
-        return customerOrderHdrDb.remoteData(firstStage = firstStage)
+        return customerOrderHdrDb.remoteData(
+            firstStage = firstStage,
+            modelLookupList = listOf(
+                ModelLookup(
+                    resultProperty = CustomerOrderHdr::customerItm
+                )
+            )
+        )
     }
 
     override suspend fun customerOrderItm(

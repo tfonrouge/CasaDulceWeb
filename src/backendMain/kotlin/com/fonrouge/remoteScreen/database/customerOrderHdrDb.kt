@@ -2,7 +2,7 @@ package com.fonrouge.remoteScreen.database
 
 import com.fonrouge.fsLib.mongoDb.LookupBuilder
 import com.fonrouge.fsLib.mongoDb.mongoDbCollection
-import com.fonrouge.remoteScreen.CustomerItm
+import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.mongodb.client.model.IndexOptions
 import kotlinx.coroutines.runBlocking
@@ -24,4 +24,8 @@ val customerOrderHdrDb = mongoDbCollection<CustomerOrderHdr>(
             indexOptions = IndexOptions().partialFilterExpression(CustomerOrderHdr::status eq "$")
         )
     }
+}
+
+fun a1() {
+//    FSObjectIdSerializer.serialize()
 }

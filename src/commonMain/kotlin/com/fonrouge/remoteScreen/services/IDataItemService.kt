@@ -4,8 +4,8 @@ import com.fonrouge.fsLib.model.CrudAction
 import com.fonrouge.fsLib.model.IDataItem
 import com.fonrouge.fsLib.model.ItemContainer
 import com.fonrouge.fsLib.model.ItemContainerCallType
-import com.fonrouge.remoteScreen.CustomerOrderItm
-import com.fonrouge.remoteScreen.InventoryItm
+import com.fonrouge.remoteScreen.model.CustomerOrderItm
+import com.fonrouge.remoteScreen.model.InventoryItm
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import io.kvision.annotations.KVService
 

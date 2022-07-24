@@ -3,12 +3,12 @@ package com.fonrouge.remoteScreen.services
 import com.fonrouge.fsLib.model.CrudAction
 import com.fonrouge.fsLib.model.ItemContainer
 import com.fonrouge.fsLib.model.ItemContainerCallType
-import com.fonrouge.remoteScreen.CustomerOrderItm
-import com.fonrouge.remoteScreen.InventoryItm
 import com.fonrouge.remoteScreen.database.customerOrderHdrDb
 import com.fonrouge.remoteScreen.database.customerOrderItmDb
 import com.fonrouge.remoteScreen.database.getNextNumId
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
+import com.fonrouge.remoteScreen.model.CustomerOrderItm
+import com.fonrouge.remoteScreen.model.InventoryItm
 import org.litote.kmongo.eq
 import org.litote.kmongo.match
 
@@ -19,6 +19,7 @@ actual class DataItemService : IDataItemService {
         customerOrderHdr: CustomerOrderHdr?,
         itemContainerCallType: ItemContainerCallType
     ): ItemContainer<CustomerOrderHdr> {
+        customerOrderHdr?.customerItm = null
         return when (itemContainerCallType) {
             ItemContainerCallType.Query -> when (crudAction) {
                 CrudAction.Create -> ItemContainer(result = true)

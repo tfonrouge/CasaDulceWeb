@@ -2,8 +2,8 @@ package com.fonrouge.remoteScreen.database
 
 import com.fonrouge.fsLib.mongoDb.LookupBuilder
 import com.fonrouge.fsLib.mongoDb.mongoDbCollection
-import com.fonrouge.remoteScreen.CustomerOrderItm
-import com.fonrouge.remoteScreen.InventoryItm
+import com.fonrouge.remoteScreen.model.CustomerOrderItm
+import com.fonrouge.remoteScreen.model.InventoryItm
 import com.mongodb.client.model.IndexOptions
 import kotlinx.coroutines.runBlocking
 import org.litote.kmongo.eq

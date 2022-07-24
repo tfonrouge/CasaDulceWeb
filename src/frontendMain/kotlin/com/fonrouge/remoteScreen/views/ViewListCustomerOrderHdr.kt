@@ -3,7 +3,7 @@ package com.fonrouge.remoteScreen.views
 import com.fonrouge.fsLib.layout.tabulatorCommon
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewList
-import com.fonrouge.remoteScreen.CustomerItm
+import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderHdr
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.services.DataListService
@@ -14,6 +14,7 @@ import io.kvision.html.ButtonStyle
 import io.kvision.html.Span
 import io.kvision.tabulator.ColumnDefinition
 import io.kvision.tabulator.Editor
+import io.kvision.tabulator.Formatter
 
 class ViewListCustomerOrderHdr(
     override var urlParams: UrlParams?,
@@ -24,10 +25,14 @@ class ViewListCustomerOrderHdr(
 ) {
 
     override val columnDefinitionList: List<ColumnDefinition<CustomerOrderHdr>> = listOf(
-/*                    ColumnDefinition(
-                        title = "#",
-                        formatter = Formatter.ROWSELECTION
-                    ),*/
+        ColumnDefinition(
+            title = "#",
+            formatter = Formatter.ROWSELECTION
+        ),
+        ColumnDefinition(
+            title = "_id",
+            field = "_id"
+        ),
         ColumnDefinition(
             title = "",
             formatterComponentFunction = { _, _, data ->

@@ -1,8 +1,8 @@
 package com.fonrouge.remoteScreen.upload
 
 import com.fonrouge.remoteScreen.CatalogType
-import com.fonrouge.remoteScreen.CustomerItm
-import com.fonrouge.remoteScreen.InventoryItm
+import com.fonrouge.remoteScreen.model.CustomerItm
+import com.fonrouge.remoteScreen.model.InventoryItm
 import com.fonrouge.remoteScreen.database.customerItmDb
 import com.fonrouge.remoteScreen.database.inventoryItmDb
 import com.fonrouge.remoteScreen.uploadsDir

@@ -1,4 +1,4 @@
-package com.fonrouge.remoteScreen
+package com.fonrouge.remoteScreen.model
 
 import com.fonrouge.fsLib.model.base.BaseModel
 import kotlinx.serialization.Serializable
