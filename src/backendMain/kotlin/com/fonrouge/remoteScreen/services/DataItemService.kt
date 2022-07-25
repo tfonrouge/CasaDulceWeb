@@ -1,9 +1,8 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.fsLib.model.CrudAction
+import com.fonrouge.fsLib.StateFunctionItem
 import com.fonrouge.fsLib.model.CrudAction.*
 import com.fonrouge.fsLib.model.ItemContainer
-import com.fonrouge.fsLib.model.ItemContainerCallType
 import com.fonrouge.fsLib.model.ItemContainerCallType.Action
 import com.fonrouge.fsLib.model.ItemContainerCallType.Query
 import com.fonrouge.remoteScreen.database.customerOrderHdrDb
@@ -18,20 +17,19 @@ import org.litote.kmongo.match
 
 actual class DataItemService : IDataItemService {
     override suspend fun customerOrderHdr(
-        crudAction: CrudAction,
         _id: String?,
         customerOrderHdr: CustomerOrderHdr?,
-        itemContainerCallType: ItemContainerCallType
+        state: StateFunctionItem,
     ): ItemContainer<CustomerOrderHdr> {
-        return when (itemContainerCallType) {
-            Query -> when (crudAction) {
+        return when (state.itemContainerCallType) {
+            Query -> when (state.crudAction) {
                 Create -> ItemContainer(result = true)
                 Read, Update -> ItemContainer(
                     item = customerOrderHdrDb.getItem(match = match(CustomerOrderHdr::_id eq _id))
                 )
                 Delete -> ItemContainer(result = true)
             }
-            Action -> when (crudAction) {
+            Action -> when (state.crudAction) {
                 Create -> {
                     customerOrderHdr?._id = ObjectId().toHexString()
                     customerOrderHdr?.numId = getNextNumId(customerOrderHdrDb)
@@ -51,19 +49,17 @@ actual class DataItemService : IDataItemService {
     }
 
     override suspend fun customerOrderItm(
-        crudAction: CrudAction,
         _id: String?,
         customerOrderItm: CustomerOrderItm?,
-        itemContainerCallType: ItemContainerCallType
+        state: StateFunctionItem,
     ): ItemContainer<CustomerOrderItm> {
         TODO("Not yet implemented")
     }
 
     override suspend fun inventoryItm(
-        crudAction: CrudAction,
         _id: String?,
         inventoryItm: InventoryItm?,
-        itemContainerCallType: ItemContainerCallType
+        state: StateFunctionItem,
     ): ItemContainer<InventoryItm> {
         TODO("Not yet implemented")
     }
