@@ -3,6 +3,7 @@ package com.fonrouge.remoteScreen.views
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewItem
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewItemCustomerOrderHdr
+import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderItm
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.customerOrderHdrStatusList
 import com.fonrouge.remoteScreen.services.*
@@ -26,14 +27,13 @@ class ViewItemCustomerOrderHdr(
     klass = CustomerOrderHdr::class
 ) {
     override fun Container.pageItemBody(): FormPanel<CustomerOrderHdr> {
-        return formPanel {
+        val fPanel = formPanel {
             flexPanel(direction = FlexDirection.ROW, spacing = 20) {
                 spinner(label = "Doc Id:", value = 0).bind(key = CustomerOrderHdr::numId, required = true)
                 dateTime(label = "Created:", format = "MMM DD, YYYY hh:mm a", value = Date())
                     .bind(key = CustomerOrderHdr::created, required = true)
                 simpleSelect(label = "Status", options = customerOrderHdrStatusList)
                     .bind(key = CustomerOrderHdr::status)
-
             }
             selectRemote(
                 label = "Customer:",
@@ -41,5 +41,9 @@ class ViewItemCustomerOrderHdr(
                 function = ISelectService::customerItm,
             ).bind(key = CustomerOrderHdr::customerItm_id, required = true)
         }
+
+        ConfigViewListCustomerOrderItm.viewFunc(null).displayPage(this)
+
+        return fPanel
     }
 }

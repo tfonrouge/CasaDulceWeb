@@ -13,12 +13,12 @@ class ConfigViewImpl : IConfigView {
     companion object {
         val ConfigViewItemCustomerOrderHdr = object : ConfigViewItem<CustomerOrderHdr, ViewItemCustomerOrderHdr>(
             name = CustomerOrderHdr::class.simpleName!!,
-            label = "Customer Order",
+            label = "Customer Order Header",
             viewFunc = ::ViewItemCustomerOrderHdr
         ) {}
         val ConfigViewItemCustomerOrderItm = object : ConfigViewItem<CustomerOrderItm, ViewItemCustomerOrderItm>(
             name = CustomerOrderItm::class.simpleName!!,
-            label = "Customer Order",
+            label = "Customer Order Item",
             viewFunc = ::ViewItemCustomerOrderItm
         ) {}
         val ConfigViewItemInventoryItm = object : ConfigViewItem<InventoryItm, ViewItemInventoryItm>(
@@ -35,7 +35,7 @@ class ConfigViewImpl : IConfigView {
         ) {}
         val ConfigViewListCustomerOrderItm = object : ConfigViewList<CustomerOrderItm, ViewListCustomerOrderItm>(
             name = CustomerOrderItm::class.simpleName!!,
-            label = "Customer Order List",
+            label = "Customer Order Item List",
             viewFunc = ::ViewListCustomerOrderItm
         ) {}
         val ConfigViewListCustomerItm = object : ConfigViewList<CustomerItm, ViewListCustomerItm>(
