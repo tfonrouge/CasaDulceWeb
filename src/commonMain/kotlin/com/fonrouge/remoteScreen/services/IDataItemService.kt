@@ -1,6 +1,6 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.fsLib.StateFunctionItem
+import com.fonrouge.fsLib.StateItem
 import com.fonrouge.fsLib.model.IDataItem
 import com.fonrouge.fsLib.model.ItemContainer
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
@@ -12,19 +12,16 @@ import io.kvision.annotations.KVService
 interface IDataItemService : IDataItem {
     suspend fun customerOrderHdr(
         _id: String?,
-        customerOrderHdr: CustomerOrderHdr?,
-        state: StateFunctionItem,
+        state: StateItem<CustomerOrderHdr>,
     ): ItemContainer<CustomerOrderHdr>
 
     suspend fun customerOrderItm(
         _id: String?,
-        customerOrderItm: CustomerOrderItm?,
-        state: StateFunctionItem,
+        state: StateItem<CustomerOrderItm>,
     ): ItemContainer<CustomerOrderItm>
 
     suspend fun inventoryItm(
         _id: String?,
-        inventoryItm: InventoryItm?,
-        state: StateFunctionItem,
+        state: StateItem<InventoryItm>,
     ): ItemContainer<InventoryItm>
 }

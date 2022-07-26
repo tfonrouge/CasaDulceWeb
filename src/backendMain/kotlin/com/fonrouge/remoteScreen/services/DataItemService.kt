@@ -1,6 +1,6 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.fsLib.StateFunctionItem
+import com.fonrouge.fsLib.StateItem
 import com.fonrouge.fsLib.model.CrudAction.*
 import com.fonrouge.fsLib.model.ItemContainer
 import com.fonrouge.fsLib.model.ItemContainerCallType.Action
@@ -18,8 +18,7 @@ import org.litote.kmongo.match
 actual class DataItemService : IDataItemService {
     override suspend fun customerOrderHdr(
         _id: String?,
-        customerOrderHdr: CustomerOrderHdr?,
-        state: StateFunctionItem,
+        state: StateItem<CustomerOrderHdr>,
     ): ItemContainer<CustomerOrderHdr> {
         return when (state.itemContainerCallType) {
             Query -> when (state.crudAction) {
@@ -31,11 +30,11 @@ actual class DataItemService : IDataItemService {
             }
             Action -> when (state.crudAction) {
                 Create -> {
-                    customerOrderHdr?._id = ObjectId().toHexString()
-                    customerOrderHdr?.numId = getNextNumId(customerOrderHdrDb)
-                    customerOrderHdrDb.insertOne(customerOrderHdr)
+                    state.item?._id = ObjectId().toHexString()
+                    state.item?.numId = getNextNumId(customerOrderHdrDb)
+                    customerOrderHdrDb.insertOne(state.item)
                 }
-                Update -> customerOrderHdrDb.updateOne(_id = _id, item = customerOrderHdr)
+                Update -> customerOrderHdrDb.updateOne(_id = _id, item = state.item)
                 Delete -> {
                     var result = customerOrderItmDb.collection.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
                     if (result.wasAcknowledged()) {
@@ -50,16 +49,14 @@ actual class DataItemService : IDataItemService {
 
     override suspend fun customerOrderItm(
         _id: String?,
-        customerOrderItm: CustomerOrderItm?,
-        state: StateFunctionItem,
+        state: StateItem<CustomerOrderItm>,
     ): ItemContainer<CustomerOrderItm> {
         TODO("Not yet implemented")
     }
 
     override suspend fun inventoryItm(
         _id: String?,
-        inventoryItm: InventoryItm?,
-        state: StateFunctionItem,
+        state: StateItem<InventoryItm>,
     ): ItemContainer<InventoryItm> {
         TODO("Not yet implemented")
     }
