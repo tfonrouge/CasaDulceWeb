@@ -12,6 +12,8 @@ import com.fonrouge.remoteScreen.model.InventoryItm
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
 import io.kvision.remote.RemoteSorter
+import org.litote.kmongo.eq
+import org.litote.kmongo.match
 
 actual class DataListService : IDataListService {
     override suspend fun customerItm(
@@ -64,6 +66,23 @@ actual class DataListService : IDataListService {
     ): RemoteData<CustomerOrderItm> {
         val firstStage = customerOrderItmDb.buildFirstStage(
             match = null,
+            page = page,
+            size = size,
+            filter = filter,
+            sorter = sorter,
+        )
+        return customerOrderItmDb.remoteData(firstStage = firstStage)
+    }
+
+    override suspend fun customerOrderItmByCustomerOrder(
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
+    ): RemoteData<CustomerOrderItm> {
+        val firstStage = customerOrderItmDb.buildFirstStage(
+            match = match(CustomerOrderItm::customerOrderHdr_id eq state),
             page = page,
             size = size,
             filter = filter,

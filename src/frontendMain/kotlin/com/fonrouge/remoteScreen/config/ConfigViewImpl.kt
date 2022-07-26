@@ -38,6 +38,12 @@ class ConfigViewImpl : IConfigView {
             label = "Customer Order Item List",
             viewFunc = ::ViewListCustomerOrderItm
         ) {}
+        val ConfigViewListCustomerOrderItmByCustomerOrderHdr =
+            object : ConfigViewList<CustomerOrderItm, ViewListCustomerOrderItmByCustomerOrder>(
+                name = CustomerOrderItm::class.simpleName!!,
+                label = "Customer Order Item List",
+                viewFunc = ::ViewListCustomerOrderItmByCustomerOrder
+            ) {}
         val ConfigViewListCustomerItm = object : ConfigViewList<CustomerItm, ViewListCustomerItm>(
             name = CustomerItm::class.simpleName!!,
             label = "Customer List",

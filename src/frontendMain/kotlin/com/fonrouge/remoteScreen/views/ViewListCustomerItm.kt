@@ -1,6 +1,6 @@
 package com.fonrouge.remoteScreen.views
 
-import com.fonrouge.fsLib.layout.tabulatorCommon
+import com.fonrouge.fsLib.layout.fsTabulator
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewList
 import com.fonrouge.remoteScreen.CatalogType
@@ -77,7 +77,7 @@ class ViewListCustomerItm(
     )
 
     override fun Container.pageListBody() {
-        tabulatorCommon(viewList = this@ViewListCustomerItm)
+        fsTabulator(viewList = this@ViewListCustomerItm)
         flexPanel(direction = FlexDirection.ROW) {
             button(text = "Upload Customer Catalog").onClick {
                 val uploadCatalog = UploadCatalog(CatalogType.Customers)

@@ -1,6 +1,6 @@
 package com.fonrouge.remoteScreen.views
 
-import com.fonrouge.fsLib.layout.tabulatorCommon
+import com.fonrouge.fsLib.layout.fsTabulator
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewList
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderHdr
@@ -71,6 +71,6 @@ class ViewListCustomerOrderHdr(
     )
 
     override fun Container.pageListBody() {
-        tabulatorCommon(this@ViewListCustomerOrderHdr)
+        fsTabulator(this@ViewListCustomerOrderHdr)
     }
 }

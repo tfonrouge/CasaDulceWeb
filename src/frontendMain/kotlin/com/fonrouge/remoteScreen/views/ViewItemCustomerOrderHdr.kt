@@ -1,10 +1,10 @@
 package com.fonrouge.remoteScreen.views
 
-import com.fonrouge.fsLib.layout.tabulatorCommon
+import com.fonrouge.fsLib.layout.fsTabulator
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewItem
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewItemCustomerOrderHdr
-import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderItm
+import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderItmByCustomerOrderHdr
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.customerOrderHdrStatusList
 import com.fonrouge.remoteScreen.services.*
@@ -43,7 +43,9 @@ class ViewItemCustomerOrderHdr(
             ).bind(key = CustomerOrderHdr::customerItm_id, required = true)
         }
 
-        tabulatorCommon(ConfigViewListCustomerOrderItm.viewFunc(null))
+        fsTabulator(ConfigViewListCustomerOrderItmByCustomerOrderHdr.viewFunc(null).apply {
+            masterViewItem = this@ViewItemCustomerOrderHdr
+        })
 
         return fPanel
     }
