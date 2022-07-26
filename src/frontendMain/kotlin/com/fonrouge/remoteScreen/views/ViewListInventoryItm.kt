@@ -66,16 +66,14 @@ class ViewListInventoryItm(
         ),
     )
 
-    override fun pageListBody(container: Container) {
-        container.apply {
-            tabulatorCommon(this@ViewListInventoryItm, columnDefinitionList)
-            flexPanel(direction = FlexDirection.ROW) {
-                button(text = "Upload Product Catalog").onClick {
-                    val uploadCatalog = UploadCatalog(CatalogType.Products)
-                    AppScope.launch {
-                        uploadCatalog.getResult()
-                        tabulator?.reload()
-                    }
+    override fun Container.pageListBody() {
+        tabulatorCommon(this@ViewListInventoryItm)
+        flexPanel(direction = FlexDirection.ROW) {
+            button(text = "Upload Product Catalog").onClick {
+                val uploadCatalog = UploadCatalog(CatalogType.Products)
+                AppScope.launch {
+                    uploadCatalog.getResult()
+                    tabulator?.reload()
                 }
             }
         }

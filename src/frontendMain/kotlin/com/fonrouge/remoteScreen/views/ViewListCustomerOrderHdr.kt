@@ -26,7 +26,7 @@ class ViewListCustomerOrderHdr(
 
     override val columnDefinitionList: List<ColumnDefinition<CustomerOrderHdr>> = listOf(
         ColumnDefinition(
-            title = "#",
+            title = "",
             formatter = Formatter.ROWSELECTION
         ),
         ColumnDefinition(
@@ -70,7 +70,7 @@ class ViewListCustomerOrderHdr(
         ),
     )
 
-    override fun pageListBody(container: Container) {
-        container.tabulatorCommon(this, columnDefinitionList)
+    override fun Container.pageListBody() {
+        tabulatorCommon(this@ViewListCustomerOrderHdr)
     }
 }

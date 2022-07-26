@@ -122,7 +122,7 @@ class ViewListCustomerOrderItm(
         ),
     )
 
-    override fun pageListBody(container: Container) {
-        container.tabulatorCommon(this, columnDefinitionList)
+    override fun Container.pageListBody() {
+        tabulatorCommon(this@ViewListCustomerOrderItm)
     }
 }

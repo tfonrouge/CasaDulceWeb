@@ -76,17 +76,15 @@ class ViewListCustomerItm(
         ),
     )
 
-    override fun pageListBody(container: Container) {
-        container.apply {
-            tabulatorCommon(viewList = this@ViewListCustomerItm, columnDefinitionList = columnDefinitionList)
-            flexPanel(direction = FlexDirection.ROW) {
-                button(text = "Upload Customer Catalog").onClick {
-                    val uploadCatalog = UploadCatalog(CatalogType.Customers)
+    override fun Container.pageListBody() {
+        tabulatorCommon(viewList = this@ViewListCustomerItm)
+        flexPanel(direction = FlexDirection.ROW) {
+            button(text = "Upload Customer Catalog").onClick {
+                val uploadCatalog = UploadCatalog(CatalogType.Customers)
 //                AppScope.launch {
 //                    uploadCatalog.getResult()
 //                    tabRemote.reload()
 //                }
-                }
             }
         }
     }
