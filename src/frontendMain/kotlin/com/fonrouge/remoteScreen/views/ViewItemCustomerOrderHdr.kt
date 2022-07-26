@@ -1,5 +1,6 @@
 package com.fonrouge.remoteScreen.views
 
+import com.fonrouge.fsLib.layout.tabulatorCommon
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewItem
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewItemCustomerOrderHdr
@@ -42,7 +43,7 @@ class ViewItemCustomerOrderHdr(
             ).bind(key = CustomerOrderHdr::customerItm_id, required = true)
         }
 
-        ConfigViewListCustomerOrderItm.viewFunc(null).displayPage(this)
+        tabulatorCommon(ConfigViewListCustomerOrderItm.viewFunc(null))
 
         return fPanel
     }

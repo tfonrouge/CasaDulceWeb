@@ -1,10 +1,10 @@
 package com.fonrouge.remoteScreen.services
 
 import com.fonrouge.fsLib.StateItem
+import com.fonrouge.fsLib.StateItem.CallType.Action
+import com.fonrouge.fsLib.StateItem.CallType.Query
 import com.fonrouge.fsLib.model.CrudAction.*
 import com.fonrouge.fsLib.model.ItemContainer
-import com.fonrouge.fsLib.model.ItemContainerCallType.Action
-import com.fonrouge.fsLib.model.ItemContainerCallType.Query
 import com.fonrouge.remoteScreen.database.customerOrderHdrDb
 import com.fonrouge.remoteScreen.database.customerOrderItmDb
 import com.fonrouge.remoteScreen.database.getNextNumId
@@ -20,7 +20,7 @@ actual class DataItemService : IDataItemService {
         _id: String?,
         state: StateItem<CustomerOrderHdr>,
     ): ItemContainer<CustomerOrderHdr> {
-        return when (state.itemContainerCallType) {
+        return when (state.callType) {
             Query -> when (state.crudAction) {
                 Create -> ItemContainer(result = true)
                 Read, Update -> ItemContainer(
