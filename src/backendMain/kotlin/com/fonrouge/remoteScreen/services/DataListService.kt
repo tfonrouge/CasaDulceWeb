@@ -65,24 +65,7 @@ actual class DataListService : IDataListService {
         state: String?
     ): RemoteData<CustomerOrderItm> {
         val firstStage = customerOrderItmDb.buildFirstStage(
-            match = null,
-            page = page,
-            size = size,
-            filter = filter,
-            sorter = sorter,
-        )
-        return customerOrderItmDb.remoteData(firstStage = firstStage)
-    }
-
-    override suspend fun customerOrderItmByCustomerOrder(
-        page: Int?,
-        size: Int?,
-        filter: List<RemoteFilter>?,
-        sorter: List<RemoteSorter>?,
-        state: String?
-    ): RemoteData<CustomerOrderItm> {
-        val firstStage = customerOrderItmDb.buildFirstStage(
-            match = match(CustomerOrderItm::customerOrderHdr_id eq state),
+            match = state?.let { match(CustomerOrderItm::customerOrderHdr_id eq it) },
             page = page,
             size = size,
             filter = filter,
