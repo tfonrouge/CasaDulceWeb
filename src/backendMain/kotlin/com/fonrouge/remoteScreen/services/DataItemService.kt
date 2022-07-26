@@ -26,14 +26,17 @@ actual class DataItemService : IDataItemService {
                 Read, Update -> ItemContainer(
                     item = customerOrderHdrDb.getItem(match = match(CustomerOrderHdr::_id eq _id))
                 )
+
                 Delete -> ItemContainer(result = true)
             }
+
             Action -> when (state.crudAction) {
                 Create -> {
                     state.item?._id = ObjectId().toHexString()
                     state.item?.numId = getNextNumId(customerOrderHdrDb)
                     customerOrderHdrDb.insertOne(state.item)
                 }
+
                 Update -> customerOrderHdrDb.updateOne(_id = _id, item = state.item)
                 Delete -> {
                     var result = customerOrderItmDb.collection.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
@@ -42,6 +45,7 @@ actual class DataItemService : IDataItemService {
                     }
                     ItemContainer(result = result.deletedCount == 1L)
                 }
+
                 else -> ItemContainer(result = false, description = "Unknown error...")
             }
         }

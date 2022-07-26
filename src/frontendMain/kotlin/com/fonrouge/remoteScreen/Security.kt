@@ -67,12 +67,12 @@ class LoginWindow : Dialog<Credentials>(closeButton = false, escape = false, ani
         cancelButton = Button(I18n.tr("Cancel"), "fas fa-times").onClick {
             this@LoginWindow.hideRegisterForm()
         }
-/*
-        registerButton = Button(I18n.tr("Register"), "fas fa-check", ButtonStyle.PRIMARY).onClick {
-            this@LoginWindow.processRegister()
-        }
-        registerButton.disabled = true
-*/
+        /*
+                registerButton = Button(I18n.tr("Register"), "fas fa-check", ButtonStyle.PRIMARY).onClick {
+                    this@LoginWindow.processRegister()
+                }
+                registerButton.disabled = true
+        */
         loginButton = Button(I18n.tr("Login"), "fas fa-check", ButtonStyle.PRIMARY).onClick {
             this@LoginWindow.processCredentials()
         }
@@ -113,23 +113,23 @@ class LoginWindow : Dialog<Credentials>(closeButton = false, escape = false, ani
         }
     }
 
-/*
-    private fun processRegister() {
-        if (registerPanel.validate()) {
-            val userData = registerPanel.getData()
-            AppScope.launch {
-                if (Model.registerProfile(userData, userData.password!!)
-                ) {
-                    Alert.show(text = I18n.tr("User registered. You can now log in.")) {
-                        hideRegisterForm()
+    /*
+        private fun processRegister() {
+            if (registerPanel.validate()) {
+                val userData = registerPanel.getData()
+                AppScope.launch {
+                    if (Model.registerProfile(userData, userData.password!!)
+                    ) {
+                        Alert.show(text = I18n.tr("User registered. You can now log in.")) {
+                            hideRegisterForm()
+                        }
+                    } else {
+                        Alert.show(text = I18n.tr("This login is not available. Please try again."))
                     }
-                } else {
-                    Alert.show(text = I18n.tr("This login is not available. Please try again."))
                 }
             }
         }
-    }
-*/
+    */
 }
 
 object Security : SecurityMgr() {

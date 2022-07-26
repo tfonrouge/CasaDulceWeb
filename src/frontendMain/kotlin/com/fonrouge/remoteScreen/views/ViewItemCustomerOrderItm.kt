@@ -29,7 +29,7 @@ class ViewItemCustomerOrderItm(
 
     private lateinit var textSize: Text
 
-    override fun Container.pageItemBody(): FormPanel<CustomerOrderItm>? {
+    override fun Container.pageItemBody(): FormPanel<CustomerOrderItm> {
         return formPanel {
             selectRemote(
                 serviceManager = SelectServiceManager,
