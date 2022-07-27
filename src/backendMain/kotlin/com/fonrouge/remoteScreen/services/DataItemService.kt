@@ -3,6 +3,7 @@ package com.fonrouge.remoteScreen.services
 import com.fonrouge.fsLib.StateItem
 import com.fonrouge.fsLib.StateItem.CallType.Action
 import com.fonrouge.fsLib.StateItem.CallType.Query
+import com.fonrouge.fsLib.localDateTimeNow
 import com.fonrouge.fsLib.model.CrudAction.*
 import com.fonrouge.fsLib.model.ItemContainer
 import com.fonrouge.remoteScreen.database.customerOrderHdrDb
@@ -11,7 +12,9 @@ import com.fonrouge.remoteScreen.database.getNextNumId
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.model.InventoryItm
+import org.bson.Document
 import org.bson.types.ObjectId
+import org.litote.kmongo.bson
 import org.litote.kmongo.eq
 import org.litote.kmongo.match
 
@@ -22,7 +25,16 @@ actual class DataItemService : IDataItemService {
     ): ItemContainer<CustomerOrderHdr> {
         return when (state.callType) {
             Query -> when (state.crudAction) {
-                Create -> ItemContainer(result = true)
+                Create -> ItemContainer(
+                    item = CustomerOrderHdr(
+                        _id = ObjectId().toHexString(),
+                        numId = getNextNumId(customerOrderHdrDb),
+                        customerItm_id = "",
+                        created = localDateTimeNow(),
+                        status = "$"
+                    )
+                )
+
                 Read, Update -> ItemContainer(
                     item = customerOrderHdrDb.getItem(match = match(CustomerOrderHdr::_id eq _id))
                 )
@@ -32,7 +44,7 @@ actual class DataItemService : IDataItemService {
 
             Action -> when (state.crudAction) {
                 Create -> {
-                    state.item?._id = ObjectId().toHexString()
+//                    state.item?._id = ObjectId().toHexString()
                     state.item?.numId = getNextNumId(customerOrderHdrDb)
                     customerOrderHdrDb.insertOne(state.item)
                 }
@@ -55,7 +67,41 @@ actual class DataItemService : IDataItemService {
         _id: String?,
         state: StateItem<CustomerOrderItm>,
     ): ItemContainer<CustomerOrderItm> {
-        TODO("Not yet implemented")
+        val itemContainer: ItemContainer<CustomerOrderItm>? = when (state.callType) {
+            Query -> when (state.crudAction) {
+                Create -> ItemContainer(
+                    item = CustomerOrderItm(
+                        _id = ObjectId().toHexString(),
+                        customerOrderHdr_id = state.contextDataUrl?.contextId ?: "",
+                        inventoryItm_id = "",
+                        qty = 1,
+                        size = ""
+                    )
+                )
+
+                Read, Update -> ItemContainer(
+                    item = customerOrderItmDb.getItem(match = match(CustomerOrderItm::_id eq _id))
+                )
+
+                Delete -> TODO()
+            }
+
+            Action -> when (state.crudAction) {
+                Create -> {
+                    customerOrderItmDb.insertOne(state.item)
+                }
+
+                Read -> TODO()
+                Update -> {
+                    state.json?.bson?.let { bson ->
+                        customerOrderItmDb.updateOne(_id = _id, Document("\$set", bson))
+                    }
+                }
+
+                Delete -> TODO()
+            }
+        }
+        return itemContainer ?: ItemContainer(result = false)
     }
 
     override suspend fun inventoryItm(

@@ -8,8 +8,8 @@ import kotlin.js.JsExport
 @JsExport
 @Collection("customerOrderItms")
 class CustomerOrderItm(
-    override var _id: String,
-    var customerOrderHdr_id: String,
+    override var _id: String = "",
+    var customerOrderHdr_id: String = "",
     var inventoryItm_id: String,
     var qty: Int,
     var size: String,

@@ -1,11 +1,8 @@
 package com.fonrouge.remoteScreen.views
 
-import com.fonrouge.fsLib.StateItem
-import com.fonrouge.fsLib.StateItem.CallType.Action
 import com.fonrouge.fsLib.apiLib.AppScope
 import com.fonrouge.fsLib.layout.fsTabulator
 import com.fonrouge.fsLib.lib.UrlParams
-import com.fonrouge.fsLib.model.CrudAction
 import com.fonrouge.fsLib.view.ViewList
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderItm
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
@@ -25,7 +22,6 @@ import io.kvision.tabulator.ColumnDefinition
 import io.kvision.tabulator.Editor
 import io.kvision.tabulator.Formatter
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.buildJsonObject
 
 class ViewListCustomerOrderItm(
     override var urlParams: UrlParams?
@@ -118,15 +114,10 @@ class ViewListCustomerOrderItm(
                         blur = {
                             self.value?.let { size ->
                                 AppScope.launch {
-                                    ModelDataItemService.dataItemService.customerOrderItm(
-                                        _id = data._id,
-                                        state = StateItem(
-                                            json = buildJsonObject { CustomerOrderItm::size to size },
-                                            crudAction = CrudAction.Update,
-                                            callType = Action
-                                        )
+                                    ModelDataItemService.updateField(
+                                        data._id,
+                                        linkedMapOf(CustomerOrderItm::size.name to value!!)
                                     )
-//                                    ModelCustomerOrderItm.updateFieldSize(data._id, size.toString())
                                     success(self.value)
                                 }
                             }
