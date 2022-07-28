@@ -1,10 +1,13 @@
 package com.fonrouge.remoteScreen.views
 
+import com.fonrouge.fsLib.StateItem
 import com.fonrouge.fsLib.apiLib.AppScope
 import com.fonrouge.fsLib.lib.UrlParams
+import com.fonrouge.fsLib.model.CrudAction
 import com.fonrouge.fsLib.view.ViewItem
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewItemCustomerOrderItm
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
+import com.fonrouge.remoteScreen.model.ModelDataItemService.dataItemService
 import com.fonrouge.remoteScreen.services.ISelectService
 import com.fonrouge.remoteScreen.services.SelectServiceManager
 import io.kvision.core.Container
@@ -36,10 +39,18 @@ class ViewItemCustomerOrderItm(
             ) {
                 onEvent {
                     change = {
-                        AppScope.launch {
-//                            ModelInventoryItm.getInventoryItm(self.value ?: "").let {
-//                                textSize.value = it.size
-//                            }
+                        self.value?.let { _id ->
+                            AppScope.launch {
+                                dataItemService.inventoryItm(
+                                    _id = _id,
+                                    state = StateItem(
+                                        crudAction = CrudAction.Read,
+                                        callType = StateItem.CallType.Query
+                                    )
+                                ).item?.let {
+                                    textSize.value = it.size
+                                }
+                            }
                         }
                     }
                 }
