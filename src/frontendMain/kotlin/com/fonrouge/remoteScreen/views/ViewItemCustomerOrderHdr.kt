@@ -7,7 +7,8 @@ import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewItemC
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderItm
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.customerOrderHdrStatusList
-import com.fonrouge.remoteScreen.services.*
+import com.fonrouge.remoteScreen.services.ISelectService
+import com.fonrouge.remoteScreen.services.SelectServiceManager
 import io.kvision.core.Container
 import io.kvision.core.FlexDirection
 import io.kvision.form.FormPanel
@@ -21,11 +22,8 @@ import kotlin.js.Date
 
 class ViewItemCustomerOrderHdr(
     override var urlParams: UrlParams? = null
-) : ViewItem<CustomerOrderHdr, DataItemService, String>(
+) : ViewItem<CustomerOrderHdr, String>(
     configView = ConfigViewItemCustomerOrderHdr,
-    serverManager = DataItemServiceManager,
-    function = IDataItemService::customerOrderHdr,
-    klass = CustomerOrderHdr::class
 ) {
     override fun Container.pageItemBody(): FormPanel<CustomerOrderHdr> {
         val fPanel = formPanel {

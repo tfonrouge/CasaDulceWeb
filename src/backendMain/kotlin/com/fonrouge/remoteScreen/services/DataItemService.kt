@@ -25,15 +25,18 @@ actual class DataItemService : IDataItemService {
     ): ItemContainer<CustomerOrderHdr> {
         return when (state.callType) {
             Query -> when (state.crudAction) {
-                Create -> ItemContainer(
-                    item = CustomerOrderHdr(
-                        _id = ObjectId().toHexString(),
-                        numId = getNextNumId(customerOrderHdrDb),
-                        customerItm_id = "",
-                        created = localDateTimeNow(),
-                        status = "$"
+                Create -> {
+                    val result = customerOrderHdrDb.insertOne(
+                        item = CustomerOrderHdr(
+                            _id = ObjectId().toHexString(),
+                            numId = getNextNumId(customerOrderHdrDb),
+                            customerItm_id = "",
+                            created = localDateTimeNow(),
+                            status = "$"
+                        )
                     )
-                )
+                    result
+                }
 
                 Read, Update -> ItemContainer(
                     item = customerOrderHdrDb.getItem(match = match(CustomerOrderHdr::_id eq _id))

@@ -7,25 +7,37 @@ import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.model.InventoryItm
+import com.fonrouge.remoteScreen.services.DataItemService
+import com.fonrouge.remoteScreen.services.DataItemServiceManager
+import com.fonrouge.remoteScreen.services.IDataItemService
 import com.fonrouge.remoteScreen.views.*
 
 class ConfigViewImpl : IConfigView {
     companion object {
-        val ConfigViewItemCustomerOrderHdr = object : ConfigViewItem<CustomerOrderHdr, ViewItemCustomerOrderHdr>(
-            name = CustomerOrderHdr::class.simpleName!!,
-            label = "Customer Order Header",
-            viewFunc = ::ViewItemCustomerOrderHdr
-        ) {}
-        val ConfigViewItemCustomerOrderItm = object : ConfigViewItem<CustomerOrderItm, ViewItemCustomerOrderItm>(
-            name = CustomerOrderItm::class.simpleName!!,
-            label = "Customer Order Item",
-            viewFunc = ::ViewItemCustomerOrderItm
-        ) {}
-        val ConfigViewItemInventoryItm = object : ConfigViewItem<InventoryItm, ViewItemInventoryItm>(
-            name = InventoryItm::class.simpleName!!,
-            label = "Inventory Item",
-            viewFunc = ::ViewItemInventoryItm
-        ) {}
+        val ConfigViewItemCustomerOrderHdr =
+            object : ConfigViewItem<CustomerOrderHdr, ViewItemCustomerOrderHdr, DataItemService, String>(
+                klass = CustomerOrderHdr::class,
+                label = "Customer Order Header",
+                viewFunc = ::ViewItemCustomerOrderHdr,
+                serverManager = DataItemServiceManager,
+                function = IDataItemService::customerOrderHdr,
+            ) {}
+        val ConfigViewItemCustomerOrderItm =
+            object : ConfigViewItem<CustomerOrderItm, ViewItemCustomerOrderItm, DataItemService, String>(
+                klass = CustomerOrderItm::class,
+                label = "Customer Order Item",
+                viewFunc = ::ViewItemCustomerOrderItm,
+                serverManager = DataItemServiceManager,
+                function = IDataItemService::customerOrderItm,
+            ) {}
+        val ConfigViewItemInventoryItm =
+            object : ConfigViewItem<InventoryItm, ViewItemInventoryItm, DataItemService, String>(
+                klass = InventoryItm::class,
+                label = "Inventory Item",
+                viewFunc = ::ViewItemInventoryItm,
+                serverManager = DataItemServiceManager,
+                function = IDataItemService::inventoryItm,
+            ) {}
 
         /* list */
         val ConfigViewListCustomerOrderHdr = object : ConfigViewList<CustomerOrderHdr, ViewListCustomerOrderHdr>(

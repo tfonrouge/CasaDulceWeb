@@ -5,7 +5,8 @@ import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewItem
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewItemCustomerOrderItm
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
-import com.fonrouge.remoteScreen.services.*
+import com.fonrouge.remoteScreen.services.ISelectService
+import com.fonrouge.remoteScreen.services.SelectServiceManager
 import io.kvision.core.Container
 import io.kvision.core.FlexDirection
 import io.kvision.core.onEvent
@@ -20,11 +21,8 @@ import kotlinx.coroutines.launch
 
 class ViewItemCustomerOrderItm(
     override var urlParams: UrlParams?
-) : ViewItem<CustomerOrderItm, DataItemService, String>(
+) : ViewItem<CustomerOrderItm, String>(
     configView = ConfigViewItemCustomerOrderItm,
-    serverManager = DataItemServiceManager,
-    function = IDataItemService::customerOrderItm,
-    klass = CustomerOrderItm::class
 ) {
 
     private lateinit var textSize: Text

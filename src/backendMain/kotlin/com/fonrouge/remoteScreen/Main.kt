@@ -30,12 +30,13 @@ const val uploadsDir = "uploads"
 @Suppress("unused")
 fun Application.main() {
     install(MongoDbPlugin) {
-        serverUrl = "dulceserver.dulcesdulcemaria.com"
+//        serverUrl = "dulceserver.dulcesdulcemaria.com"
+        serverUrl = "localhost"
         serverPort = 27017
-        authSource = "CasaDulce"
-        user = "user1"
-        password = "fb513d2033"
         database = "CasaDulce"
+//        authSource = "CasaDulce"
+//        user = "user1"
+//        password = "fb513d2033"
     }
     install(Compression)
     install(DefaultHeaders)

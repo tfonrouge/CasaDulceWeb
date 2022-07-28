@@ -10,9 +10,6 @@ import com.fonrouge.remoteScreen.services.IDataItemService
 
 class ViewItemInventoryItm(
     override var urlParams: UrlParams?
-) : ViewItem<InventoryItm, DataItemService, String>(
+) : ViewItem<InventoryItm, String>(
     configView = ConfigViewImpl.ConfigViewItemInventoryItm,
-    serverManager = DataItemServiceManager,
-    function = IDataItemService::inventoryItm,
-    klass = InventoryItm::class
 )
