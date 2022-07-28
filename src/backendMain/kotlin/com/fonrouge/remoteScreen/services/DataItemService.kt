@@ -113,7 +113,7 @@ actual class DataItemService : IDataItemService {
                         }
                 }
 
-                Delete -> TODO()
+                Delete -> customerOrderItmDb.deleteOneById(_id = _id)
             }
         }
         return itemContainer ?: ItemContainer(result = false)
