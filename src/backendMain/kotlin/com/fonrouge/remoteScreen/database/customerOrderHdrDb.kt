@@ -8,7 +8,7 @@ import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.DocumentWithNumId
 import kotlinx.coroutines.runBlocking
 
-val customerOrderHdrDb = mongoDbCollection<CustomerOrderHdr>(
+val customerOrderHdrDb = mongoDbCollection(
     lookupBuilderList = listOf(
         LookupBuilder(
             cTableDb = customerItmDb,
@@ -25,7 +25,7 @@ val customerOrderHdrDb = mongoDbCollection<CustomerOrderHdr>(
     }
 }
 
-suspend fun getNextNumId(cTableDb: CTableDb<out DocumentWithNumId<*>>): Int {
+suspend fun getNextNumId(cTableDb: CTableDb<out DocumentWithNumId<String>, String>): Int {
     return cTableDb.collection.find()
         .descendingSort(DocumentWithNumId<*>::numId)
         .limit(1)

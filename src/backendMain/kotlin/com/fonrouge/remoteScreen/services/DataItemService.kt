@@ -10,6 +10,7 @@ import com.fonrouge.fsLib.mongoDb.ModelLookup
 import com.fonrouge.remoteScreen.database.customerOrderHdrDb
 import com.fonrouge.remoteScreen.database.customerOrderItmDb
 import com.fonrouge.remoteScreen.database.getNextNumId
+import com.fonrouge.remoteScreen.database.inventoryItmDb
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.model.InventoryItm
@@ -122,6 +123,16 @@ actual class DataItemService : IDataItemService {
         _id: String?,
         state: StateItem<InventoryItm>,
     ): ItemContainer<InventoryItm> {
-        TODO("Not yet implemented")
+        val itemContainer: ItemContainer<InventoryItm>? = when (state.callType) {
+            Query -> when (state.crudAction) {
+                Create -> TODO()
+                Read -> _id?.let { inventoryItmDb.findOneById(_id = it) }
+                Update -> TODO()
+                Delete -> TODO()
+            }
+
+            Action -> TODO()
+        }
+        return itemContainer ?: ItemContainer(result = false)
     }
 }

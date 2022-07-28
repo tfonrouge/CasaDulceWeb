@@ -8,7 +8,7 @@ import com.mongodb.client.model.IndexOptions
 import kotlinx.coroutines.runBlocking
 import org.litote.kmongo.eq
 
-val customerOrderItmDb = mongoDbCollection<CustomerOrderItm>(
+val customerOrderItmDb = mongoDbCollection(
     lookupBuilderList = listOf(
         LookupBuilder(
             cTableDb = inventoryItmDb,
