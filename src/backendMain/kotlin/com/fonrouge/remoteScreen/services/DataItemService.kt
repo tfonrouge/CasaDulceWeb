@@ -23,10 +23,10 @@ actual class DataItemService : IDataItemService {
         _id: String?,
         state: StateItem<CustomerOrderHdr>,
     ): ItemContainer<CustomerOrderHdr> {
-        return when (state.callType) {
+        val itemContainer: ItemContainer<CustomerOrderHdr> = when (state.callType) {
             Query -> when (state.crudAction) {
                 Create -> {
-                    val result = customerOrderHdrDb.insertOne(
+                    customerOrderHdrDb.insertOne(
                         item = CustomerOrderHdr(
                             _id = ObjectId().toHexString(),
                             numId = getNextNumId(customerOrderHdrDb),
@@ -35,7 +35,6 @@ actual class DataItemService : IDataItemService {
                             status = "$"
                         )
                     )
-                    result
                 }
 
                 Read, Update -> ItemContainer(
@@ -64,6 +63,7 @@ actual class DataItemService : IDataItemService {
                 else -> ItemContainer(result = false, description = "Unknown error...")
             }
         }
+        return itemContainer
     }
 
     override suspend fun customerOrderItm(
@@ -72,7 +72,7 @@ actual class DataItemService : IDataItemService {
     ): ItemContainer<CustomerOrderItm> {
         val itemContainer: ItemContainer<CustomerOrderItm>? = when (state.callType) {
             Query -> when (state.crudAction) {
-                Create -> ItemContainer(
+                Create -> customerOrderItmDb.insertOne(
                     item = CustomerOrderItm(
                         _id = ObjectId().toHexString(),
                         customerOrderHdr_id = state.contextDataUrl?.contextId ?: "",
@@ -96,6 +96,9 @@ actual class DataItemService : IDataItemService {
 
                 Read -> TODO()
                 Update -> {
+                    if (state.item!=null) {
+                        customerOrderItmDb.updateOne(_id = _id, state.item)
+                    } else
                     state.json?.bson?.let { bson ->
                         customerOrderItmDb.updateOne(_id = _id, Document("\$set", bson))
                     }
