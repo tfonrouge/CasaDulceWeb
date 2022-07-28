@@ -6,9 +6,7 @@ import com.fonrouge.fsLib.mongoDb.mongoDbCollection
 import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.DocumentWithNumId
-import com.mongodb.client.model.IndexOptions
 import kotlinx.coroutines.runBlocking
-import org.litote.kmongo.eq
 
 val customerOrderHdrDb = mongoDbCollection<CustomerOrderHdr>(
     lookupBuilderList = listOf(

@@ -6,6 +6,7 @@ import com.fonrouge.fsLib.StateItem.CallType.Query
 import com.fonrouge.fsLib.localDateTimeNow
 import com.fonrouge.fsLib.model.CrudAction.*
 import com.fonrouge.fsLib.model.ItemContainer
+import com.fonrouge.fsLib.mongoDb.ModelLookup
 import com.fonrouge.remoteScreen.database.customerOrderHdrDb
 import com.fonrouge.remoteScreen.database.customerOrderItmDb
 import com.fonrouge.remoteScreen.database.getNextNumId
@@ -83,7 +84,14 @@ actual class DataItemService : IDataItemService {
                 )
 
                 Read, Update -> ItemContainer(
-                    item = customerOrderItmDb.getItem(match = match(CustomerOrderItm::_id eq _id))
+                    item = customerOrderItmDb.getItem(
+                        match = match(CustomerOrderItm::_id eq _id),
+                        modelLookupList = listOf(
+                            ModelLookup(
+                                resultProperty = CustomerOrderHdr::customerItm
+                            )
+                        )
+                    )
                 )
 
                 Delete -> TODO()
@@ -96,12 +104,12 @@ actual class DataItemService : IDataItemService {
 
                 Read -> TODO()
                 Update -> {
-                    if (state.item!=null) {
+                    if (state.item != null) {
                         customerOrderItmDb.updateOne(_id = _id, state.item)
                     } else
-                    state.json?.bson?.let { bson ->
-                        customerOrderItmDb.updateOne(_id = _id, Document("\$set", bson))
-                    }
+                        state.json?.bson?.let { bson ->
+                            customerOrderItmDb.updateOne(_id = _id, Document("\$set", bson))
+                        }
                 }
 
                 Delete -> TODO()

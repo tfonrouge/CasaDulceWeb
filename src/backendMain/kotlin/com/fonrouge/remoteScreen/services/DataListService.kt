@@ -71,7 +71,14 @@ actual class DataListService : IDataListService {
             filter = filter,
             sorter = sorter,
         )
-        return customerOrderItmDb.remoteData(firstStage = firstStage)
+        return customerOrderItmDb.remoteData(
+            firstStage = firstStage,
+            modelLookupList = listOf(
+                ModelLookup(
+                    resultProperty = CustomerOrderItm::inventoryItm
+                )
+            )
+        )
     }
 
     override suspend fun inventoryItm(

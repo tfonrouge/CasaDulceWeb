@@ -4,9 +4,6 @@ import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewItem
 import com.fonrouge.remoteScreen.config.ConfigViewImpl
 import com.fonrouge.remoteScreen.model.InventoryItm
-import com.fonrouge.remoteScreen.services.DataItemService
-import com.fonrouge.remoteScreen.services.DataItemServiceManager
-import com.fonrouge.remoteScreen.services.IDataItemService
 
 class ViewItemInventoryItm(
     override var urlParams: UrlParams?
