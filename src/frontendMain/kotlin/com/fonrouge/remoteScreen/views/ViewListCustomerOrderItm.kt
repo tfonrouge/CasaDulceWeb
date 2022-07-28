@@ -18,6 +18,7 @@ import io.kvision.html.ButtonStyle
 import io.kvision.i18n.I18n
 import io.kvision.modal.Alert
 import io.kvision.modal.Confirm
+import io.kvision.remote.obj
 import io.kvision.tabulator.ColumnDefinition
 import io.kvision.tabulator.Editor
 import io.kvision.tabulator.Formatter
@@ -114,9 +115,11 @@ class ViewListCustomerOrderItm(
                         blur = {
                             self.value?.let { size ->
                                 AppScope.launch {
+                                    val json = obj { }
+                                    json[CustomerOrderItm::size.name] = size
                                     ModelDataItemService.updateField(
-                                        data._id,
-                                        linkedMapOf(CustomerOrderItm::size.name to value!!)
+                                        _id = data._id,
+                                        value = json
                                     )
                                     success(self.value)
                                 }
