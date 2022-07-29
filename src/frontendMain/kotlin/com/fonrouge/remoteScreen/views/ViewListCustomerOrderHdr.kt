@@ -31,21 +31,6 @@ class ViewListCustomerOrderHdr(
             field = "_id"
         ),
         ColumnDefinition(
-            title = "",
-            formatterComponentFunction = { _, _, data ->
-                Button(text = "", icon = "fas fa-edit").onClick {
-//                                routing.navigate("/${State.CustomerOrderHdrItem}?action=${ViewAction.update}&_id=${data._id}")
-                }
-            }
-        ),
-        ColumnDefinition(
-            title = "",
-            formatterComponentFunction = { _, _, data ->
-                Button(text = "", icon = "fas fa-trash-can", style = ButtonStyle.OUTLINEDANGER).onClick {
-                }
-            }
-        ),
-        ColumnDefinition(
             title = CustomerOrderHdr::numId.name,
             field = CustomerOrderHdr::numId.name,
             headerFilter = Editor.INPUT
