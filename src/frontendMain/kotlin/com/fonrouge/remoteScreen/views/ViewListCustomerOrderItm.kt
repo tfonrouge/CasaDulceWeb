@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 
 class ViewListCustomerOrderItm(
     override var urlParams: UrlParams?
-) : ViewList<CustomerOrderItm, DataListService>(
+) : ViewList<CustomerOrderItm, DataListService, String>(
     configView = ConfigViewListCustomerOrderItm,
     serverManager = DataListServiceManager,
     function = DataListService::customerOrderItm

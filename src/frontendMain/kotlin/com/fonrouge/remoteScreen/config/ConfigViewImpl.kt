@@ -40,22 +40,24 @@ class ConfigViewImpl : IConfigView {
             ) {}
 
         /* list */
-        val ConfigViewListCustomerOrderHdr = object : ConfigViewList<CustomerOrderHdr, ViewListCustomerOrderHdr>(
-            name = CustomerOrderHdr::class.simpleName!!,
-            label = "Customer Order Header List",
-            viewFunc = ::ViewListCustomerOrderHdr
-        ) {}
-        val ConfigViewListCustomerOrderItm = object : ConfigViewList<CustomerOrderItm, ViewListCustomerOrderItm>(
-            name = CustomerOrderItm::class.simpleName!!,
-            label = "Customer Order Item List",
-            viewFunc = ::ViewListCustomerOrderItm
-        ) {}
-        val ConfigViewListCustomerItm = object : ConfigViewList<CustomerItm, ViewListCustomerItm>(
+        val ConfigViewListCustomerOrderHdr =
+            object : ConfigViewList<CustomerOrderHdr, ViewListCustomerOrderHdr, String>(
+                name = CustomerOrderHdr::class.simpleName!!,
+                label = "Customer Order Header List",
+                viewFunc = ::ViewListCustomerOrderHdr
+            ) {}
+        val ConfigViewListCustomerOrderItm =
+            object : ConfigViewList<CustomerOrderItm, ViewListCustomerOrderItm, String>(
+                name = CustomerOrderItm::class.simpleName!!,
+                label = "Customer Order Item List",
+                viewFunc = ::ViewListCustomerOrderItm
+            ) {}
+        val ConfigViewListCustomerItm = object : ConfigViewList<CustomerItm, ViewListCustomerItm, String>(
             name = CustomerItm::class.simpleName!!,
             label = "Customer List",
             viewFunc = ::ViewListCustomerItm
         ) {}
-        val ConfigViewListInventoryItm = object : ConfigViewList<InventoryItm, ViewListInventoryItm>(
+        val ConfigViewListInventoryItm = object : ConfigViewList<InventoryItm, ViewListInventoryItm, String>(
             name = InventoryItm::class.simpleName!!,
             label = "Inventory List",
             viewFunc = ::ViewListInventoryItm

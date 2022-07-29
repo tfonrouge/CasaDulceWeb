@@ -23,7 +23,7 @@ import kotlinx.serialization.json.decodeFromDynamic
 
 class ViewListInventoryItm(
     override var urlParams: UrlParams?
-) : ViewList<InventoryItm, DataListService>(
+) : ViewList<InventoryItm, DataListService, String>(
     configView = ConfigViewListInventoryItm,
     serverManager = DataListServiceManager,
     function = DataListService::inventoryItm

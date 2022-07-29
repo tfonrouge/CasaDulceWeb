@@ -18,7 +18,7 @@ import io.kvision.tabulator.Editor
 
 class ViewListCustomerItm(
     override var urlParams: UrlParams?,
-) : ViewList<CustomerItm, DataListService>(
+) : ViewList<CustomerItm, DataListService, String>(
     configView = ConfigViewListCustomerItm,
     serverManager = DataListServiceManager,
     function = DataListService::customerItm

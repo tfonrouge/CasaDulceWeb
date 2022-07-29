@@ -18,7 +18,7 @@ import io.kvision.tabulator.Formatter
 
 class ViewListCustomerOrderHdr(
     override var urlParams: UrlParams?,
-) : ViewList<CustomerOrderHdr, DataListService>(
+) : ViewList<CustomerOrderHdr, DataListService, String>(
     configView = ConfigViewListCustomerOrderHdr,
     serverManager = DataListServiceManager,
     function = DataListService::customerOrderHdr
