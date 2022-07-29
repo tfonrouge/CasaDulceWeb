@@ -36,10 +36,12 @@ class ViewListCustomerOrderItm(
         ColumnDefinition(
             title = "Inv Item Name",
             field = "inventoryItm.name",
+            headerFilter = Editor.INPUT,
         ),
         ColumnDefinition(
             title = "Inv Item UPC",
-            field = "inventoryItm.upc"
+            field = "inventoryItm.upc",
+            headerFilter = Editor.INPUT,
         ),
         ColumnDefinition(
             title = "Qty",
