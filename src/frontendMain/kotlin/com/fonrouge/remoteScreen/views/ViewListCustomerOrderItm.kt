@@ -12,11 +12,6 @@ import io.kvision.core.Container
 import io.kvision.core.onEvent
 import io.kvision.form.spinner.SpinnerInput
 import io.kvision.form.text.TextInput
-import io.kvision.html.Button
-import io.kvision.html.ButtonStyle
-import io.kvision.i18n.I18n
-import io.kvision.modal.Alert
-import io.kvision.modal.Confirm
 import io.kvision.remote.obj
 import io.kvision.tabulator.ColumnDefinition
 import io.kvision.tabulator.Editor

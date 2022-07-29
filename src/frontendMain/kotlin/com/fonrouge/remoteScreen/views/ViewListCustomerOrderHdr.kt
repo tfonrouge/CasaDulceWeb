@@ -8,8 +8,6 @@ import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.services.DataListService
 import io.kvision.core.Container
-import io.kvision.html.Button
-import io.kvision.html.ButtonStyle
 import io.kvision.html.Span
 import io.kvision.tabulator.ColumnDefinition
 import io.kvision.tabulator.Editor
