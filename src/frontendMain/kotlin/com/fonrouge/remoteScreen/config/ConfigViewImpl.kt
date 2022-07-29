@@ -7,9 +7,7 @@ import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.model.InventoryItm
-import com.fonrouge.remoteScreen.services.DataItemService
-import com.fonrouge.remoteScreen.services.DataItemServiceManager
-import com.fonrouge.remoteScreen.services.IDataItemService
+import com.fonrouge.remoteScreen.services.*
 import com.fonrouge.remoteScreen.views.*
 
 class ConfigViewImpl : IConfigView {
@@ -41,26 +39,36 @@ class ConfigViewImpl : IConfigView {
 
         /* list */
         val ConfigViewListCustomerOrderHdr =
-            object : ConfigViewList<CustomerOrderHdr, ViewListCustomerOrderHdr, String>(
+            object : ConfigViewList<CustomerOrderHdr, ViewListCustomerOrderHdr, DataListService, String>(
                 name = CustomerOrderHdr::class.simpleName!!,
                 label = "Customer Order Header List",
-                viewFunc = ::ViewListCustomerOrderHdr
+                viewFunc = ::ViewListCustomerOrderHdr,
+                serverManager = DataListServiceManager,
+                function = DataListService::customerOrderHdr
             ) {}
         val ConfigViewListCustomerOrderItm =
-            object : ConfigViewList<CustomerOrderItm, ViewListCustomerOrderItm, String>(
+            object : ConfigViewList<CustomerOrderItm, ViewListCustomerOrderItm, DataListService, String>(
                 name = CustomerOrderItm::class.simpleName!!,
                 label = "Customer Order Item List",
-                viewFunc = ::ViewListCustomerOrderItm
+                viewFunc = ::ViewListCustomerOrderItm,
+                serverManager = DataListServiceManager,
+                function = DataListService::customerOrderItm
             ) {}
-        val ConfigViewListCustomerItm = object : ConfigViewList<CustomerItm, ViewListCustomerItm, String>(
-            name = CustomerItm::class.simpleName!!,
-            label = "Customer List",
-            viewFunc = ::ViewListCustomerItm
-        ) {}
-        val ConfigViewListInventoryItm = object : ConfigViewList<InventoryItm, ViewListInventoryItm, String>(
-            name = InventoryItm::class.simpleName!!,
-            label = "Inventory List",
-            viewFunc = ::ViewListInventoryItm
-        ) {}
+        val ConfigViewListCustomerItm =
+            object : ConfigViewList<CustomerItm, ViewListCustomerItm, DataListService, String>(
+                name = CustomerItm::class.simpleName!!,
+                label = "Customer List",
+                viewFunc = ::ViewListCustomerItm,
+                serverManager = DataListServiceManager,
+                function = DataListService::customerItm
+            ) {}
+        val ConfigViewListInventoryItm =
+            object : ConfigViewList<InventoryItm, ViewListInventoryItm, DataListService, String>(
+                name = InventoryItm::class.simpleName!!,
+                label = "Inventory List",
+                viewFunc = ::ViewListInventoryItm,
+                serverManager = DataListServiceManager,
+                function = DataListService::inventoryItm
+            ) {}
     }
 }

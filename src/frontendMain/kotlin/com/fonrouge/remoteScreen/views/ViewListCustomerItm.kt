@@ -8,7 +8,6 @@ import com.fonrouge.remoteScreen.UploadCatalog
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerItm
 import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.services.DataListService
-import com.fonrouge.remoteScreen.services.DataListServiceManager
 import io.kvision.core.Container
 import io.kvision.core.FlexDirection
 import io.kvision.html.button
@@ -20,8 +19,6 @@ class ViewListCustomerItm(
     override var urlParams: UrlParams?,
 ) : ViewList<CustomerItm, DataListService, String>(
     configView = ConfigViewListCustomerItm,
-    serverManager = DataListServiceManager,
-    function = DataListService::customerItm
 ) {
     override val columnDefinitionList: List<ColumnDefinition<CustomerItm>> = listOf(
         ColumnDefinition(
