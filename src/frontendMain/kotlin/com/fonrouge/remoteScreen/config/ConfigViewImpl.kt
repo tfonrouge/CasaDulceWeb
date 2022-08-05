@@ -3,17 +3,14 @@ package com.fonrouge.remoteScreen.config
 import com.fonrouge.fsLib.apiLib.IConfigView
 import com.fonrouge.fsLib.config.ConfigViewItem
 import com.fonrouge.fsLib.config.ConfigViewList
-import com.fonrouge.remoteScreen.model.CustomerItm
-import com.fonrouge.remoteScreen.model.CustomerOrderHdr
-import com.fonrouge.remoteScreen.model.CustomerOrderItm
-import com.fonrouge.remoteScreen.model.InventoryItm
+import com.fonrouge.remoteScreen.model.*
 import com.fonrouge.remoteScreen.services.*
 import com.fonrouge.remoteScreen.views.*
 
 class ConfigViewImpl : IConfigView {
     companion object {
         val ConfigViewItemCustomerOrderHdr =
-            object : ConfigViewItem<CustomerOrderHdr, ViewItemCustomerOrderHdr, DataItemService, String>(
+            object : ConfigViewItem<     CustomerOrderHdr, ViewItemCustomerOrderHdr, DataItemService, String>(
                 klass = CustomerOrderHdr::class,
                 label = "Customer Order Header",
                 viewFunc = ::ViewItemCustomerOrderHdr,
@@ -70,5 +67,11 @@ class ConfigViewImpl : IConfigView {
                 serverManager = DataListServiceManager,
                 function = DataListService::inventoryItm
             ) {}
-    }
-}
+        val ConfigViewDeliverList =
+            object : ConfigViewList<InventoryItm, ViewListInventoryItm, DataListService, String>(
+                name = DeliveryOrderItm::class.simpleName!!,
+                label = "Delivery List",
+                viewFunc = ::ViewDeliverList,
+                serverManager = DataListServiceManager,
+                function = DataListService::deliverList
+            )

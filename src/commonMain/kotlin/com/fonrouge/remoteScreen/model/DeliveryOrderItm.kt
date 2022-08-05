@@ -1,5 +1,6 @@
 package com.fonrouge.remoteScreen.model
 
+import com.fonrouge.fsLib.model.base.BaseModel
 import io.kvision.types.LocalDateTime
 import kotlinx.serialization.Contextual
 
@@ -11,7 +12,7 @@ data class DeliveryOrderItm(
     @Contextual
     val dateDelivered: LocalDateTime,
     val status: String
-) {
+) : BaseModel<String> {
     val customerOrderItm: CustomerOrderItm? = null
     val customerItm: CustomerItm? = null
     val statusDeliver: String
