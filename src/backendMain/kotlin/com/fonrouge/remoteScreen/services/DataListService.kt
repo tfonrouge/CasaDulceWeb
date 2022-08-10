@@ -5,10 +5,7 @@ import com.fonrouge.remoteScreen.database.customerItmDb
 import com.fonrouge.remoteScreen.database.customerOrderHdrDb
 import com.fonrouge.remoteScreen.database.customerOrderItmDb
 import com.fonrouge.remoteScreen.database.inventoryItmDb
-import com.fonrouge.remoteScreen.model.CustomerItm
-import com.fonrouge.remoteScreen.model.CustomerOrderHdr
-import com.fonrouge.remoteScreen.model.CustomerOrderItm
-import com.fonrouge.remoteScreen.model.InventoryItm
+import com.fonrouge.remoteScreen.model.*
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
 import io.kvision.remote.RemoteSorter
@@ -96,5 +93,15 @@ actual class DataListService : IDataListService {
             sorter = sorter,
         )
         return inventoryItmDb.remoteData(firstStage = firstStage)
+    }
+
+    override suspend fun deliverList(
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
+    ): RemoteData<DeliveryOrderItm> {
+        TODO("Not yet implemented")
     }
 }

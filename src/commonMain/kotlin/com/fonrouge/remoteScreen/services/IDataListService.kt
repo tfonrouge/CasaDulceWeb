@@ -1,10 +1,7 @@
 package com.fonrouge.remoteScreen.services
 
 import com.fonrouge.fsLib.model.IDataList
-import com.fonrouge.remoteScreen.model.CustomerItm
-import com.fonrouge.remoteScreen.model.CustomerOrderHdr
-import com.fonrouge.remoteScreen.model.CustomerOrderItm
-import com.fonrouge.remoteScreen.model.InventoryItm
+import com.fonrouge.remoteScreen.model.*
 import io.kvision.annotations.KVService
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
@@ -50,5 +47,5 @@ interface IDataListService : IDataList {
     filter: List<RemoteFilter>?,
     sorter: List<RemoteSorter>?,
     state: String?
-    ): RemoteData<DeliverList>
+    ): RemoteData<DeliveryOrderItm>
 }

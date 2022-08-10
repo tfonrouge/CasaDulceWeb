@@ -6,7 +6,7 @@ import kotlinx.serialization.Contextual
 
 @kotlinx.serialization.Serializable
 data class DeliveryOrderItm(
-    val _id: String,
+    override val _id: String,
     val customerOrderItm_id: String,
     val qtyDelivered: Int,
     @Contextual

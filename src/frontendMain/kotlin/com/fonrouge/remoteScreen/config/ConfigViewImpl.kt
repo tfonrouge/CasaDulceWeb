@@ -10,7 +10,7 @@ import com.fonrouge.remoteScreen.views.*
 class ConfigViewImpl : IConfigView {
     companion object {
         val ConfigViewItemCustomerOrderHdr =
-            object : ConfigViewItem<     CustomerOrderHdr, ViewItemCustomerOrderHdr, DataItemService, String>(
+            object : ConfigViewItem<CustomerOrderHdr, ViewItemCustomerOrderHdr, DataItemService, String>(
                 klass = CustomerOrderHdr::class,
                 label = "Customer Order Header",
                 viewFunc = ::ViewItemCustomerOrderHdr,
@@ -68,10 +68,12 @@ class ConfigViewImpl : IConfigView {
                 function = DataListService::inventoryItm
             ) {}
         val ConfigViewDeliverList =
-            object : ConfigViewList<InventoryItm, ViewListInventoryItm, DataListService, String>(
+            object : ConfigViewList<DeliveryOrderItm, ViewListDeliveryItm, DataListService, String>(
                 name = DeliveryOrderItm::class.simpleName!!,
                 label = "Delivery List",
-                viewFunc = ::ViewDeliverList,
+                viewFunc = ::ViewListDeliveryItm,
                 serverManager = DataListServiceManager,
                 function = DataListService::deliverList
-            )
+            ) {}
+       }
+    }

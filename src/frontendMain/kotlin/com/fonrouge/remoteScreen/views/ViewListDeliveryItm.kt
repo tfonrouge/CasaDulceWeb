@@ -11,7 +11,7 @@ import io.kvision.tabulator.ColumnDefinition
 import io.kvision.tabulator.Editor
 import io.kvision.tabulator.Formatter
 
-class ViewDeliverList(
+class ViewListDeliveryItm(
     override var urlParams: UrlParams?,
 ) : ViewList<DeliveryOrderItm, DataListService, String>(
     configView = ConfigViewDeliverList,
@@ -46,7 +46,7 @@ class ViewDeliverList(
     )
 
     override fun Container.pageListBody() {
-        fsTabulator(this@ViewDeliverList)
+        fsTabulator(this@ViewListDeliveryItm)
     }
 
 }
