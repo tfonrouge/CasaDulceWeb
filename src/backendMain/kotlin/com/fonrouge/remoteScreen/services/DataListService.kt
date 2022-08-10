@@ -9,6 +9,7 @@ import com.fonrouge.remoteScreen.model.*
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
 import io.kvision.remote.RemoteSorter
+import org.bson.BsonDocument
 import org.litote.kmongo.eq
 import org.litote.kmongo.match
 
@@ -61,8 +62,9 @@ actual class DataListService : IDataListService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<CustomerOrderItm> {
+        val masterViewItemId = state?.let { BsonDocument.parse(it).getString("masterViewItemId").value }
         val firstStage = customerOrderItmDb.buildFirstStage(
-            match = state?.let { match(CustomerOrderItm::customerOrderHdr_id eq it) },
+            match = masterViewItemId.let { match(CustomerOrderItm::customerOrderHdr_id eq it) },
             page = page,
             size = size,
             filter = filter,
