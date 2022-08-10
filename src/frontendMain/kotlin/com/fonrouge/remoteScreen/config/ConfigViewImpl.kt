@@ -75,5 +75,13 @@ class ConfigViewImpl : IConfigView {
                 serverManager = DataListServiceManager,
                 function = DataListService::deliverList
             ) {}
+        val ConfigViewListDeliveryHdr =
+            object : ConfigViewList<DeliveryOrderItm, ViewListDeliveryHdr, DataListService, String>(
+                name = DeliveryOrderItm::class.simpleName!!,
+                label = "Delivery Hdr",
+                viewFunc = ViewListDeliveryHdr,
+                serverManager = DataListServiceManager,
+                function = DataListService::deliverList
+            ) {}
        }
     }
