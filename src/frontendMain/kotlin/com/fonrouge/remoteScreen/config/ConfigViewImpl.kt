@@ -79,7 +79,7 @@ class ConfigViewImpl : IConfigView {
             object : ConfigViewList<DeliveryOrderItm, ViewListDeliveryHdr, DataListService, String>(
                 name = DeliveryOrderItm::class.simpleName!!,
                 label = "Delivery Hdr",
-                viewFunc = ViewListDeliveryHdr,
+                viewFunc = ::ViewListDeliveryHdr,
                 serverManager = DataListServiceManager,
                 function = DataListService::deliverList
             ) {}
