@@ -2,7 +2,7 @@
 
 package com.fonrouge.remoteScreen.model
 
-import com.fonrouge.fsLib.annotations.Collection
+import com.fonrouge.fsLib.annotations.MongoDoc
 import com.fonrouge.fsLib.serializers.FSLocalDateTimeSerializer
 import io.kvision.types.LocalDateTime
 import kotlinx.serialization.EncodeDefault
@@ -14,7 +14,7 @@ import kotlin.js.JsExport
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
 @JsExport
-@Collection("customerOrderHdrs")
+@MongoDoc("customerOrderHdrs")
 data class CustomerOrderHdr(
     override var _id: String = "",
     override var numId: Int = 0,

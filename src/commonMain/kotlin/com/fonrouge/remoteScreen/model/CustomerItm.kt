@@ -1,12 +1,12 @@
 package com.fonrouge.remoteScreen.model
 
-import com.fonrouge.fsLib.annotations.Collection
+import com.fonrouge.fsLib.annotations.MongoDoc
 import com.fonrouge.fsLib.model.base.BaseModel
 import kotlin.js.JsExport
 
 @kotlinx.serialization.Serializable
 @JsExport
-@Collection("customerItms")
+@MongoDoc("customerItms")
 class CustomerItm(
     override var _id: String,
     var company: String,
