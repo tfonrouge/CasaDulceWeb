@@ -12,7 +12,7 @@ import io.kvision.tabulator.ColumnDefinition
 import io.kvision.tabulator.Editor
 import io.kvision.tabulator.Formatter
 
-class ViewListDeliveryHdr (
+class ViewListDeliveryHdr(
     override var urlParams: UrlParams?,
 ) : ViewList<DeliveryOrderItm, DataListService, String>(
     configView = ConfigViewListDeliveryHdr,
@@ -44,7 +44,7 @@ class ViewListDeliveryHdr (
         ),
         ColumnDefinition(
             title = DeliveryOrderItm::statusDeliver.name,
-            formatterComponentFunction = { _, _, data -> Span(data.statusDeliver)}
+            formatterComponentFunction = { _, _, data -> Span(data.statusDeliver) }
         ),
     )
 

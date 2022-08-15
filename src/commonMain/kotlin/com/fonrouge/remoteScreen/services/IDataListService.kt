@@ -42,10 +42,10 @@ interface IDataListService : IDataList {
     ): RemoteData<InventoryItm>
 
     suspend fun deliverList(
-    page: Int?,
-    size: Int?,
-    filter: List<RemoteFilter>?,
-    sorter: List<RemoteSorter>?,
-    state: String?
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
     ): RemoteData<DeliveryOrderItm>
 }
