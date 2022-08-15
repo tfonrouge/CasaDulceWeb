@@ -41,9 +41,10 @@ class ViewItemCustomerOrderHdr(
             ).bind(key = CustomerOrderHdr::customerItm_id, required = true)
         }
 
-        fsTabulator(ConfigViewListCustomerOrderItm.viewFunc(null).apply {
+        fsTabulator(
+            configViewList = ConfigViewListCustomerOrderItm,
             masterViewItem = this@ViewItemCustomerOrderHdr
-        })
+        )
 
         return fPanel
     }
