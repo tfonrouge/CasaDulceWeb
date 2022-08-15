@@ -37,7 +37,7 @@ class ConfigViewImpl : IConfigView {
         /* list */
         val ConfigViewListCustomerOrderHdr =
             object : ConfigViewList<CustomerOrderHdr, ViewListCustomerOrderHdr, DataListService, String>(
-                name = CustomerOrderHdr::class.simpleName!!,
+                klass = CustomerOrderHdr::class,
                 label = "Customer Order Header List",
                 viewFunc = ::ViewListCustomerOrderHdr,
                 serverManager = DataListServiceManager,
@@ -45,7 +45,7 @@ class ConfigViewImpl : IConfigView {
             ) {}
         val ConfigViewListCustomerOrderItm =
             object : ConfigViewList<CustomerOrderItm, ViewListCustomerOrderItm, DataListService, String>(
-                name = CustomerOrderItm::class.simpleName!!,
+                klass = CustomerOrderItm::class,
                 label = "Customer Order Item List",
                 viewFunc = ::ViewListCustomerOrderItm,
                 serverManager = DataListServiceManager,
@@ -53,7 +53,7 @@ class ConfigViewImpl : IConfigView {
             ) {}
         val ConfigViewListCustomerItm =
             object : ConfigViewList<CustomerItm, ViewListCustomerItm, DataListService, String>(
-                name = CustomerItm::class.simpleName!!,
+                klass = CustomerItm::class,
                 label = "Customer List",
                 viewFunc = ::ViewListCustomerItm,
                 serverManager = DataListServiceManager,
@@ -61,7 +61,7 @@ class ConfigViewImpl : IConfigView {
             ) {}
         val ConfigViewListInventoryItm =
             object : ConfigViewList<InventoryItm, ViewListInventoryItm, DataListService, String>(
-                name = InventoryItm::class.simpleName!!,
+                klass = InventoryItm::class,
                 label = "Inventory List",
                 viewFunc = ::ViewListInventoryItm,
                 serverManager = DataListServiceManager,
@@ -69,7 +69,7 @@ class ConfigViewImpl : IConfigView {
             ) {}
         val ConfigViewDeliverList =
             object : ConfigViewList<DeliveryOrderItm, ViewListDeliveryItm, DataListService, String>(
-                name = DeliveryOrderItm::class.simpleName!!,
+                klass = DeliveryOrderItm::class,
                 label = "Delivery List",
                 viewFunc = ::ViewListDeliveryItm,
                 serverManager = DataListServiceManager,
@@ -77,11 +77,11 @@ class ConfigViewImpl : IConfigView {
             ) {}
         val ConfigViewListDeliveryHdr =
             object : ConfigViewList<DeliveryOrderItm, ViewListDeliveryHdr, DataListService, String>(
-                name = DeliveryOrderItm::class.simpleName!!,
+                klass = DeliveryOrderItm::class,
                 label = "Delivery Hdr",
                 viewFunc = ::ViewListDeliveryHdr,
                 serverManager = DataListServiceManager,
                 function = DataListService::deliverList
             ) {}
-       }
     }
+}
