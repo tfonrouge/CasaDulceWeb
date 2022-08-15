@@ -21,7 +21,7 @@ actual class DataListService : IDataListService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<CustomerItm> {
-        val firstStage = customerItmDb.buildFirstStage(
+        val firstStage = customerItmDb.listFirstStage(
             match = null,
             page = page,
             size = size,
@@ -38,7 +38,7 @@ actual class DataListService : IDataListService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<CustomerOrderHdr> {
-        val firstStage = customerOrderHdrDb.buildFirstStage(
+        val firstStage = customerOrderHdrDb.listFirstStage(
             match = null,
             page = page,
             size = size,
@@ -63,7 +63,7 @@ actual class DataListService : IDataListService {
         state: String?
     ): RemoteData<CustomerOrderItm> {
         val masterViewItemId = state?.let { BsonDocument.parse(it).getString("masterViewItemId").value }
-        val firstStage = customerOrderItmDb.buildFirstStage(
+        val firstStage = customerOrderItmDb.listFirstStage(
             match = masterViewItemId.let { match(CustomerOrderItm::customerOrderHdr_id eq it) },
             page = page,
             size = size,
@@ -87,7 +87,7 @@ actual class DataListService : IDataListService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<InventoryItm> {
-        val firstStage = inventoryItmDb.buildFirstStage(
+        val firstStage = inventoryItmDb.listFirstStage(
             match = null,
             page = page,
             size = size,
