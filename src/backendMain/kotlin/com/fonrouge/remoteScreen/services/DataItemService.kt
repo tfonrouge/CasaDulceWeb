@@ -14,46 +14,38 @@ import com.fonrouge.remoteScreen.database.inventoryItmDb
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.model.InventoryItm
-import org.bson.Document
 import org.bson.types.ObjectId
-import org.litote.kmongo.bson
 import org.litote.kmongo.eq
-import org.litote.kmongo.match
 
 actual class DataItemService : IDataItemService {
     override suspend fun customerOrderHdr(
         _id: String?,
         state: StateItem<CustomerOrderHdr>,
     ): ItemContainer<CustomerOrderHdr> {
-        val itemContainer: ItemContainer<CustomerOrderHdr> = when (state.callType) {
+        return when (state.callType) {
             Query -> when (state.crudAction) {
                 Create -> {
-                    customerOrderHdrDb.insertOne(
-                        item = CustomerOrderHdr(
-                            _id = ObjectId().toHexString(),
-                            numId = getNextNumId(customerOrderHdrDb),
-                            customerItm_id = "",
-                            created = localDateTimeNow(),
-                            status = "$"
-                        )
+                    state.item = CustomerOrderHdr(
+                        _id = ObjectId().toHexString(),
+                        numId = getNextNumId(customerOrderHdrDb),
+                        customerItm_id = "",
+                        created = localDateTimeNow(),
+                        status = "$"
                     )
+                    customerOrderHdrDb.insertOne(state = state)
                 }
 
-                Read, Update -> ItemContainer(
-                    item = customerOrderHdrDb.getItem(match = match(CustomerOrderHdr::_id eq _id))
-                )
-
+                Read, Update -> customerOrderHdrDb.getItemContainer(_id = _id)
                 Delete -> ItemContainer(result = true)
             }
 
             Action -> when (state.crudAction) {
                 Create -> {
-//                    state.item?._id = ObjectId().toHexString()
                     state.item?.numId = getNextNumId(customerOrderHdrDb)
-                    customerOrderHdrDb.insertOne(state.item)
+                    customerOrderHdrDb.insertOne(state = state)
                 }
 
-                Update -> customerOrderHdrDb.updateOne(_id = _id, item = state.item)
+                Update -> customerOrderHdrDb.updateOne(_id = _id, state = state)
                 Delete -> {
                     var result = customerOrderItmDb.collection.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
                     if (result.wasAcknowledged()) {
@@ -62,36 +54,32 @@ actual class DataItemService : IDataItemService {
                     ItemContainer(result = result.deletedCount == 1L)
                 }
 
-                else -> ItemContainer(result = false, description = "Unknown error...")
+                else -> ItemContainer(result = false)
             }
         }
-        return itemContainer
     }
 
     override suspend fun customerOrderItm(
         _id: String?,
         state: StateItem<CustomerOrderItm>,
     ): ItemContainer<CustomerOrderItm> {
-        val itemContainer: ItemContainer<CustomerOrderItm>? = when (state.callType) {
+        return when (state.callType) {
             Query -> when (state.crudAction) {
-                Create -> customerOrderItmDb.insertOne(
-                    item = CustomerOrderItm(
+                Create -> {
+                    state.item = CustomerOrderItm(
                         _id = ObjectId().toHexString(),
                         customerOrderHdr_id = state.contextDataUrl?.contextId ?: "",
                         inventoryItm_id = "",
                         qty = 1,
                         size = ""
                     )
-                )
+                    customerOrderItmDb.insertOne(state = state)
+                }
 
-                Read, Update -> ItemContainer(
-                    item = customerOrderItmDb.getItem(
-                        match = match(CustomerOrderItm::_id eq _id),
-                        modelLookupList = listOf(
-                            ModelLookup(
-                                resultProperty = CustomerOrderHdr::customerItm
-                            )
-                        )
+                Read, Update -> customerOrderItmDb.getItemContainer(
+                    _id = _id,
+                    modelLookupList = listOf(
+                        ModelLookup(resultProperty = CustomerOrderHdr::customerItm)
                     )
                 )
 
@@ -99,40 +87,25 @@ actual class DataItemService : IDataItemService {
             }
 
             Action -> when (state.crudAction) {
-                Create -> {
-                    customerOrderItmDb.insertOne(state.item)
-                }
-
-                Read -> TODO()
-                Update -> {
-                    if (state.item != null) {
-                        customerOrderItmDb.updateOne(_id = _id, state.item)
-                    } else
-                        state.json?.bson?.let { bson ->
-                            customerOrderItmDb.updateOne(_id = _id, Document("\$set", bson))
-                        }
-                }
-
+                Create -> customerOrderItmDb.insertOne(state)
+                Update -> customerOrderItmDb.updateOne(_id = _id, state)
                 Delete -> customerOrderItmDb.deleteOneById(_id = _id)
+                else -> ItemContainer(result = false)
             }
         }
-        return itemContainer ?: ItemContainer(result = false)
     }
 
     override suspend fun inventoryItm(
         _id: String?,
         state: StateItem<InventoryItm>,
     ): ItemContainer<InventoryItm> {
-        val itemContainer: ItemContainer<InventoryItm>? = when (state.callType) {
+        return when (state.callType) {
             Query -> when (state.crudAction) {
-                Create -> TODO()
-                Read -> _id?.let { inventoryItmDb.findOneById(_id = it) }
-                Update -> TODO()
-                Delete -> TODO()
+                Read -> inventoryItmDb.getItemContainer(_id)
+                else -> ItemContainer(result = false)
             }
 
-            Action -> TODO()
+            Action -> ItemContainer(result = false)
         }
-        return itemContainer ?: ItemContainer(result = false)
     }
 }
