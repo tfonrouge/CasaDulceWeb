@@ -2,10 +2,10 @@ package com.fonrouge.remoteScreen.services
 
 import com.fonrouge.fsLib.masterViewItemId
 import com.fonrouge.fsLib.mongoDb.ModelLookup
-import com.fonrouge.remoteScreen.database.customerItmDb
-import com.fonrouge.remoteScreen.database.customerOrderHdrDb
-import com.fonrouge.remoteScreen.database.customerOrderItmDb
-import com.fonrouge.remoteScreen.database.inventoryItmDb
+import com.fonrouge.remoteScreen.database.CustomerItmDb
+import com.fonrouge.remoteScreen.database.CustomerOrderHdrDb
+import com.fonrouge.remoteScreen.database.CustomerOrderItmDb
+import com.fonrouge.remoteScreen.database.InventoryItmDb
 import com.fonrouge.remoteScreen.model.*
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
@@ -22,14 +22,14 @@ actual class DataListService : IDataListService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<CustomerItm> {
-        val firstStage = customerItmDb.listFirstStage(
+        val firstStage = CustomerItmDb.listFirstStage(
             match = null,
             page = page,
             size = size,
             filter = filter,
             sorter = sorter,
         )
-        return customerItmDb.remoteData(firstStage = firstStage)
+        return CustomerItmDb.remoteData(firstStage = firstStage)
     }
 
     override suspend fun customerOrderHdr(
@@ -39,20 +39,16 @@ actual class DataListService : IDataListService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<CustomerOrderHdr> {
-        val firstStage = customerOrderHdrDb.listFirstStage(
+        val firstStage = CustomerOrderHdrDb.listFirstStage(
             match = null,
             page = page,
             size = size,
             filter = filter,
             sorter = sorter,
         )
-        return customerOrderHdrDb.remoteData(
+        return CustomerOrderHdrDb.remoteData(
             firstStage = firstStage,
-            modelLookupList = listOf(
-                ModelLookup(
-                    resultProperty = CustomerOrderHdr::customerItm
-                )
-            )
+            ModelLookup(resultProperty = CustomerOrderHdr::customerItm)
         )
     }
 
@@ -64,20 +60,16 @@ actual class DataListService : IDataListService {
         state: String?
     ): RemoteData<CustomerOrderItm> {
         val masterViewItemId = state?.let { Document.parse(it).getString(masterViewItemId) }
-        val firstStage = customerOrderItmDb.listFirstStage(
+        val firstStage = CustomerOrderItmDb.listFirstStage(
             match = match(CustomerOrderItm::customerOrderHdr_id eq masterViewItemId),
             page = page,
             size = size,
             filter = filter,
             sorter = sorter,
         )
-        return customerOrderItmDb.remoteData(
+        return CustomerOrderItmDb.remoteData(
             firstStage = firstStage,
-            modelLookupList = listOf(
-                ModelLookup(
-                    resultProperty = CustomerOrderItm::inventoryItm
-                )
-            )
+            ModelLookup(resultProperty = CustomerOrderItm::inventoryItm)
         )
     }
 
@@ -88,14 +80,14 @@ actual class DataListService : IDataListService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<InventoryItm> {
-        val firstStage = inventoryItmDb.listFirstStage(
+        val firstStage = InventoryItmDb.listFirstStage(
             match = null,
             page = page,
             size = size,
             filter = filter,
             sorter = sorter,
         )
-        return inventoryItmDb.remoteData(firstStage = firstStage)
+        return InventoryItmDb.remoteData(firstStage = firstStage)
     }
 
     override suspend fun deliverList(

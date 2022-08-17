@@ -7,10 +7,10 @@ import com.fonrouge.fsLib.localDateTimeNow
 import com.fonrouge.fsLib.model.CrudAction.*
 import com.fonrouge.fsLib.model.ItemContainer
 import com.fonrouge.fsLib.mongoDb.ModelLookup
-import com.fonrouge.remoteScreen.database.customerOrderHdrDb
-import com.fonrouge.remoteScreen.database.customerOrderItmDb
+import com.fonrouge.remoteScreen.database.CustomerOrderHdrDb
+import com.fonrouge.remoteScreen.database.CustomerOrderItmDb
+import com.fonrouge.remoteScreen.database.InventoryItmDb
 import com.fonrouge.remoteScreen.database.getNextNumId
-import com.fonrouge.remoteScreen.database.inventoryItmDb
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.model.InventoryItm
@@ -27,29 +27,29 @@ actual class DataItemService : IDataItemService {
                 Create -> {
                     state.item = CustomerOrderHdr(
                         _id = ObjectId().toHexString(),
-                        numId = getNextNumId(customerOrderHdrDb),
+                        numId = getNextNumId(CustomerOrderHdrDb),
                         customerItm_id = "",
                         created = localDateTimeNow(),
                         status = "$"
                     )
-                    customerOrderHdrDb.insertOne(state = state)
+                    CustomerOrderHdrDb.insertOne(state = state)
                 }
 
-                Read, Update -> customerOrderHdrDb.getItemContainer(_id = _id)
+                Read, Update -> CustomerOrderHdrDb.getItemContainer(_id = _id)
                 Delete -> ItemContainer(result = true)
             }
 
             Action -> when (state.crudAction) {
                 Create -> {
-                    state.item?.numId = getNextNumId(customerOrderHdrDb)
-                    customerOrderHdrDb.insertOne(state = state)
+                    state.item?.numId = getNextNumId(CustomerOrderHdrDb)
+                    CustomerOrderHdrDb.insertOne(state = state)
                 }
 
-                Update -> customerOrderHdrDb.updateOne(_id = _id, state = state)
+                Update -> CustomerOrderHdrDb.updateOne(_id = _id, state = state)
                 Delete -> {
-                    var result = customerOrderItmDb.collection.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
+                    var result = CustomerOrderItmDb.collection.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
                     if (result.wasAcknowledged()) {
-                        result = customerOrderHdrDb.collection.deleteOne(CustomerOrderHdr::_id eq _id)
+                        result = CustomerOrderHdrDb.collection.deleteOne(CustomerOrderHdr::_id eq _id)
                     }
                     ItemContainer(result = result.deletedCount == 1L)
                 }
@@ -73,23 +73,21 @@ actual class DataItemService : IDataItemService {
                         qty = 1,
                         size = ""
                     )
-                    customerOrderItmDb.insertOne(state = state)
+                    CustomerOrderItmDb.insertOne(state = state)
                 }
 
-                Read, Update -> customerOrderItmDb.getItemContainer(
+                Read, Update -> CustomerOrderItmDb.getItemContainer(
                     _id = _id,
-                    modelLookupList = listOf(
-                        ModelLookup(resultProperty = CustomerOrderHdr::customerItm)
-                    )
+                    ModelLookup(resultProperty = CustomerOrderHdr::customerItm)
                 )
 
                 Delete -> TODO()
             }
 
             Action -> when (state.crudAction) {
-                Create -> customerOrderItmDb.insertOne(state)
-                Update -> customerOrderItmDb.updateOne(_id = _id, state)
-                Delete -> customerOrderItmDb.deleteOneById(_id = _id)
+                Create -> CustomerOrderItmDb.insertOne(state)
+                Update -> CustomerOrderItmDb.updateOne(_id = _id, state)
+                Delete -> CustomerOrderItmDb.deleteOneById(_id = _id)
                 else -> ItemContainer(result = false)
             }
         }
@@ -101,7 +99,7 @@ actual class DataItemService : IDataItemService {
     ): ItemContainer<InventoryItm> {
         return when (state.callType) {
             Query -> when (state.crudAction) {
-                Read -> inventoryItmDb.getItemContainer(_id)
+                Read -> InventoryItmDb.getItemContainer(_id)
                 else -> ItemContainer(result = false)
             }
 

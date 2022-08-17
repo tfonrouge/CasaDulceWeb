@@ -1,6 +1,8 @@
 package com.fonrouge.remoteScreen.database
 
-import com.fonrouge.fsLib.mongoDb.mongoDbCollection
+import com.fonrouge.fsLib.mongoDb.CTableDb
 import org.litote.kmongo.Id
 
-val userItmDb = mongoDbCollection<UserItm, Id<UserItm>>()
+val UserItmDb = object : CTableDb<UserItm, Id<UserItm>>(
+    klass = UserItm::class
+) {}

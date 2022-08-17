@@ -1,7 +1,7 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.remoteScreen.database.customerItmDb
-import com.fonrouge.remoteScreen.database.inventoryItmDb
+import com.fonrouge.remoteScreen.database.CustomerItmDb
+import com.fonrouge.remoteScreen.database.InventoryItmDb
 import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.model.InventoryItm
 import io.kvision.remote.RemoteOption
@@ -25,7 +25,7 @@ actual class SelectService : ISelectService {
                 )
             )
         }
-        val list = customerItmDb.collection.find(or(filter)).limit(100).toList()
+        val list = CustomerItmDb.collection.find(or(filter)).limit(100).toList()
         val result = list.map {
             val s = "<b>co</b>: ${it.company} <b>fn</b>: ${it.firstName} <b>ln</b>: ${it.lastName} - <i>${it._id}</i>"
             RemoteOption(
@@ -62,7 +62,7 @@ actual class SelectService : ISelectService {
                 )
             )
         }
-        val list = inventoryItmDb.collection.find(or(filter)).limit(100).toList()
+        val list = InventoryItmDb.collection.find(or(filter)).limit(100).toList()
         val result = list.map {
             val s = "<b>upc</b>: ${it.upc} <b>name</b>: ${it.name} - <i>${it._id}</i>"
             RemoteOption(

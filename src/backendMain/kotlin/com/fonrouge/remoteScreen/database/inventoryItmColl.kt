@@ -1,6 +1,8 @@
 package com.fonrouge.remoteScreen.database
 
-import com.fonrouge.fsLib.mongoDb.mongoDbCollection
+import com.fonrouge.fsLib.mongoDb.CTableDb
 import com.fonrouge.remoteScreen.model.InventoryItm
 
-val inventoryItmDb = mongoDbCollection<InventoryItm, String>()
+val InventoryItmDb = object : CTableDb<InventoryItm, String>(
+    klass = InventoryItm::class
+) {}

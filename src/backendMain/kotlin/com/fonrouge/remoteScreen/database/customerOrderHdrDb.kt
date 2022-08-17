@@ -2,26 +2,31 @@ package com.fonrouge.remoteScreen.database
 
 import com.fonrouge.fsLib.mongoDb.CTableDb
 import com.fonrouge.fsLib.mongoDb.LookupBuilder
-import com.fonrouge.fsLib.mongoDb.mongoDbCollection
 import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.DocumentWithNumId
 import kotlinx.coroutines.runBlocking
 
-val customerOrderHdrDb = mongoDbCollection(
-    lookupBuilderList = listOf(
-        LookupBuilder(
-            cTableDb = customerItmDb,
-            localField = CustomerOrderHdr::customerItm_id,
-            foreignField = CustomerItm::_id,
-            resultProperty = CustomerOrderHdr::customerItm
-        )
-    )
+val CustomerOrderHdrDb = object : CTableDb<CustomerOrderHdr, String>(
+    klass = CustomerOrderHdr::class
 ) {
-    runBlocking {
-        collection.ensureUniqueIndex(
-            properties = arrayOf(CustomerOrderHdr::numId)
+    override val lookupFun: (() -> List<LookupBuilder<CustomerOrderHdr, *, *, *>>) = {
+        listOf(
+            LookupBuilder(
+                cTableDb = CustomerItmDb::class,
+                localField = CustomerOrderHdr::customerItm_id,
+                foreignField = CustomerItm::_id,
+                resultProperty = CustomerOrderHdr::customerItm
+            )
         )
+    }
+
+    init {
+        runBlocking {
+            collection.ensureUniqueIndex(
+                properties = arrayOf(CustomerOrderHdr::numId)
+            )
+        }
     }
 }
 
