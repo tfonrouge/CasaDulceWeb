@@ -99,11 +99,17 @@ actual class DataItemService : IDataItemService {
     ): ItemContainer<InventoryItm> {
         return when (state.callType) {
             Query -> when (state.crudAction) {
-                Read -> InventoryItmDb.getItemContainer(_id)
-                else -> ItemContainer(result = false)
+                Create -> ItemContainer(result = false, description = "Not implemented ...")
+                Read, Update -> InventoryItmDb.getItemContainer(_id)
+                Delete -> ItemContainer(result = false, description = "Not allowed ...")
             }
 
-            Action -> ItemContainer(result = false)
+            Action -> when(state.crudAction) {
+                Create -> TODO()
+                Read -> TODO()
+                Update -> InventoryItmDb.updateOne(_id, state)
+                Delete -> TODO()
+            }
         }
     }
 }

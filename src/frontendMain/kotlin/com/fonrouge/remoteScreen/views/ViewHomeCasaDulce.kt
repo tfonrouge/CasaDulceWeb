@@ -30,41 +30,39 @@ class ViewHomeCasaDulce(
         }
     }
 
-    override fun displayPage(container: Container) {
-        container.apply {
+    override fun Container.displayPage() {
 
-            routing.updatePageLinks()
+        routing.updatePageLinks()
 
-            pageBanner()
+        pageBanner()
 
-            div().bind(userProfile) { userProfile ->
-                if (!userProfile.name.isNullOrEmpty()) {
-                    navbar {
-                        nav {
-                            dropDown(
-                                text = "Customer Orders",
-                                elements = listOf(
-                                    ConfigViewListCustomerOrderHdr.labelUrl
-                                ),
-                                forNavbar = true
-                            )
-                            dropDown(
-                                text = "Catalog",
-                                elements = listOf(
-                                    ConfigViewListInventoryItm.labelUrl,
-                                    ConfigViewListCustomerItm.labelUrl,
-                                ),
-                                icon = "fas fa-rep",
-                                forNavbar = true
-                            )
-                        }
-                        nav(rightAlign = true) {
-                            navLink("System", icon = "fab fa-windows")
-                        }
+        div().bind(userProfile) { userProfile ->
+            if (!userProfile.name.isNullOrEmpty()) {
+                navbar {
+                    nav {
+                        dropDown(
+                            text = "Customer Orders",
+                            elements = listOf(
+                                ConfigViewListCustomerOrderHdr.labelUrl
+                            ),
+                            forNavbar = true
+                        )
+                        dropDown(
+                            text = "Catalog",
+                            elements = listOf(
+                                ConfigViewListInventoryItm.labelUrl,
+                                ConfigViewListCustomerItm.labelUrl,
+                            ),
+                            icon = "fas fa-rep",
+                            forNavbar = true
+                        )
                     }
-                } else {
-                    Span("")
+                    nav(rightAlign = true) {
+                        navLink("System", icon = "fab fa-windows")
+                    }
                 }
+            } else {
+                Span("")
             }
         }
     }
