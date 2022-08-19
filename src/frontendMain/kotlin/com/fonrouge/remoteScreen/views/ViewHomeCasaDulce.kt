@@ -7,6 +7,7 @@ import com.fonrouge.remoteScreen.config.ConfigViewCasaDulceHome
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerItm
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderHdr
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListInventoryItm
+import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewPriceChecker
 import com.fonrouge.remoteScreen.model.Model
 import com.fonrouge.remoteScreen.model.Model.userProfile
 import io.kvision.core.Container
@@ -39,13 +40,13 @@ class ViewHomeCasaDulce(
         div().bind(userProfile) { userProfile ->
             if (!userProfile.name.isNullOrEmpty()) {
                 navbar {
-                    nav {
+                    nav(className = "navButtons") {
                         dropDown(
                             text = "Customer Orders",
                             elements = listOf(
                                 ConfigViewListCustomerOrderHdr.labelUrl
                             ),
-                            forNavbar = true
+//                                forNavbar = true
                         )
                         dropDown(
                             text = "Catalog",
@@ -54,7 +55,15 @@ class ViewHomeCasaDulce(
                                 ConfigViewListCustomerItm.labelUrl,
                             ),
                             icon = "fas fa-rep",
-                            forNavbar = true
+//                                forNavbar = true
+                        )
+                        dropDown(
+                            text = "Price Checker",
+                            icon = "fas barcode-read",
+                            elements = listOf(
+                                ConfigViewPriceChecker.labelUrl,
+                            ),
+//                                forNavbar = true
                         )
                     }
                     nav(rightAlign = true) {
@@ -63,6 +72,7 @@ class ViewHomeCasaDulce(
                 }
             } else {
                 Span("")
+
             }
         }
     }

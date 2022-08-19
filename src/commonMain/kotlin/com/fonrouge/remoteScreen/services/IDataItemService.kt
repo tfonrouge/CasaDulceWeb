@@ -24,4 +24,9 @@ interface IDataItemService : IDataItem {
         _id: String?,
         state: StateItem<InventoryItm>,
     ): ItemContainer<InventoryItm>
+
+    suspend fun priceCheck(
+        _id: String?,
+        state: StateItem<InventoryItm>,
+    ): ItemContainer<InventoryItm>
 }

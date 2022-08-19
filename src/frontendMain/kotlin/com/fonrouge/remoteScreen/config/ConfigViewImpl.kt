@@ -1,6 +1,7 @@
 package com.fonrouge.remoteScreen.config
 
 import com.fonrouge.fsLib.apiLib.IConfigView
+import com.fonrouge.fsLib.config.ConfigView
 import com.fonrouge.fsLib.config.ConfigViewItem
 import com.fonrouge.fsLib.config.ConfigViewList
 import com.fonrouge.remoteScreen.model.*
@@ -9,6 +10,14 @@ import com.fonrouge.remoteScreen.views.*
 
 class ConfigViewImpl : IConfigView {
     companion object {
+        val ConfigViewPriceChecker =
+            object : ConfigView<ViewPriceCheck>(
+                name = "priceChecker",
+                label = "Price Checker",
+                viewFunc = ::ViewPriceCheck
+            ) {}
+
+        /* Item */
         val ConfigViewItemCustomerOrderHdr =
             object : ConfigViewItem<CustomerOrderHdr, ViewItemCustomerOrderHdr, DataItemService, String>(
                 klass = CustomerOrderHdr::class,
