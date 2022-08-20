@@ -24,17 +24,7 @@ actual class DataItemService : IDataItemService {
     ): ItemContainer<CustomerOrderHdr> {
         return when (state.callType) {
             Query -> when (state.crudAction) {
-                Create -> {
-                    state.item = CustomerOrderHdr(
-                        _id = ObjectId().toHexString(),
-                        numId = getNextNumId(CustomerOrderHdrDb),
-                        customerItm_id = "",
-                        created = localDateTimeNow(),
-                        status = "$"
-                    )
-                    CustomerOrderHdrDb.insertOne(state = state)
-                }
-
+                Create -> ItemContainer(result = true)
                 Read, Update -> CustomerOrderHdrDb.getItemContainer(_id = _id)
                 Delete -> ItemContainer(result = true)
             }
