@@ -24,7 +24,7 @@ val CustomerOrderHdrDb = object : CTableDb<CustomerOrderHdr, String>(
     init {
         runBlocking {
             collection.ensureUniqueIndex(
-                properties = arrayOf(CustomerOrderHdr::numId)
+                CustomerOrderHdr::numId
             )
         }
     }
