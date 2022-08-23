@@ -1,5 +1,6 @@
 package com.fonrouge.remoteScreen.views
 
+import com.fonrouge.fsLib.apiLib.AppScope
 import com.fonrouge.fsLib.layout.fsTabulator
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewList
@@ -14,6 +15,7 @@ import io.kvision.html.button
 import io.kvision.panel.flexPanel
 import io.kvision.tabulator.ColumnDefinition
 import io.kvision.tabulator.Editor
+import kotlinx.coroutines.launch
 
 class ViewListCustomerItm(
     override var urlParams: UrlParams?,
@@ -78,10 +80,10 @@ class ViewListCustomerItm(
         flexPanel(direction = FlexDirection.ROW) {
             button(text = "Upload Customer Catalog").onClick {
                 val uploadCatalog = UploadCatalog(CatalogType.Customers)
-//                AppScope.launch {
-//                    uploadCatalog.getResult()
-//                    tabRemote.reload()
-//                }
+                AppScope.launch {
+                    uploadCatalog.getResult()
+                    this@ViewListCustomerItm.dataUpdate()
+                }
             }
         }
     }

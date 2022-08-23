@@ -3,6 +3,8 @@
 package com.fonrouge.remoteScreen.model
 
 import com.fonrouge.fsLib.annotations.MongoDoc
+import com.fonrouge.fsLib.localDateTimeNow
+import com.fonrouge.fsLib.newObjectId
 import com.fonrouge.fsLib.serializers.FSLocalDateTimeSerializer
 import io.kvision.types.LocalDateTime
 import kotlinx.serialization.EncodeDefault
@@ -16,12 +18,12 @@ import kotlin.js.JsExport
 @JsExport
 @MongoDoc("customerOrderHdrs")
 data class CustomerOrderHdr(
-    override var _id: String = "",
+    override var _id: String = newObjectId(),
     override var numId: Int = 0,
-    var customerItm_id: String,
+    var customerItm_id: String = "",
     @Suppress("NON_EXPORTABLE_TYPE")
     @Serializable(with = FSLocalDateTimeSerializer::class)
-    var created: LocalDateTime,
+    var created: LocalDateTime = localDateTimeNow(),
     var status: String = "$",
     var userProfile: String = ""
 ) : DocumentWithNumId<String> {

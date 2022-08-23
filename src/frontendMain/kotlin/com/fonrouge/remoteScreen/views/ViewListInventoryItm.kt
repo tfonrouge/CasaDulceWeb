@@ -70,7 +70,7 @@ class ViewListInventoryItm(
                 val uploadCatalog = UploadCatalog(CatalogType.Products)
                 AppScope.launch {
                     uploadCatalog.getResult()
-                    tabulator?.reload()
+                    this@ViewListInventoryItm.dataUpdate()
                 }
             }
         }

@@ -3,7 +3,6 @@ package com.fonrouge.remoteScreen.services
 import com.fonrouge.fsLib.StateItem
 import com.fonrouge.fsLib.StateItem.CallType.Action
 import com.fonrouge.fsLib.StateItem.CallType.Query
-import com.fonrouge.fsLib.localDateTimeNow
 import com.fonrouge.fsLib.model.CrudAction.*
 import com.fonrouge.fsLib.model.ItemContainer
 import com.fonrouge.fsLib.mongoDb.ModelLookup
@@ -24,17 +23,19 @@ actual class DataItemService : IDataItemService {
     ): ItemContainer<CustomerOrderHdr> {
         return when (state.callType) {
             Query -> when (state.crudAction) {
-                Create -> ItemContainer(result = true)
+                Create -> {
+                    state.item = CustomerOrderHdr().also {
+                        it.numId = getNextNumId(CustomerOrderHdrDb)
+                    }
+                    CustomerOrderHdrDb.insertOne(state = state)
+                }
+
                 Read, Update -> CustomerOrderHdrDb.getItemContainer(_id = _id)
                 Delete -> ItemContainer(result = true)
             }
 
             Action -> when (state.crudAction) {
-                Create -> {
-                    state.item?.numId = getNextNumId(CustomerOrderHdrDb)
-                    CustomerOrderHdrDb.insertOne(state = state)
-                }
-
+                Create -> ItemContainer(result = false)
                 Update -> CustomerOrderHdrDb.updateOne(_id = _id, state = state)
                 Delete -> {
                     var result = CustomerOrderItmDb.collection.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
@@ -94,7 +95,7 @@ actual class DataItemService : IDataItemService {
                 Delete -> ItemContainer(result = false, description = "Not allowed ...")
             }
 
-            Action -> when(state.crudAction) {
+            Action -> when (state.crudAction) {
                 Create -> TODO()
                 Read -> TODO()
                 Update -> InventoryItmDb.updateOne(_id, state)
