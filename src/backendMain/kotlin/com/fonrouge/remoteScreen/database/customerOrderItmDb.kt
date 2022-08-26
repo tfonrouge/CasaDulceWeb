@@ -24,7 +24,7 @@ val CustomerOrderItmDb = object : CTableDb<CustomerOrderItm, String>(
 
     init {
         runBlocking {
-            collection.ensureUniqueIndex(
+            coroutineColl.ensureUniqueIndex(
                 properties = arrayOf(CustomerOrderItm::customerOrderHdr_id, CustomerOrderItm::inventoryItm_id),
                 indexOptions = IndexOptions().partialFilterExpression(CustomerOrderItm::inventoryItm_id eq null)
             )

@@ -38,9 +38,9 @@ actual class DataItemService : IDataItemService {
                 Create -> ItemContainer(result = false)
                 Update -> CustomerOrderHdrDb.updateOne(_id = _id, state = state)
                 Delete -> {
-                    var result = CustomerOrderItmDb.collection.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
+                    var result = CustomerOrderItmDb.coroutineColl.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
                     if (result.wasAcknowledged()) {
-                        result = CustomerOrderHdrDb.collection.deleteOne(CustomerOrderHdr::_id eq _id)
+                        result = CustomerOrderHdrDb.coroutineColl.deleteOne(CustomerOrderHdr::_id eq _id)
                     }
                     ItemContainer(result = result.deletedCount == 1L)
                 }

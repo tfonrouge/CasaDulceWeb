@@ -23,7 +23,7 @@ val CustomerOrderHdrDb = object : CTableDb<CustomerOrderHdr, String>(
 
     init {
         runBlocking {
-            collection.ensureUniqueIndex(
+            coroutineColl.ensureUniqueIndex(
                 CustomerOrderHdr::numId
             )
         }
@@ -31,7 +31,7 @@ val CustomerOrderHdrDb = object : CTableDb<CustomerOrderHdr, String>(
 }
 
 suspend fun getNextNumId(cTableDb: CTableDb<out DocumentWithNumId<String>, String>): Int {
-    return cTableDb.collection.find()
+    return cTableDb.coroutineColl.find()
         .descendingSort(DocumentWithNumId<*>::numId)
         .limit(1)
         .first()?.let { it.numId + 1 } ?: 1

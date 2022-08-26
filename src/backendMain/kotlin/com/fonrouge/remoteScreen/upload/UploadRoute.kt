@@ -59,8 +59,8 @@ fun Route.uploadsRoute() {
 
             val result = try {
                 when (catalogType) {
-                    CatalogType.Products -> importProducts(InventoryItmDb.collection, inventoryItmMap, fileName)
-                    CatalogType.Customers -> importProducts(CustomerItmDb.collection, customerItmMap, fileName)
+                    CatalogType.Products -> importProducts(InventoryItmDb.coroutineColl, inventoryItmMap, fileName)
+                    CatalogType.Customers -> importProducts(CustomerItmDb.coroutineColl, customerItmMap, fileName)
                 }
                 buildJsonObject { put("response", "$fileDescription and imported ok") }
             } catch (e: Exception) {

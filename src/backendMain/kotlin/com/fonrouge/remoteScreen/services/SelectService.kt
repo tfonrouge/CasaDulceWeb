@@ -25,7 +25,7 @@ actual class SelectService : ISelectService {
                 )
             )
         }
-        val list = CustomerItmDb.collection.find(or(filter)).limit(100).toList()
+        val list = CustomerItmDb.coroutineColl.find(or(filter)).limit(100).toList()
         val result = list.map {
             val s = "<b>co</b>: ${it.company} <b>fn</b>: ${it.firstName} <b>ln</b>: ${it.lastName} - <i>${it._id}</i>"
             RemoteOption(
@@ -62,7 +62,7 @@ actual class SelectService : ISelectService {
                 )
             )
         }
-        val list = InventoryItmDb.collection.find(or(filter)).limit(100).toList()
+        val list = InventoryItmDb.coroutineColl.find(or(filter)).limit(100).toList()
         val result = list.map {
             val s = "<b>upc</b>: ${it.upc} <b>name</b>: ${it.name} - <i>${it._id}</i>"
             RemoteOption(

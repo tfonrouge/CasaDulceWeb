@@ -52,11 +52,11 @@ fun Application.main() {
             userParamName = "username"
             passwordParamName = "password"
             validate { credentials ->
-                UserItmDb.collection.find(
+                UserItmDb.coroutineColl.find(
                     UserItm::userName eq credentials.name,
                 ).collation(collation = collation).first()?.let {
                     if (Bcrypt.verify(credentials.password, it.password.encodeToByteArray())) {
-                        UserItmDb.collection.updateOne(
+                        UserItmDb.coroutineColl.updateOne(
                             filter = UserItm::_id eq it._id, update = set(UserItm::lastAccess setTo Date())
                         )
                         UserIdPrincipal(credentials.name)
@@ -73,7 +73,7 @@ fun Application.main() {
         authenticate {
             post("login") {
                 val result = call.principal<UserIdPrincipal>()?.let { userIdPrincipal ->
-                    UserItmDb.collection.find(UserItm::userName eq userIdPrincipal.name).collation(collation).first()
+                    UserItmDb.coroutineColl.find(UserItm::userName eq userIdPrincipal.name).collation(collation).first()
                         ?.let { user ->
                             val profile = UserProfile(
                                 id = user._id.toString(),
