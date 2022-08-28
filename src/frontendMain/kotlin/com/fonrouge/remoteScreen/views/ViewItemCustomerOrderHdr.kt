@@ -42,7 +42,7 @@ class ViewItemCustomerOrderHdr(
         }
 
         fsTabulator(
-            configViewList = ConfigViewListCustomerOrderItm,
+            configView = ConfigViewListCustomerOrderItm,
             masterViewItem = this@ViewItemCustomerOrderHdr
         )
 
