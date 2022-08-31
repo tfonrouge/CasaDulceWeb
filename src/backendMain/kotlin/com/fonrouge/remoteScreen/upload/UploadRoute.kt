@@ -90,6 +90,9 @@ private val inventoryItmMap = listOf(
     ColumnMap(InventoryItm::size.name, "Size", CellType.CtString),
     ColumnMap(InventoryItm::upc.name, "UPC", CellType.CtString),
     ColumnMap(InventoryItm::departmentName.name, "Department Name", CellType.CtString),
+    ColumnMap(InventoryItm::price.name, "Regular Price", CellType.CtInt),
+    ColumnMap(InventoryItm::wprice.name, "Wholesale Price", CellType.CtInt),
+    ColumnMap(InventoryItm::cprice.name, "Case Price", CellType.CtInt),
 )
 
 private val customerItmMap = listOf(

@@ -61,6 +61,21 @@ class ViewListInventoryItm(
             field = InventoryItm::departmentName.name,
             headerFilter = Editor.INPUT
         ),
+        ColumnDefinition(
+            title = InventoryItm::price.name,
+            field = InventoryItm::price.name,
+            headerFilter = Editor.INPUT
+        ),
+        ColumnDefinition(
+            title = InventoryItm::wprice.name,
+            field = InventoryItm::wprice.name,
+            headerFilter = Editor.INPUT
+        ),
+        ColumnDefinition(
+            title = InventoryItm::cprice.name,
+            field = InventoryItm::cprice.name,
+            headerFilter = Editor.INPUT
+        )
     )
 
     override fun Container.pageListBody() {
