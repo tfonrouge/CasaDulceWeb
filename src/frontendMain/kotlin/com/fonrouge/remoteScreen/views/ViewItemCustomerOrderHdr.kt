@@ -38,7 +38,9 @@ class ViewItemCustomerOrderHdr(
                 label = "Customer:",
                 serviceManager = SelectServiceManager,
                 function = ISelectService::customerItm,
-            ).bind(key = CustomerOrderHdr::customerItm_id, required = true)
+            ).bind(key = CustomerOrderHdr::customerItm_id, validator = {
+                !it.value.isNullOrEmpty()
+            })
         }
 
         fsTabulator(
