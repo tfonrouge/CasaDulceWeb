@@ -62,18 +62,18 @@ class ViewListInventoryItm(
             headerFilter = Editor.INPUT
         ),
         ColumnDefinition(
-            title = InventoryItm::price.name,
-            field = InventoryItm::price.name,
+            title = InventoryItm::Price.name,
+            field = InventoryItm::Price.name,
             headerFilter = Editor.INPUT
         ),
         ColumnDefinition(
-            title = InventoryItm::wprice.name,
-            field = InventoryItm::wprice.name,
+            title = InventoryItm::wholesalePrice.name,
+            field = InventoryItm::wholesalePrice.name,
             headerFilter = Editor.INPUT
         ),
         ColumnDefinition(
-            title = InventoryItm::cprice.name,
-            field = InventoryItm::cprice.name,
+            title = InventoryItm::casePrice.name,
+            field = InventoryItm::casePrice.name,
             headerFilter = Editor.INPUT
         )
     )

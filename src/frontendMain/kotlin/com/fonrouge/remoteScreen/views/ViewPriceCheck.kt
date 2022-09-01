@@ -51,9 +51,9 @@ class ViewPriceCheck(
                                         text(label = "Size:").bind(InventoryItm::size)
                                         text(label = "Upc:").bind(InventoryItm::upc)
                                         text(label = "Dept:").bind(InventoryItm::departmentName)
-                                        spinner(label = "Case Price").bind(InventoryItm::cprice)
-                                        spinner(label = "Wholesale Price").bind(InventoryItm::wprice)
-                                        spinner(label = "Regular Price:", decimals = 2).bind(InventoryItm::price)
+                                        spinner(label = "Case Price", decimalSeparator = ".").bind(InventoryItm::casePrice)
+                                        spinner(label = "Wholesale Price", decimalSeparator = ".").bind(InventoryItm::wholesalePrice)
+                                        spinner(label = "Regular Price:", decimalSeparator = ".").bind(InventoryItm::Price)
                                     }
                                 }
                             }
