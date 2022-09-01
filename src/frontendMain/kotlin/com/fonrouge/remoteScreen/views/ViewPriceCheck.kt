@@ -53,7 +53,7 @@ class ViewPriceCheck(
                                         text(label = "Dept:").bind(InventoryItm::departmentName)
                                         spinner(label = "Case Price", decimalSeparator = ".").bind(InventoryItm::casePrice)
                                         spinner(label = "Wholesale Price", decimalSeparator = ".").bind(InventoryItm::wholesalePrice)
-                                        spinner(label = "Regular Price:", decimalSeparator = ".").bind(InventoryItm::Price)
+                                        spinner(label = "Regular Price:", decimalSeparator = ".").bind(InventoryItm::price)
                                     }
                                 }
                             }

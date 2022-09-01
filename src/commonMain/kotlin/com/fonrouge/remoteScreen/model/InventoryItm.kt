@@ -14,7 +14,7 @@ class InventoryItm(
     var size: String,
     var upc: String,
     var departmentName: String?,
-    var Price: Double?,
+    var price: Double?,
     var wholesalePrice: Double?,
     var casePrice: Double?,
 ) : BaseModel<String>

@@ -62,8 +62,8 @@ class ViewListInventoryItm(
             headerFilter = Editor.INPUT
         ),
         ColumnDefinition(
-            title = InventoryItm::Price.name,
-            field = InventoryItm::Price.name,
+            title = InventoryItm::price.name,
+            field = InventoryItm::price.name,
             headerFilter = Editor.INPUT
         ),
         ColumnDefinition(
