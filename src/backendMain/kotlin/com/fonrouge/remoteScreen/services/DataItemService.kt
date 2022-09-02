@@ -59,7 +59,7 @@ actual class DataItemService : IDataItemService {
                 Create -> {
                     state.item = CustomerOrderItm(
                         _id = ObjectId().toHexString(),
-                        customerOrderHdr_id = state.contextDataUrl?.contextId ?: "",
+                        customerOrderHdr_id = state.contextId(),
                         inventoryItm_id = "",
                         qty = 1,
                         size = ""

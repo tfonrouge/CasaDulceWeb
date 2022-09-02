@@ -4,9 +4,7 @@ import com.fonrouge.fsLib.mongoDb.CTableDb
 import com.fonrouge.fsLib.mongoDb.LookupBuilder
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.model.InventoryItm
-import com.mongodb.client.model.IndexOptions
 import kotlinx.coroutines.runBlocking
-import org.litote.kmongo.eq
 
 val CustomerOrderItmDb = object : CTableDb<CustomerOrderItm, String>(
     klass = CustomerOrderItm::class
@@ -24,11 +22,8 @@ val CustomerOrderItmDb = object : CTableDb<CustomerOrderItm, String>(
 
     init {
         runBlocking {
-            coroutineColl.ensureIndex(
+            coroutineColl.ensureUniqueIndex(
                 properties = arrayOf(CustomerOrderItm::customerOrderHdr_id, CustomerOrderItm::inventoryItm_id),
-                indexOptions = IndexOptions()
-                    .unique(true)
-                    .partialFilterExpression(CustomerOrderItm::inventoryItm_id eq null)
             )
         }
     }

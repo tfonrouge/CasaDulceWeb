@@ -51,9 +51,18 @@ class ViewPriceCheck(
                                         text(label = "Size:").bind(InventoryItm::size)
                                         text(label = "Upc:").bind(InventoryItm::upc)
                                         text(label = "Dept:").bind(InventoryItm::departmentName)
-                                        spinner(label = "Case Price", decimalSeparator = ".").bind(InventoryItm::casePrice)
-                                        spinner(label = "Wholesale Price", decimalSeparator = ".").bind(InventoryItm::wholesalePrice)
-                                        spinner(label = "Regular Price:", decimalSeparator = ".").bind(InventoryItm::price)
+                                        spinner(
+                                            label = "Case Price",
+                                            decimalSeparator = "."
+                                        ).bind(InventoryItm::casePrice)
+                                        spinner(
+                                            label = "Wholesale Price",
+                                            decimalSeparator = "."
+                                        ).bind(InventoryItm::wholesalePrice)
+                                        spinner(
+                                            label = "Regular Price:",
+                                            decimalSeparator = "."
+                                        ).bind(InventoryItm::price)
                                     }
                                 }
                             }
@@ -66,7 +75,7 @@ class ViewPriceCheck(
 //                                                textBarcode.input.getElementJQuery()?.select()
                                                 textBarcode.input.getElementJQuery()?.select()
                                                 val item = ModelDataItemService.dataItemService.inventoryItm(
-                                                        _id = barcode,
+                                                    _id = barcode,
                                                     state = StateItem(
                                                         crudAction = CrudAction.Read,
                                                         callType = StateItem.CallType.Query
