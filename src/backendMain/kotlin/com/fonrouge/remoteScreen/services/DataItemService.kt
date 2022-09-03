@@ -31,7 +31,7 @@ actual class DataItemService : IDataItemService {
                 }
 
                 Read, Update -> CustomerOrderHdrDb.getItemContainer(_id = _id)
-                Delete -> ItemContainer(result = true)
+                Delete -> ItemContainer(isOk = true)
             }
 
             Action -> when (state.crudAction) {
@@ -42,10 +42,10 @@ actual class DataItemService : IDataItemService {
                     if (result.wasAcknowledged()) {
                         result = CustomerOrderHdrDb.coroutineColl.deleteOne(CustomerOrderHdr::_id eq _id)
                     }
-                    ItemContainer(result = result.deletedCount == 1L)
+                    ItemContainer(isOk = result.deletedCount == 1L)
                 }
 
-                else -> ItemContainer(result = false)
+                else -> ItemContainer(isOk = false)
             }
         }
     }
@@ -78,7 +78,7 @@ actual class DataItemService : IDataItemService {
             Action -> when (state.crudAction) {
                 Create, Update -> CustomerOrderItmDb.updateOne(_id = _id, state)
                 Delete -> CustomerOrderItmDb.deleteOneById(_id = _id)
-                else -> ItemContainer(result = false)
+                else -> ItemContainer(isOk = false)
             }
         }
     }
@@ -89,9 +89,9 @@ actual class DataItemService : IDataItemService {
     ): ItemContainer<InventoryItm> {
         return when (state.callType) {
             Query -> when (state.crudAction) {
-                Create -> ItemContainer(result = false, description = "Not implemented ...")
+                Create -> ItemContainer(isOk = false, msgError = "Not implemented ...")
                 Read, Update -> InventoryItmDb.getItemContainer(_id)
-                Delete -> ItemContainer(result = false, description = "Not allowed ...")
+                Delete -> ItemContainer(isOk = false, msgError = "Not allowed ...")
             }
 
             Action -> when (state.crudAction) {
