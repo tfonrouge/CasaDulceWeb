@@ -1,6 +1,6 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.fsLib.masterViewItemId
+import com.fonrouge.fsLib.contextDataUrl
 import com.fonrouge.fsLib.mongoDb.ModelLookup
 import com.fonrouge.remoteScreen.database.CustomerItmDb
 import com.fonrouge.remoteScreen.database.CustomerOrderHdrDb
@@ -10,7 +10,6 @@ import com.fonrouge.remoteScreen.model.*
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
 import io.kvision.remote.RemoteSorter
-import org.bson.Document
 import org.litote.kmongo.eq
 import org.litote.kmongo.match
 
@@ -59,9 +58,8 @@ actual class DataListService : IDataListService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<CustomerOrderItm> {
-        val masterViewItemId = state?.let { Document.parse(it).getString(masterViewItemId) }
         val firstStage = CustomerOrderItmDb.listFirstStage(
-            match = match(CustomerOrderItm::customerOrderHdr_id eq masterViewItemId),
+            match = match(CustomerOrderItm::customerOrderHdr_id eq state?.contextDataUrl?.contextIdValue()),
             page = page,
             size = size,
             filter = filter,
