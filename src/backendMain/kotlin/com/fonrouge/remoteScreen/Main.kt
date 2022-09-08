@@ -52,6 +52,7 @@ fun Application.main() {
             userParamName = "username"
             passwordParamName = "password"
             validate { credentials ->
+                println("credentials = $credentials")
                 UserItmDb.coroutineColl.find(
                     UserItm::userName eq credentials.name,
                 ).collation(collation = collation).first()?.let {
