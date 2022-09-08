@@ -13,6 +13,7 @@ import com.fonrouge.remoteScreen.database.getNextNumId
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.model.InventoryItm
+import org.apache.xmlbeans.impl.xb.xsdschema.BlockSet.Member2.Item
 import org.bson.types.ObjectId
 import org.litote.kmongo.eq
 
@@ -27,7 +28,11 @@ actual class DataItemService : IDataItemService {
                     state.item = CustomerOrderHdr().also {
                         it.numId = getNextNumId(CustomerOrderHdrDb)
                     }
-                    CustomerOrderHdrDb.insertOne(state = state)
+                    val result = CustomerOrderHdrDb.coroutineColl.findOne (
+                        filter = CustomerOrderHdr::status eq "$"
+                    )
+//                    CustomerOrderHdrDb.insertOne(state = state)
+                    ItemContainer(isOk = result == null, msgError = "Existen Pedidos Nuevos por lo que No se permite crear nuevos Pedidos ...")
                 }
 
                 Read, Update -> CustomerOrderHdrDb.getItemContainer(_id = _id)
@@ -41,8 +46,10 @@ actual class DataItemService : IDataItemService {
                         CustomerOrderItmDb.coroutineColl.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
                     if (result.wasAcknowledged()) {
                         result = CustomerOrderHdrDb.coroutineColl.deleteOne(CustomerOrderHdr::_id eq _id)
+                        ItemContainer(isOk = result.deletedCount == 1L)
+                    } else {
+                        ItemContainer(isOk = false, msgError = "Error en operacion requerida ...")
                     }
-                    ItemContainer(isOk = result.deletedCount == 1L)
                 }
 
                 else -> ItemContainer(isOk = false)
@@ -89,8 +96,10 @@ actual class DataItemService : IDataItemService {
     ): ItemContainer<InventoryItm> {
         return when (state.callType) {
             Query -> when (state.crudAction) {
-                Create -> ItemContainer(isOk = false, msgError = "Not implemented ...")
-                Read, Update -> InventoryItmDb.getItemContainer(_id)
+                Create -> ItemContainer(isOk = false, msgError = "Not allowed ...")
+                Read -> InventoryItmDb.getItemContainer(_id)
+                Update -> ItemContainer(isOk = false, msgError = "No se permite editar ... ")
+                //InventoryItmDb.getItemContainer(_id)
                 Delete -> ItemContainer(isOk = false, msgError = "Not allowed ...")
             }
 
