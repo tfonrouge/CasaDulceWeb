@@ -25,6 +25,9 @@ class ConfigViewImpl : IConfigView {
                 viewFunc = ::ViewItemCustomerOrderHdr,
                 serverManager = DataItemServiceManager,
                 function = IDataItemService::customerOrderHdr,
+                labelId = { customerOrderHdr ->
+                    customerOrderHdr?.numId?.toString() ?: "?"
+                }
             ) {}
         val ConfigViewItemCustomerOrderItm =
             object : ConfigViewItem<CustomerOrderItm, ViewItemCustomerOrderItm, DataItemService, String>(
