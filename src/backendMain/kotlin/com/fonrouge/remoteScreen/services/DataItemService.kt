@@ -35,8 +35,7 @@ actual class DataItemService : IDataItemService {
                     ItemContainer(isOk = result == null, msgError = "Existen Pedidos Nuevos por lo que No se permite crear nuevos Pedidos ...")
                 }
 
-                Read, Update -> CustomerOrderHdrDb.getItemContainer(_id = _id)
-                Delete -> ItemContainer(isOk = true)
+                Read, Update, Delete -> CustomerOrderHdrDb.getItemContainer(_id = _id)
             }
 
             Action -> when (state.crudAction) {
