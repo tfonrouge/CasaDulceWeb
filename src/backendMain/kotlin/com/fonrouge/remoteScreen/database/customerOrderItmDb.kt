@@ -2,6 +2,7 @@ package com.fonrouge.remoteScreen.database
 
 import com.fonrouge.fsLib.mongoDb.CTableDb
 import com.fonrouge.fsLib.mongoDb.LookupBuilder
+import com.fonrouge.fsLib.mongoDb.localToForeign
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.model.InventoryItm
 import kotlinx.coroutines.runBlocking
@@ -13,8 +14,7 @@ val CustomerOrderItmDb = object : CTableDb<CustomerOrderItm, String>(
         listOf(
             LookupBuilder(
                 cTableDb = InventoryItmDb::class,
-                localField = CustomerOrderItm::inventoryItm_id,
-                foreignField = InventoryItm::_id,
+                localToForeign = CustomerOrderItm::inventoryItm_id localToForeign InventoryItm::_id,
                 resultProperty = CustomerOrderItm::inventoryItm
             )
         )

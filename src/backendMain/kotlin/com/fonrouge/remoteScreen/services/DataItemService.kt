@@ -13,7 +13,6 @@ import com.fonrouge.remoteScreen.database.getNextNumId
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.CustomerOrderItm
 import com.fonrouge.remoteScreen.model.InventoryItm
-import org.apache.xmlbeans.impl.xb.xsdschema.BlockSet.Member2.Item
 import org.bson.types.ObjectId
 import org.litote.kmongo.eq
 
@@ -28,11 +27,14 @@ actual class DataItemService : IDataItemService {
                     state.item = CustomerOrderHdr().also {
                         it.numId = getNextNumId(CustomerOrderHdrDb)
                     }
-                    val result = CustomerOrderHdrDb.coroutineColl.findOne (
+                    val result = CustomerOrderHdrDb.coroutineColl.findOne(
                         filter = CustomerOrderHdr::status eq "$"
                     )
 //                    CustomerOrderHdrDb.insertOne(state = state)
-                    ItemContainer(isOk = result == null, msgError = "Existen Pedidos Nuevos por lo que No se permite crear nuevos Pedidos ...")
+                    ItemContainer(
+                        isOk = result == null,
+                        msgError = "Existen Pedidos Nuevos por lo que No se permite crear nuevos Pedidos ..."
+                    )
                 }
 
                 Read, Update, Delete -> CustomerOrderHdrDb.getItemContainer(_id = _id)
