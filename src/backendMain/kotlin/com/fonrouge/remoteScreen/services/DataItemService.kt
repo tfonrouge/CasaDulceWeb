@@ -27,14 +27,14 @@ actual class DataItemService : IDataItemService {
                     state.item = CustomerOrderHdr().also {
                         it.numId = getNextNumId(CustomerOrderHdrDb)
                     }
-                    val result = CustomerOrderHdrDb.coroutineColl.findOne(
+                    val documentoNuevo = CustomerOrderHdrDb.coroutineColl.findOne(
                         filter = CustomerOrderHdr::status eq "$"
                     )
-//                    CustomerOrderHdrDb.insertOne(state = state)
-                    ItemContainer(
-                        isOk = result == null,
-                        msgError = "Existen Pedidos Nuevos por lo que No se permite crear nuevos Pedidos ..."
-                    )
+                    if (documentoNuevo == null) {
+                        CustomerOrderHdrDb.insertOne(state)
+                    } else {
+                        ItemContainer(isOk = false, msgError = "Existe previamente documento Nuevo ...")
+                    }
                 }
 
                 Read, Update, Delete -> CustomerOrderHdrDb.getItemContainer(_id = _id)
