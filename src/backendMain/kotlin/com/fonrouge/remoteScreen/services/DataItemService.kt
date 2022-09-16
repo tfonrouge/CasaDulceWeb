@@ -80,7 +80,7 @@ actual class DataItemService : IDataItemService {
                     ModelLookup(resultProperty = CustomerOrderHdr::customerItm)
                 )
 
-                Delete -> TODO()
+                Delete -> CustomerOrderItmDb.deleteOneById(_id)
             }
 
             Action -> when (state.crudAction) {
