@@ -75,12 +75,13 @@ actual class DataItemService : IDataItemService {
                     CustomerOrderItmDb.insertOne(state = state)
                 }
 
-                Read, Update -> CustomerOrderItmDb.getItemContainer(
+                Read, Update, Delete -> CustomerOrderItmDb.getItemContainer(
                     _id = _id,
                     ModelLookup(resultProperty = CustomerOrderHdr::customerItm)
                 )
 
                 Delete -> CustomerOrderItmDb.deleteOneById(_id)
+                else -> ItemContainer(isOk = true)
             }
 
             Action -> when (state.crudAction) {
