@@ -22,7 +22,7 @@ repositories {
 val kotlinVersion: String by System.getProperties()
 val kvisionVersion: String by System.getProperties()
 val fsLibVersion: String by project
-val logbackVersion: String by project
+//val logbackVersion: String by project
 val exposed_version: String by project
 
 val webDir = file("src/frontendMain/web")
@@ -86,7 +86,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
                 implementation(kotlin("reflect"))
-                implementation("ch.qos.logback:logback-classic:$logbackVersion")
+//                implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
                 implementation("org.apache.poi:poi-ooxml:5.2.2")
             }
