@@ -42,7 +42,7 @@ fun Application.main() {
     install(DefaultHeaders)
     install(CallLogging)
     install(Sessions) {
-        cookie<UserProfile>("KTSESSION", storage = SessionStorageMemory()) {
+        cookie<User>("KTSESSION", storage = SessionStorageMemory()) {
             cookie.path = "/"
             cookie.extensions["SameSite"] = "strict"
         }
@@ -55,7 +55,7 @@ fun Application.main() {
                 println("credentials = $credentials")
                 UserItmDb.coroutineColl.find(
                     UserItm::userName eq credentials.name,
-                ).collation(collation = collation).first()?.let {
+                ).collation(collation = collation()).first()?.let {
                     if (Bcrypt.verify(credentials.password, it.password.encodeToByteArray())) {
                         UserItmDb.coroutineColl.updateOne(
                             filter = UserItm::_id eq it._id, update = set(UserItm::lastAccess setTo Date())
@@ -64,7 +64,7 @@ fun Application.main() {
                     } else null
                 }
             }
-            skipWhen { call -> call.sessions.get<UserProfile>() != null }
+            skipWhen { call -> call.sessions.get<User>() != null }
         }
     }
     routing {
@@ -74,9 +74,9 @@ fun Application.main() {
         authenticate {
             post("login") {
                 val result = call.principal<UserIdPrincipal>()?.let { userIdPrincipal ->
-                    UserItmDb.coroutineColl.find(UserItm::userName eq userIdPrincipal.name).collation(collation).first()
+                    UserItmDb.coroutineColl.find(UserItm::userName eq userIdPrincipal.name).collation(collation()).first()
                         ?.let { user ->
-                            val profile = UserProfile(
+                            val profile = User(
                                 id = user._id.toString(),
                                 name = user.fullName,
                                 username = user.userName,
@@ -87,15 +87,15 @@ fun Application.main() {
                         }
                 }
                 if (result == null) {
-                    call.sessions.clear<UserProfile>()
+                    call.sessions.clear<User>()
                 }
                 call.respond(result ?: HttpStatusCode.Unauthorized)
             }
             get("logout") {
-                call.sessions.clear<UserProfile>()
+                call.sessions.clear<User>()
                 call.respondRedirect("/")
             }
-            applyRoutes(UserProfileServiceManager)
+            applyRoutes(UserServiceManager)
             applyRoutes(CasaDulceServiceManager)
             applyRoutes(DataItemServiceManager)
             applyRoutes(DataListServiceManager)

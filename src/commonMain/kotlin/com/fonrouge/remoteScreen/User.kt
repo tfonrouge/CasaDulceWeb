@@ -3,7 +3,7 @@ package com.fonrouge.remoteScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserProfile(
+data class User(
     val id: String? = null,
     val name: String? = null,
     val username: String? = null,
@@ -11,4 +11,4 @@ data class UserProfile(
     val password2: String? = null,
 )
 
-var userProfile: UserProfile? = null
+var user: User? = null

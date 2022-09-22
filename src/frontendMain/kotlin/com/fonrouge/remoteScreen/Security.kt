@@ -19,7 +19,7 @@ class LoginWindow : Dialog<Credentials>(closeButton = false, escape = false, ani
     private val loginPanel: FormPanel<Credentials>
     private val loginButton: Button
     private val userButton: Button
-    private val registerPanel: FormPanel<UserProfile>
+    private val registerPanel: FormPanel<User>
 
     //    private val registerButton: Button
     private val cancelButton: Button
@@ -38,27 +38,27 @@ class LoginWindow : Dialog<Credentials>(closeButton = false, escape = false, ani
         }
 
         registerPanel = formPanel {
-            add(UserProfile::name, Text(label = "Nombre:"), required = true)
-            add(UserProfile::username, Text(label = "Login:"), required = true)
+            add(User::name, Text(label = "Nombre:"), required = true)
+            add(User::username, Text(label = "Login:"), required = true)
             add(
-                UserProfile::password,
+                User::password,
                 Password(label = "Password:"),
                 required = true,
                 validatorMessage = { "Password muy corto" }) {
                 (it.getValue()?.length ?: 0) >= 8
             }
             add(
-                UserProfile::password2,
+                User::password2,
                 Password(label = "Confirm password:"),
                 required = true,
                 validatorMessage = { "Password muy corto" }) {
                 (it.getValue()?.length ?: 0) >= 8
             }
             validator = {
-                val result = it[UserProfile::password] == it[UserProfile::password2]
+                val result = it[User::password] == it[User::password2]
                 if (!result) {
-                    it.getControl(UserProfile::password)?.validatorError = "Passwords no son iguales"
-                    it.getControl(UserProfile::password2)?.validatorError = "Passwords no son iguales"
+                    it.getControl(User::password)?.validatorError = "Passwords no son iguales"
+                    it.getControl(User::password2)?.validatorError = "Passwords no son iguales"
                 }
                 result
             }

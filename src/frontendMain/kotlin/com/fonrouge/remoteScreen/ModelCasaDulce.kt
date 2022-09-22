@@ -7,7 +7,7 @@ object ModelCasaDulce {
 
     private val casaDulceService = CasaDulceService()
 
-    val obsProfile = ObservableValue(UserProfile())
+    val obsProfile = ObservableValue(User())
 
     suspend fun ping(hello: String): String {
         return Security.withAuth {

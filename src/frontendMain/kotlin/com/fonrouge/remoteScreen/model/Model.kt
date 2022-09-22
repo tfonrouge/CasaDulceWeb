@@ -1,18 +1,18 @@
 package com.fonrouge.remoteScreen.model
 
 import com.fonrouge.remoteScreen.Security
-import com.fonrouge.remoteScreen.UserProfile
-import com.fonrouge.remoteScreen.services.UserProfileService
+import com.fonrouge.remoteScreen.User
+import com.fonrouge.remoteScreen.services.UserService
 import io.kvision.state.ObservableValue
 
 object Model {
-    private val profileService = UserProfileService()
+    private val profileService = UserService()
 
-    val userProfile = ObservableValue(UserProfile())
+    val user = ObservableValue(User())
 
     suspend fun readProfile() {
         Security.withAuth {
-            userProfile.value = profileService.getProfile()
+            user.value = profileService.getUser()
         }
     }
 }

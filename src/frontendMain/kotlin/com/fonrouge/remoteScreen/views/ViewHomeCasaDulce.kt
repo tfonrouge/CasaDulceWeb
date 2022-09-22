@@ -9,7 +9,7 @@ import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListC
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListInventoryItm
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewPriceChecker
 import com.fonrouge.remoteScreen.model.Model
-import com.fonrouge.remoteScreen.model.Model.userProfile
+import com.fonrouge.remoteScreen.model.Model.user
 import io.kvision.core.Container
 import io.kvision.dropdown.dropDown
 import io.kvision.html.Span
@@ -37,7 +37,7 @@ class ViewHomeCasaDulce(
 
         pageBanner()
 
-        div().bind(userProfile) { userProfile ->
+        div().bind(user) { userProfile ->
             if (!userProfile.name.isNullOrEmpty()) {
                 navbar {
                     nav(className = "navButtons") {
