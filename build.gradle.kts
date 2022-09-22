@@ -49,10 +49,10 @@ kotlin {
                     open = false,
                     port = 3000,
                     proxy = mutableMapOf(
-                        "/kv/*" to "http://localhost:8000",
-                        "/login" to "http://localhost:8000",
-                        "/logout" to "http://localhost:8000",
-                        "/kvws/*" to mapOf("target" to "ws://localhost:8000", "ws" to true)
+                        "/kv/*" to "http://localhost:8080",
+                        "/login" to "http://localhost:8080",
+                        "/logout" to "http://localhost:8080",
+                        "/kvws/*" to mapOf("target" to "ws://localhost:8080", "ws" to true)
                     ),
                     static = mutableListOf("$buildDir/processedResources/frontend/main")
                 )
