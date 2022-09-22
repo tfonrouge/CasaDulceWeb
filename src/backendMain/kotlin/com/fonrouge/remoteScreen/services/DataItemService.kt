@@ -79,9 +79,6 @@ actual class DataItemService : IDataItemService {
                     _id = _id,
                     ModelLookup(resultProperty = CustomerOrderHdr::customerItm)
                 )
-
-                Delete -> CustomerOrderItmDb.deleteOneById(_id)
-                else -> ItemContainer(isOk = true)
             }
 
             Action -> when (state.crudAction) {
