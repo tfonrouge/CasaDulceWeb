@@ -6,5 +6,5 @@ import com.fonrouge.remoteScreen.views.ViewHomeCasaDulce
 object ConfigViewCasaDulceHome : ConfigViewHome<ViewHomeCasaDulce>(
     name = "",
     label = "",
-    viewFunc = ::ViewHomeCasaDulce
+    viewFunc = ViewHomeCasaDulce::class
 )
