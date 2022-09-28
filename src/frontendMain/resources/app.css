@@ -1,37 +1,7 @@
-
-.areaTrabajo-preview {
-    border-top: 1px solid rgba(0, 0, 0, .1);
-    padding: 1.5rem 0;
-}
-
-.areaTrabajo-meta {
-    display: block;
-    position: relative;
-    font-weight: 300;
-}
-
-.areaTrabajo-meta img {
-    color: #FF010B;
-    display: inline-block;
-    vertical-align: middle;
-    height: 32px;
-    width: 32px;
-    border-radius: 30px;
-}
-
 .home-page .banner {
     background: #FF010B;
     box-shadow: inset 0 8px 8px -8px rgba(0, 0, 0, .3), inset 0 -8px 8px -8px rgba(0, 0, 0, .3);
     box-sizing: inherit;
-}
-
-.tagCloud-containers {
-    margin: auto;
-    width: 100%;
-    border: 3px solid green;
-    padding: 10px;
-    alignment-baseline: center;
-    background: #FF010B;
 }
 
 .banner {
@@ -99,10 +69,6 @@
     /*font-size: 0.6vw;*/
 }
 
-.vpanel-item {
-
-}
-
 .hpanel-item {
     /*spacing = 20, justify = JustifyContent.START    */
     margin-right: 20px;
@@ -133,8 +99,4 @@
 
 .form-label {
     font-size: small;
-}
-
-.form-group .form-control {
-    font-size: 2rem;
 }

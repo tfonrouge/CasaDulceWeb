@@ -50,6 +50,9 @@ actual class SelectService : ISelectService {
         return result
     }
 
+    companion object
+
+    val limit = 10
     override suspend fun inventoryItm(search: String?, initial: String?, state: String?): List<RemoteOption> {
         val filter = mutableListOf<Bson>()
         initial?.let { filter.add(InventoryItm::_id eq initial) }
@@ -62,7 +65,7 @@ actual class SelectService : ISelectService {
                 )
             )
         }
-        val list = InventoryItmDb.coroutineColl.find(or(filter)).limit(100).toList()
+        val list = InventoryItmDb.coroutineColl.find(or(filter)).limit(limit + 1).toList()
         val result = list.map {
             val s = "<b>upc</b>: ${it.upc} <b>name</b>: ${it.name} - <i>${it._id}</i>"
             RemoteOption(
@@ -71,7 +74,7 @@ actual class SelectService : ISelectService {
                 content = s
             )
         }.toMutableList()
-        if (result.size == 100) {
+        if (result.size == limit + 1) {
             result.add(
                 RemoteOption(
                     divider = true
@@ -79,7 +82,7 @@ actual class SelectService : ISelectService {
             )
             result.add(
                 RemoteOption(
-                    content = "<i>result is limited to 100 items ...</i>",
+                    content = "<i>result is limited to $limit items ...</i>",
                     disabled = true
                 )
             )

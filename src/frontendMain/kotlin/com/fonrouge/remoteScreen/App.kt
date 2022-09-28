@@ -53,7 +53,7 @@ class App : Application() {
                         marginRight = 1.rem
                         onClick { routing.navigate("/") }
                     }
-                    h1("Casa Dulce: ${it}")
+                    h1("Casa Dulce: ${it?.configView?.label}")
                     div().bind(ModelCasaDulce.obsProfile) {
                         if (it.username != null) {
                             button(text = "Logout", icon = "fas fa-sign-out-alt", style = ButtonStyle.OUTLINEDANGER) {

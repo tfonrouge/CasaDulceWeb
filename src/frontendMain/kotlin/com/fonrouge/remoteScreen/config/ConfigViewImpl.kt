@@ -21,7 +21,7 @@ class ConfigViewImpl : IConfigView {
         val ConfigViewItemCustomerOrderHdr =
             object : ConfigViewItem<CustomerOrderHdr, ViewItemCustomerOrderHdr, DataItemService, String>(
                 klass = CustomerOrderHdr::class,
-                label = "Customer Order Header",
+                label = "Customer Order",
                 viewFunc = ViewItemCustomerOrderHdr::class,
                 serverManager = DataItemServiceManager,
                 function = IDataItemService::customerOrderHdr,
@@ -50,7 +50,7 @@ class ConfigViewImpl : IConfigView {
         val ConfigViewListCustomerOrderHdr =
             object : ConfigViewList<CustomerOrderHdr, ViewListCustomerOrderHdr, DataListService, String>(
                 klass = CustomerOrderHdr::class,
-                label = "Customer Order Header List",
+                label = "Customer Orders",
                 viewFunc = ViewListCustomerOrderHdr::class,
                 serverManager = DataListServiceManager,
                 function = DataListService::customerOrderHdr
@@ -58,7 +58,7 @@ class ConfigViewImpl : IConfigView {
         val ConfigViewListCustomerOrderItm =
             object : ConfigViewList<CustomerOrderItm, ViewListCustomerOrderItm, DataListService, String>(
                 klass = CustomerOrderItm::class,
-                label = "Customer Order Item List",
+                label = "Customer Order Items",
                 viewFunc = ViewListCustomerOrderItm::class,
                 serverManager = DataListServiceManager,
                 function = DataListService::customerOrderItm

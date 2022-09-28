@@ -10,7 +10,6 @@ import com.toxicbakery.bcrypt.Bcrypt
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
-import io.ktor.server.plugins.callloging.*
 import io.ktor.server.plugins.compression.*
 import io.ktor.server.plugins.defaultheaders.*
 import io.ktor.server.response.*
@@ -30,8 +29,8 @@ const val uploadsDir = "uploads"
 @Suppress("unused")
 fun Application.main() {
     install(MongoDbPlugin) {
-        serverUrl = "casadulce.fonrouge.com"
-//        serverUrl = "localhost"
+//        serverUrl = "casadulce.fonrouge.com"
+        serverUrl = "localhost"
         serverPort = 27017
         database = "CasaDulce"
         authSource = "CasaDulce"
@@ -40,7 +39,7 @@ fun Application.main() {
     }
     install(Compression)
     install(DefaultHeaders)
-    install(CallLogging)
+//    install(CallLogging)
     install(Sessions) {
         cookie<User>("KTSESSION", storage = SessionStorageMemory()) {
             cookie.path = "/"
@@ -74,7 +73,8 @@ fun Application.main() {
         authenticate {
             post("login") {
                 val result = call.principal<UserIdPrincipal>()?.let { userIdPrincipal ->
-                    UserItmDb.coroutineColl.find(UserItm::userName eq userIdPrincipal.name).collation(collation()).first()
+                    UserItmDb.coroutineColl.find(UserItm::userName eq userIdPrincipal.name).collation(collation())
+                        .first()
                         ?.let { user ->
                             val profile = User(
                                 id = user._id.toString(),
@@ -100,6 +100,7 @@ fun Application.main() {
             applyRoutes(DataItemServiceManager)
             applyRoutes(DataListServiceManager)
             applyRoutes(SelectServiceManager)
+            applyRoutes(TypeaheadServiceManager)
             uploadsRoute()
         }
     }

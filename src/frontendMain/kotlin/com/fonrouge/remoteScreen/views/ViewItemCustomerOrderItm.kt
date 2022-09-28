@@ -2,6 +2,7 @@ package com.fonrouge.remoteScreen.views
 
 import com.fonrouge.fsLib.StateItem
 import com.fonrouge.fsLib.apiLib.AppScope
+import com.fonrouge.fsLib.layout.formColumn
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.model.CrudAction
 import com.fonrouge.fsLib.view.ViewItem
@@ -32,39 +33,47 @@ class ViewItemCustomerOrderItm(
 
     override fun Container.pageItemBody(): FormPanel<CustomerOrderItm> {
         return formPanel {
-            selectRemote(
-                serviceManager = SelectServiceManager,
-                function = ISelectService::inventoryItm,
-                label = "Inventory Item:"
-            ) {
-                onEvent {
-                    change = {
-                        self.value?.let { _id ->
-                            AppScope.launch {
-                                dataItemService.inventoryItm(
-                                    _id = _id,
-                                    state = StateItem(
-                                        crudAction = CrudAction.Read,
-                                        callType = StateItem.CallType.Query
-                                    )
-                                ).item?.let {
-                                    textSize.value = it.size
+            formColumn(12) {
+//                typeaheadRemote(
+//                    label = "Inventory Item:",
+//                    serviceManager = TypeaheadServiceManager,
+//                    function = ITypeaheadService::inventoryItem,
+//                    floating = true,
+//                ).bind(key = CustomerOrderItm::inventoryItm_id)
+//            }
+                selectRemote(
+                    serviceManager = SelectServiceManager,
+                    function = ISelectService::inventoryItm,
+                    label = "Inventory Item:"
+                ) {
+                    onEvent {
+                        change = {
+                            self.value?.let { _id ->
+                                AppScope.launch {
+                                    dataItemService.inventoryItm(
+                                        _id = _id,
+                                        state = StateItem(
+                                            crudAction = CrudAction.Read,
+                                            callType = StateItem.CallType.Query
+                                        )
+                                    ).item?.let {
+                                        textSize.value = it.size
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            }.bind(key = CustomerOrderItm::inventoryItm_id, required = true)
-
-            flexPanel(direction = FlexDirection.ROW, spacing = 20) {
-                spinner(label = "Qty:")
-                    .bind(key = CustomerOrderItm::qty, required = true) { spinner ->
-                        spinner.value?.let {
-                            it.toInt() > 0
+                }.bind(key = CustomerOrderItm::inventoryItm_id, required = true)
+                flexPanel(direction = FlexDirection.ROW, spacing = 20) {
+                    spinner(label = "Qty:")
+                        .bind(key = CustomerOrderItm::qty, required = true) { spinner ->
+                            spinner.value?.let {
+                                it.toInt() > 0
+                            }
                         }
-                    }
-                textSize = text(label = "Size:")
-                    .bind(key = CustomerOrderItm::size, required = true)
+                    textSize = text(label = "Size:")
+                        .bind(key = CustomerOrderItm::size, required = true)
+                }
             }
         }
     }
