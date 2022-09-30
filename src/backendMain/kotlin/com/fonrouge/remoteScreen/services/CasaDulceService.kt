@@ -1,13 +1,8 @@
 package com.fonrouge.remoteScreen.services
 
-import com.google.inject.Inject
 import io.ktor.server.application.*
 
-actual class CasaDulceService : ICasaDulceService {
-
-    @Inject
-    lateinit var call: ApplicationCall
-
+actual class CasaDulceService(private val call: ApplicationCall) : ICasaDulceService {
     override suspend fun getProfile() = call.withProfile { it }
 
     override suspend fun ping(hello: String): String {

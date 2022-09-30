@@ -17,6 +17,8 @@ import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import io.kvision.remote.applyRoutes
 import io.kvision.remote.kvisionInit
+import org.koin.core.module.dsl.factoryOf
+import org.koin.dsl.module
 import org.litote.kmongo.eq
 import org.litote.kmongo.set
 import org.litote.kmongo.setTo
@@ -29,8 +31,8 @@ const val uploadsDir = "uploads"
 @Suppress("unused")
 fun Application.main() {
     install(MongoDbPlugin) {
-//        serverUrl = "casadulce.fonrouge.com"
-        serverUrl = "localhost"
+        serverUrl = "casadulce.fonrouge.com"
+//        serverUrl = "localhost"
         serverPort = 27017
         database = "CasaDulce"
         authSource = "CasaDulce"
@@ -104,5 +106,13 @@ fun Application.main() {
             uploadsRoute()
         }
     }
-    kvisionInit()
+    val module = module {
+        factoryOf(::CasaDulceService)
+        factoryOf(::DataItemService)
+        factoryOf(::DataListService)
+        factoryOf(::SelectService)
+        factoryOf(::TypeaheadService)
+        factoryOf(::UserService)
+    }
+    kvisionInit(module)
 }
