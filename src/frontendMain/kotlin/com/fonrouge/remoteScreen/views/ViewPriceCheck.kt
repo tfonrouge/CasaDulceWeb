@@ -37,7 +37,7 @@ class ViewPriceCheck(
             div(className = "content") {
                 formRow {
                     formColumn(6) {
-                        image1 = image(src = "Logotipo-Casa-Dulce.png", shape = ImageShape.THUMBNAIL) {
+                        image1 = image(src = "Logotipo-Casa-Dulce2.jpeg", shape = ImageShape.THUMBNAIL) {
                             width = 50.vw
                         }
                     }

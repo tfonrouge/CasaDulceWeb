@@ -25,10 +25,6 @@ class ViewListCustomerOrderHdr(
             formatter = Formatter.ROWSELECTION
         ),
         ColumnDefinition(
-            title = "_id",
-            field = "_id"
-        ),
-        ColumnDefinition(
             title = CustomerOrderHdr::numId.name,
             field = CustomerOrderHdr::numId.name,
             headerFilter = Editor.INPUT
@@ -39,9 +35,12 @@ class ViewListCustomerOrderHdr(
             headerFilter = Editor.INPUT
         ),
         ColumnDefinition(
-            title = CustomerItm::company.name,
-            field = "customerItm.company",
-            headerFilter = Editor.INPUT
+            title = CustomerItm::firstName.name,
+            field = "customerItm.firstName"
+        ),
+        ColumnDefinition(
+            title = CustomerItm::lastName.name,
+            field = "customerItm.lastName"
         ),
         ColumnDefinition(
             title = CustomerOrderHdr::status.name,
