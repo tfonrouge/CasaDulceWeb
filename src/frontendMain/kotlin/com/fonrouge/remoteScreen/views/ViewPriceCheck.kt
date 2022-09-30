@@ -100,6 +100,7 @@ class ViewPriceCheck(
         window.setInterval(
             {
                 textBarcode.focus()
+                textBarcode.input.getElementJQuery()?.select()
             },
             1000,
         )
