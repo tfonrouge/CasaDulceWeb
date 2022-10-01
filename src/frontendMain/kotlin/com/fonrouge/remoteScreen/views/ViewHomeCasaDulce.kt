@@ -6,6 +6,7 @@ import com.fonrouge.fsLib.view.ViewHome
 import com.fonrouge.remoteScreen.config.ConfigViewCasaDulceHome
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerItm
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderHdr
+import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListDeliveryHdr
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListInventoryItm
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewPriceChecker
 import com.fonrouge.remoteScreen.model.Model
@@ -46,6 +47,13 @@ class ViewHomeCasaDulce(
                             elements = listOf(
                                 ConfigViewListCustomerOrderHdr.labelUrl
                             ),
+                        )
+                        dropDown(
+                            text = "Delivery Orders",
+                            elements = listOf(
+                                ConfigViewListDeliveryHdr.labelUrl
+                            ),
+
 //                                forNavbar = true
                         )
                         dropDown(

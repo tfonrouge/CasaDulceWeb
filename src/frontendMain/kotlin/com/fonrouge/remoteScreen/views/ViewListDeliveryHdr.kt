@@ -38,8 +38,8 @@ class ViewListDeliveryHdr(
             headerFilter = Editor.INPUT
         ),
         ColumnDefinition(
-            title = DeliveryOrderItm::dateDelivered.name,
-            field = DeliveryOrderItm::dateDelivered.name,
+            title = DeliveryOrderItm::qtyDelivered.name,
+            field = DeliveryOrderItm::qtyDelivered.name,
             headerFilter = Editor.INPUT
         ),
         ColumnDefinition(
