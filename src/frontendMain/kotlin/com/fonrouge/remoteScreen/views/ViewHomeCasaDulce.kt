@@ -1,7 +1,7 @@
 package com.fonrouge.remoteScreen.views
 
-import com.fonrouge.fsLib.apiLib.AppScope
 import com.fonrouge.fsLib.lib.UrlParams
+import com.fonrouge.fsLib.view.AppScope
 import com.fonrouge.fsLib.view.ViewHome
 import com.fonrouge.remoteScreen.config.ConfigViewCasaDulceHome
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerItm

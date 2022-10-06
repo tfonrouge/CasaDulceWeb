@@ -1,10 +1,10 @@
 package com.fonrouge.remoteScreen.views
 
 import com.fonrouge.fsLib.StateItem
-import com.fonrouge.fsLib.apiLib.AppScope
 import com.fonrouge.fsLib.layout.formColumn
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.model.CrudAction
+import com.fonrouge.fsLib.view.AppScope
 import com.fonrouge.fsLib.view.ViewItem
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewItemCustomerOrderItm
 import com.fonrouge.remoteScreen.model.CustomerOrderItm

@@ -1,9 +1,9 @@
 package com.fonrouge.remoteScreen.config
 
-import com.fonrouge.fsLib.apiLib.IConfigView
 import com.fonrouge.fsLib.config.ConfigView
 import com.fonrouge.fsLib.config.ConfigViewItem
 import com.fonrouge.fsLib.config.ConfigViewList
+import com.fonrouge.fsLib.config.IConfigView
 import com.fonrouge.remoteScreen.model.*
 import com.fonrouge.remoteScreen.services.*
 import com.fonrouge.remoteScreen.views.*

@@ -1,9 +1,9 @@
 package com.fonrouge.remoteScreen
 
-import com.fonrouge.fsLib.apiLib.AppScope
-import com.fonrouge.fsLib.apiLib.KVWebManager
-import com.fonrouge.fsLib.apiLib.showView
 import com.fonrouge.fsLib.layout.centeredMessage
+import com.fonrouge.fsLib.view.AppScope
+import com.fonrouge.fsLib.view.KVWebManager
+import com.fonrouge.fsLib.view.showView
 import com.fonrouge.remoteScreen.config.ConfigViewCasaDulceHome
 import com.fonrouge.remoteScreen.config.ConfigViewImpl
 import io.kvision.*
