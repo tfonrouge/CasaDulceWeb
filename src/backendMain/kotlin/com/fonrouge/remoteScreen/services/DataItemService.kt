@@ -24,14 +24,13 @@ actual class DataItemService : IDataItemService {
         return when (state.callType) {
             Query -> when (state.crudAction) {
                 Create -> {
-                    state.item = CustomerOrderHdr().also {
-                        it.numId = getNextNumId(CustomerOrderHdrDb)
-                    }
                     val documentoNuevo = CustomerOrderHdrDb.coroutineColl.findOne(
                         filter = CustomerOrderHdr::status eq "$"
                     )
                     if (documentoNuevo == null) {
-                        CustomerOrderHdrDb.insertOne(state)
+                        CustomerOrderHdrDb.insertOne(state.copy(item = CustomerOrderHdr().also {
+                            it.numId = getNextNumId(CustomerOrderHdrDb)
+                        }))
                     } else {
                         ItemContainer(isOk = false, msgError = "Existe previamente documento Nuevo ...")
                     }
@@ -65,14 +64,17 @@ actual class DataItemService : IDataItemService {
         return when (state.callType) {
             Query -> when (state.crudAction) {
                 Create -> {
-                    state.item = CustomerOrderItm(
-                        _id = ObjectId().toHexString(),
-                        customerOrderHdr_id = state.contextId(),
-                        inventoryItm_id = "",
-                        qty = 1,
-                        size = ""
+                    CustomerOrderItmDb.insertOne(
+                        state = state.copy(
+                            item = CustomerOrderItm(
+                                _id = ObjectId().toHexString(),
+                                customerOrderHdr_id = state.contextId(),
+                                inventoryItm_id = "",
+                                qty = 1,
+                                size = ""
+                            )
+                        )
                     )
-                    CustomerOrderItmDb.insertOne(state = state)
                 }
 
                 Read, Update, Delete -> CustomerOrderItmDb.getItemContainer(

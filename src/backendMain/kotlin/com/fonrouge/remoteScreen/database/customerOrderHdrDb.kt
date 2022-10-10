@@ -1,8 +1,7 @@
 package com.fonrouge.remoteScreen.database
 
 import com.fonrouge.fsLib.mongoDb.CTableDb
-import com.fonrouge.fsLib.mongoDb.LookupBuilder
-import com.fonrouge.fsLib.mongoDb.localToForeign
+import com.fonrouge.fsLib.mongoDb.lookupField
 import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.DocumentWithNumId
@@ -11,12 +10,13 @@ import kotlinx.coroutines.runBlocking
 val CustomerOrderHdrDb = object : CTableDb<CustomerOrderHdr, String>(
     klass = CustomerOrderHdr::class
 ) {
-    override val lookupFun: (() -> List<LookupBuilder<CustomerOrderHdr, *, *, *>>) = {
+    override val lookupFun = {
         listOf(
-            LookupBuilder(
+            lookupField(
                 cTableDb = CustomerItmDb::class,
-                localToForeign = CustomerOrderHdr::customerItm_id localToForeign CustomerItm::_id,
-                resultProperty = CustomerOrderHdr::customerItm
+                localField = CustomerOrderHdr::customerItm_id,
+                foreignField = CustomerItm::_id,
+                resultField = CustomerOrderHdr::customerItm
             )
         )
     }
