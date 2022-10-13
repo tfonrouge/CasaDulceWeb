@@ -25,6 +25,8 @@ interface IDataItemService : IDataItem {
         state: StateItem<InventoryItm>,
     ): ItemContainer<InventoryItm>
 
+    suspend fun inventoryItmByUpc(upc: String): ItemContainer<InventoryItm>
+
     suspend fun priceCheck(
         _id: String?,
         state: StateItem<InventoryItm>,

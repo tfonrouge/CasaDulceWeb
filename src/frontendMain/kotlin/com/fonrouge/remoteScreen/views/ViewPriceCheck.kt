@@ -1,10 +1,8 @@
 package com.fonrouge.remoteScreen.views
 
-import com.fonrouge.fsLib.StateItem
 import com.fonrouge.fsLib.layout.formColumn
 import com.fonrouge.fsLib.layout.formRow
 import com.fonrouge.fsLib.lib.UrlParams
-import com.fonrouge.fsLib.model.CrudAction
 import com.fonrouge.fsLib.view.AppScope
 import com.fonrouge.fsLib.view.View
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewPriceChecker
@@ -74,18 +72,9 @@ class ViewPriceCheck(
                                             AppScope.launch {
 //                                                textBarcode.input.getElementJQuery()?.select()
                                                 textBarcode.input.getElementJQuery()?.select()
-                                                val item = ModelDataItemService.dataItemService.inventoryItm(
-                                                    _id = barcode,
-                                                    state = StateItem(
-                                                        crudAction = CrudAction.Read,
-                                                        callType = StateItem.CallType.Query
-                                                    )
-                                                ).item
-                                                if (item != null) {
+                                                ModelDataItemService.dataItemService.inventoryItmByUpc(barcode).item?.let { item ->
                                                     formPanel1.setData(item)
-                                                } else {
-                                                    formPanel1.clearData()
-                                                }
+                                                } ?: formPanel1.clearData()
                                             }
                                         }
                                     }

@@ -113,6 +113,10 @@ actual class DataItemService : IDataItemService {
         }
     }
 
+    override suspend fun inventoryItmByUpc(upc: String): ItemContainer<InventoryItm> {
+        return ItemContainer(item = InventoryItmDb.findOne(InventoryItm::upc eq upc))
+    }
+
     override suspend fun priceCheck(_id: String?, state: StateItem<InventoryItm>): ItemContainer<InventoryItm> {
         TODO("Not yet implemented")
     }
