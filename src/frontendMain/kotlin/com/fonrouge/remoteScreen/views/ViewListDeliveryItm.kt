@@ -31,17 +31,17 @@ class ViewListDeliveryItm(
             headerFilter = Editor.INPUT
         ),
         ColumnDefinition(
-            title = DeliveryOrderItm::dateDelivered.name,
-            field = DeliveryOrderItm::dateDelivered.name,
+            title = DeliveryOrderItm::customerOrderHdr_id.name,
+            field = DeliveryOrderItm::customerOrderHdr_id.name,
             headerFilter = Editor.INPUT
         ),
         ColumnDefinition(
-            title = DeliveryOrderItm::qtyDelivered.name,
-            field = DeliveryOrderItm::qtyDelivered.name
+            title = DeliveryOrderItm::inventoryItm_id.name,
+            field = DeliveryOrderItm::inventoryItm_id.name
         ),
         ColumnDefinition(
-            title = DeliveryOrderItm::statusDeliver.name,
-            field = DeliveryOrderItm::statusDeliver.name
+            title = DeliveryOrderItm::qty.name,
+            field = DeliveryOrderItm::qty.name
         )
     )
 

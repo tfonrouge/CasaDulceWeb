@@ -97,4 +97,14 @@ actual class DataListService : IDataListService {
     ): RemoteData<DeliveryOrderItm> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deliveryHdr(
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
+    ): RemoteData<DeliveryOrderHdr> {
+        TODO("Not yet implemented")
+    }
 }

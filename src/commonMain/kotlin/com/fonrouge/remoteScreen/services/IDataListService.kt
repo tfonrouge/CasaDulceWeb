@@ -48,4 +48,12 @@ interface IDataListService : IDataList {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<DeliveryOrderItm>
+
+    suspend fun deliveryHdr(
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
+    ): RemoteData<DeliveryOrderHdr>
 }

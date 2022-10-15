@@ -1,30 +1,19 @@
 package com.fonrouge.remoteScreen.model
 
+import com.fonrouge.fsLib.annotations.MongoDoc
 import com.fonrouge.fsLib.model.base.BaseModel
-import io.kvision.types.LocalDateTime
-import kotlinx.serialization.Contextual
+import com.fonrouge.fsLib.newObjectId
+import kotlin.js.JsExport
 
 @kotlinx.serialization.Serializable
-data class DeliveryOrderItm(
-    override val _id: String,
-    val customerOrderItm_id: String,
-    val qtyDelivered: Int,
-    @Contextual
-    val dateDelivered: LocalDateTime,
-    val status: String
+@JsExport
+@MongoDoc("deliveryOrderItms")
+class DeliveryOrderItm(
+    override var _id: String = newObjectId(),
+    var customerOrderHdr_id: String = "",
+    var inventoryItm_id: String,
+    var qty: Int,
+    var size: String,
 ) : BaseModel<String> {
-    val customerOrderItm: CustomerOrderItm? = null
-    val customerItm: CustomerItm? = null
-    val statusDeliver: String
-        get() {
-            return deliveryStatusList.find { it.first == status }?.second ?: "?"
-        }
+    var inventoryItm: InventoryItm? = null
 }
-
-val deliveryStatusList = listOf(
-    "N" to "NewOrder",
-    "PK" to "Picking",
-    "PD" to "Picked",
-    "T" to "InTransit",
-    "#" to "Delivered"
-)
