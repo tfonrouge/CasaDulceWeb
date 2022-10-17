@@ -2,10 +2,7 @@ package com.fonrouge.remoteScreen.services
 
 import com.fonrouge.fsLib.contextDataUrl
 import com.fonrouge.fsLib.mongoDb.ModelLookup
-import com.fonrouge.remoteScreen.database.CustomerItmDb
-import com.fonrouge.remoteScreen.database.CustomerOrderHdrDb
-import com.fonrouge.remoteScreen.database.CustomerOrderItmDb
-import com.fonrouge.remoteScreen.database.InventoryItmDb
+import com.fonrouge.remoteScreen.database.*
 import com.fonrouge.remoteScreen.model.*
 import io.kvision.remote.RemoteData
 import io.kvision.remote.RemoteFilter
@@ -105,6 +102,16 @@ actual class DataListService : IDataListService {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<DeliveryOrderHdr> {
-        TODO("Not yet implemented")
+        val firstStage = DeliveryOrderHdrDb.listFirstStage(
+            match = null,
+            page = page,
+            size = size,
+            filter = filter,
+            sorter = sorter,
+        )
+        return DeliveryOrderHdrDb.remoteData(
+            firstStage = firstStage,
+            ModelLookup(resultProperty = DeliveryOrderHdr::customerItm)
+        )
     }
 }
