@@ -83,6 +83,7 @@ class ApiShopifyService {
                 println(s)
             }
             println(response)
+            continueFlag = false
 //            val array: JsonArray = response.list()[0].asJsonObject()["products"] as JsonArray
 //            Platform.runLater {
 //                borderPaneShopify.tableView.items.addAll(array.toModel())

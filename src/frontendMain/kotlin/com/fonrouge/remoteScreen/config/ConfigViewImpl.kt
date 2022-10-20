@@ -23,7 +23,7 @@ class ConfigViewImpl : IConfigView {
                 itemKClass = CustomerOrderHdr::class,
                 label = "Customer Order",
                 viewFunc = ViewItemCustomerOrderHdr::class,
-                serverManager = DataItemServiceManager,
+                serviceManager = DataItemServiceManager,
                 function = IDataItemService::customerOrderHdr,
                 labelId = { customerOrderHdr ->
                     customerOrderHdr?.numId?.toString() ?: "?"
@@ -34,7 +34,7 @@ class ConfigViewImpl : IConfigView {
                 itemKClass = CustomerOrderItm::class,
                 label = "Customer Order Item",
                 viewFunc = ViewItemCustomerOrderItm::class,
-                serverManager = DataItemServiceManager,
+                serviceManager = DataItemServiceManager,
                 function = IDataItemService::customerOrderItm,
             ) {}
         val ConfigViewItemInventoryItm =
@@ -42,7 +42,7 @@ class ConfigViewImpl : IConfigView {
                 itemKClass = InventoryItm::class,
                 label = "Inventory Item",
                 viewFunc = ViewItemInventoryItm::class,
-                serverManager = DataItemServiceManager,
+                serviceManager = DataItemServiceManager,
                 function = IDataItemService::inventoryItm,
             ) {}
 
@@ -52,7 +52,7 @@ class ConfigViewImpl : IConfigView {
                 itemKClass = CustomerOrderHdr::class,
                 label = "Customer Orders",
                 viewFunc = ViewListCustomerOrderHdr::class,
-                serverManager = DataListServiceManager,
+                serviceManager = DataListServiceManager,
                 function = IDataListService::customerOrderHdr
             ) {}
         val ConfigViewListCustomerOrderItm =
@@ -60,7 +60,7 @@ class ConfigViewImpl : IConfigView {
                 itemKClass = CustomerOrderItm::class,
                 label = "Customer Order Items",
                 viewFunc = ViewListCustomerOrderItm::class,
-                serverManager = DataListServiceManager,
+                serviceManager = DataListServiceManager,
                 function = IDataListService::customerOrderItm
             ) {}
         val ConfigViewListCustomerItm =
@@ -68,7 +68,7 @@ class ConfigViewImpl : IConfigView {
                 itemKClass = CustomerItm::class,
                 label = "Customer List",
                 viewFunc = ViewListCustomerItm::class,
-                serverManager = DataListServiceManager,
+                serviceManager = DataListServiceManager,
                 function = IDataListService::customerItm
             ) {}
         val ConfigViewListInventoryItm =
@@ -76,7 +76,7 @@ class ConfigViewImpl : IConfigView {
                 itemKClass = InventoryItm::class,
                 label = "Inventory List",
                 viewFunc = ViewListInventoryItm::class,
-                serverManager = DataListServiceManager,
+                serviceManager = DataListServiceManager,
                 function = IDataListService::inventoryItm
             ) {}
         val ConfigViewDeliverList =
@@ -84,7 +84,7 @@ class ConfigViewImpl : IConfigView {
                 itemKClass = DeliveryOrderItm::class,
                 label = "Delivery List",
                 viewFunc = ViewListDeliveryItm::class,
-                serverManager = DataListServiceManager,
+                serviceManager = DataListServiceManager,
                 function = IDataListService::deliverList
             ) {}
         val ConfigViewListDeliveryHdr =
@@ -92,7 +92,7 @@ class ConfigViewImpl : IConfigView {
                 itemKClass = DeliveryOrderHdr::class,
                 label = "Delivery Hdr",
                 viewFunc = ViewListDeliveryHdr::class,
-                serverManager = DataListServiceManager,
+                serviceManager = DataListServiceManager,
                 function = IDataListService::deliveryHdr
             ) {}
         val ConfigViewListQuickbooksItm =
@@ -100,7 +100,7 @@ class ConfigViewImpl : IConfigView {
                 itemKClass = QuickbooksItm::class,
                 label = "Quickbooks Items",
                 viewFunc = ViewListQuickbooksItm::class,
-                serverManager = DataListServiceManager,
+                serviceManager = DataListServiceManager,
                 function = IDataListService::quickbooksItm
             ) {}
         val ConfigViewListShopifyItm =
@@ -108,7 +108,7 @@ class ConfigViewImpl : IConfigView {
                 itemKClass = ShopifyItm::class,
                 label = "Shopify Items",
                 viewFunc = ViewListShopifyItm::class,
-                serverManager = DataListServiceManager,
+                serviceManager = DataListServiceManager,
                 function = IDataListService::shopifyItm
             ) {}
     }
