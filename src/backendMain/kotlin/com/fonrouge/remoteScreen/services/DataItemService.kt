@@ -40,7 +40,7 @@ actual class DataItemService : IDataItemService {
             }
 
             Action -> when (state.crudAction) {
-                Create, Update -> CustomerOrderHdrDb.updateOne(_id = _id, state = state)
+                Create, Update -> CustomerOrderHdrDb.updateOneById(_id = _id, state = state)
                 Delete -> {
                     var result =
                         CustomerOrderItmDb.coroutineColl.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
@@ -84,7 +84,7 @@ actual class DataItemService : IDataItemService {
             }
 
             Action -> when (state.crudAction) {
-                Create, Update -> CustomerOrderItmDb.updateOne(_id = _id, state)
+                Create, Update -> CustomerOrderItmDb.updateOneById(_id = _id, state)
                 Delete -> CustomerOrderItmDb.deleteOneById(_id = _id)
                 else -> ItemContainer(isOk = false)
             }
@@ -107,7 +107,7 @@ actual class DataItemService : IDataItemService {
             Action -> when (state.crudAction) {
                 Create -> TODO()
                 Read -> TODO()
-                Update -> InventoryItmDb.updateOne(_id, state)
+                Update -> InventoryItmDb.updateOneById(_id, state)
                 Delete -> TODO()
             }
         }

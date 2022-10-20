@@ -8,6 +8,8 @@ import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListC
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListCustomerOrderHdr
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListDeliveryHdr
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListInventoryItm
+import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListQuickbooksItm
+import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListShopifyItm
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewPriceChecker
 import com.fonrouge.remoteScreen.model.Model
 import com.fonrouge.remoteScreen.model.Model.user
@@ -42,36 +44,38 @@ class ViewHomeCasaDulce(
             if (!userProfile.name.isNullOrEmpty()) {
                 navbar {
                     nav(className = "navButtons") {
-                        dropDown(
-                            text = "Customer Orders",
-                            elements = listOf(
-                                ConfigViewListCustomerOrderHdr.labelUrl
-                            ),
+                        navLink(
+                            label = "Customer Orders",
+                            url = ConfigViewListCustomerOrderHdr.url
+                        )
+                        navLink(
+                            label = "Delivery Orders",
+                            url = ConfigViewListDeliveryHdr.url,
                         )
                         dropDown(
-                            text = "Delivery Orders",
-                            elements = listOf(
-                                ConfigViewListDeliveryHdr.labelUrl
-                            ),
-
-//                                forNavbar = true
-                        )
-                        dropDown(
-                            text = "Catalog",
+                            text = "Catalogs",
                             elements = listOf(
                                 ConfigViewListInventoryItm.labelUrl,
                                 ConfigViewListCustomerItm.labelUrl,
                             ),
                             icon = "fas fa-rep",
 //                                forNavbar = true
+                            forNavbar = true
+                        )
+                        navLink(
+                            label = "Price Checker",
+                            icon = "fas fa-barcode",
+                            url = ConfigViewPriceChecker.url,
+//                                forNavbar = true
                         )
                         dropDown(
-                            text = "Price Checker",
-                            icon = "fas barcode-read",
+                            text = "Shopify/Quickbooks",
+                            icon = "fas fa-store",
                             elements = listOf(
-                                ConfigViewPriceChecker.labelUrl,
+                                ConfigViewListShopifyItm.labelUrl,
+                                ConfigViewListQuickbooksItm.labelUrl
                             ),
-//                                forNavbar = true
+                            forNavbar = true
                         )
                     }
                     nav(rightAlign = true) {
@@ -80,7 +84,6 @@ class ViewHomeCasaDulce(
                 }
             } else {
                 Span("")
-
             }
         }
     }

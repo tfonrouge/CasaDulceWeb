@@ -3,10 +3,10 @@
 package com.fonrouge.remoteScreen.model
 
 import com.fonrouge.fsLib.annotations.MongoDoc
-import com.fonrouge.fsLib.localDateTimeNow
 import com.fonrouge.fsLib.newObjectId
-import com.fonrouge.fsLib.serializers.FSLocalDateTimeSerializer
-import io.kvision.types.LocalDateTime
+import com.fonrouge.fsLib.offsetDateTimeNow
+import com.fonrouge.fsLib.serializers.FSOffsetDateTimeSerializer
+import io.kvision.types.OffsetDateTime
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
@@ -22,8 +22,8 @@ data class CustomerOrderHdr(
     override var numId: Int = 0,
     var customerItm_id: String = "",
     @Suppress("NON_EXPORTABLE_TYPE")
-    @Serializable(with = FSLocalDateTimeSerializer::class)
-    var created: LocalDateTime = localDateTimeNow(),
+    @Serializable(with = FSOffsetDateTimeSerializer::class)
+    var created: OffsetDateTime = offsetDateTimeNow(),
     var status: String = "$",
     var userProfile: String = ""
 ) : DocumentWithNumId<String> {

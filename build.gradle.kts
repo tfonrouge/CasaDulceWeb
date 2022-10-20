@@ -21,6 +21,7 @@ repositories {
 // Versions
 val kotlinVersion: String by System.getProperties()
 val kvisionVersion: String by System.getProperties()
+val ktor_version: String by project
 val fsLibVersion: String by project
 val logbackVersion: String by project
 val exposed_version: String by project
@@ -87,6 +88,11 @@ kotlin {
                 implementation(kotlin("stdlib-jdk8"))
                 implementation(kotlin("reflect"))
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
+
+                implementation("io.ktor:ktor-client-core:$ktor_version")
+                implementation("io.ktor:ktor-client-cio:$ktor_version")
+                implementation("io.ktor:ktor-client-content-negotiation:${ktor_version}")
+                implementation("io.ktor:ktor-client-serialization:${ktor_version}")
 
                 implementation("org.apache.poi:poi-ooxml:5.2.2")
             }

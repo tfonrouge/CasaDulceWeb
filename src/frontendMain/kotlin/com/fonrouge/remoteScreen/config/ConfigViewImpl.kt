@@ -20,7 +20,7 @@ class ConfigViewImpl : IConfigView {
         /* Item */
         val ConfigViewItemCustomerOrderHdr =
             object : ConfigViewItem<CustomerOrderHdr, ViewItemCustomerOrderHdr, DataItemService, String>(
-                klass = CustomerOrderHdr::class,
+                itemKClass = CustomerOrderHdr::class,
                 label = "Customer Order",
                 viewFunc = ViewItemCustomerOrderHdr::class,
                 serverManager = DataItemServiceManager,
@@ -31,7 +31,7 @@ class ConfigViewImpl : IConfigView {
             ) {}
         val ConfigViewItemCustomerOrderItm =
             object : ConfigViewItem<CustomerOrderItm, ViewItemCustomerOrderItm, DataItemService, String>(
-                klass = CustomerOrderItm::class,
+                itemKClass = CustomerOrderItm::class,
                 label = "Customer Order Item",
                 viewFunc = ViewItemCustomerOrderItm::class,
                 serverManager = DataItemServiceManager,
@@ -39,7 +39,7 @@ class ConfigViewImpl : IConfigView {
             ) {}
         val ConfigViewItemInventoryItm =
             object : ConfigViewItem<InventoryItm, ViewItemInventoryItm, DataItemService, String>(
-                klass = InventoryItm::class,
+                itemKClass = InventoryItm::class,
                 label = "Inventory Item",
                 viewFunc = ViewItemInventoryItm::class,
                 serverManager = DataItemServiceManager,
@@ -49,51 +49,67 @@ class ConfigViewImpl : IConfigView {
         /* list */
         val ConfigViewListCustomerOrderHdr =
             object : ConfigViewList<CustomerOrderHdr, ViewListCustomerOrderHdr, DataListService, String>(
-                klass = CustomerOrderHdr::class,
+                itemKClass = CustomerOrderHdr::class,
                 label = "Customer Orders",
                 viewFunc = ViewListCustomerOrderHdr::class,
                 serverManager = DataListServiceManager,
-                function = DataListService::customerOrderHdr
+                function = IDataListService::customerOrderHdr
             ) {}
         val ConfigViewListCustomerOrderItm =
             object : ConfigViewList<CustomerOrderItm, ViewListCustomerOrderItm, DataListService, String>(
-                klass = CustomerOrderItm::class,
+                itemKClass = CustomerOrderItm::class,
                 label = "Customer Order Items",
                 viewFunc = ViewListCustomerOrderItm::class,
                 serverManager = DataListServiceManager,
-                function = DataListService::customerOrderItm
+                function = IDataListService::customerOrderItm
             ) {}
         val ConfigViewListCustomerItm =
             object : ConfigViewList<CustomerItm, ViewListCustomerItm, DataListService, String>(
-                klass = CustomerItm::class,
+                itemKClass = CustomerItm::class,
                 label = "Customer List",
                 viewFunc = ViewListCustomerItm::class,
                 serverManager = DataListServiceManager,
-                function = DataListService::customerItm
+                function = IDataListService::customerItm
             ) {}
         val ConfigViewListInventoryItm =
             object : ConfigViewList<InventoryItm, ViewListInventoryItm, DataListService, String>(
-                klass = InventoryItm::class,
+                itemKClass = InventoryItm::class,
                 label = "Inventory List",
                 viewFunc = ViewListInventoryItm::class,
                 serverManager = DataListServiceManager,
-                function = DataListService::inventoryItm
+                function = IDataListService::inventoryItm
             ) {}
         val ConfigViewDeliverList =
             object : ConfigViewList<DeliveryOrderItm, ViewListDeliveryItm, DataListService, String>(
-                klass = DeliveryOrderItm::class,
+                itemKClass = DeliveryOrderItm::class,
                 label = "Delivery List",
                 viewFunc = ViewListDeliveryItm::class,
                 serverManager = DataListServiceManager,
-                function = DataListService::deliverList
+                function = IDataListService::deliverList
             ) {}
         val ConfigViewListDeliveryHdr =
             object : ConfigViewList<DeliveryOrderHdr, ViewListDeliveryHdr, DataListService, String>(
-                klass = DeliveryOrderHdr::class,
+                itemKClass = DeliveryOrderHdr::class,
                 label = "Delivery Hdr",
                 viewFunc = ViewListDeliveryHdr::class,
                 serverManager = DataListServiceManager,
-                function = DataListService::deliveryHdr
+                function = IDataListService::deliveryHdr
+            ) {}
+        val ConfigViewListQuickbooksItm =
+            object : ConfigViewList<QuickbooksItm, ViewListQuickbooksItm, DataListService, String>(
+                itemKClass = QuickbooksItm::class,
+                label = "Quickbooks Items",
+                viewFunc = ViewListQuickbooksItm::class,
+                serverManager = DataListServiceManager,
+                function = IDataListService::quickbooksItm
+            ) {}
+        val ConfigViewListShopifyItm =
+            object : ConfigViewList<ShopifyItm, ViewListShopifyItm, DataListService, String>(
+                itemKClass = ShopifyItm::class,
+                label = "Shopify Items",
+                viewFunc = ViewListShopifyItm::class,
+                serverManager = DataListServiceManager,
+                function = IDataListService::shopifyItm
             ) {}
     }
 }

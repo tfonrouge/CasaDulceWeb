@@ -114,4 +114,31 @@ actual class DataListService : IDataListService {
             ModelLookup(resultProperty = DeliveryOrderHdr::customerItm)
         )
     }
+
+    override suspend fun quickbooksItm(
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
+    ): RemoteData<QuickbooksItm> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun shopifyItm(
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
+    ): RemoteData<ShopifyItm> {
+        val a = ApiShopifyService()
+        a.taskGetItems()
+        println(a)
+        return shopifyRemoteData()
+    }
+
+    private fun shopifyRemoteData(): RemoteData<ShopifyItm> {
+        return RemoteData()
+    }
 }

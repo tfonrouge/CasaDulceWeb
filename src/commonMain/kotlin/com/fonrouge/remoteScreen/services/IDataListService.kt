@@ -56,4 +56,20 @@ interface IDataListService : IDataList {
         sorter: List<RemoteSorter>?,
         state: String?
     ): RemoteData<DeliveryOrderHdr>
+
+    suspend fun quickbooksItm(
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
+    ): RemoteData<QuickbooksItm>
+
+    suspend fun shopifyItm(
+        page: Int?,
+        size: Int?,
+        filter: List<RemoteFilter>?,
+        sorter: List<RemoteSorter>?,
+        state: String?
+    ): RemoteData<ShopifyItm>
 }
