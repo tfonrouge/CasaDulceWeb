@@ -8,7 +8,9 @@ import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListS
 import com.fonrouge.remoteScreen.model.ShopifyItm
 import com.fonrouge.remoteScreen.services.DataListService
 import io.kvision.core.Container
+import io.kvision.core.JustifyContent
 import io.kvision.html.ImageShape
+import io.kvision.html.button
 import io.kvision.html.image
 import io.kvision.panel.hPanel
 import io.kvision.panel.vPanel
@@ -35,7 +37,13 @@ class ViewListShopifyItm(
                     height = 200.px
                 }
             }
-            fsTabulator(this@ViewListShopifyItm)
+            vPanel {
+                fsTabulator(viewList = this@ViewListShopifyItm, pagination = false)
+                hPanel(justify = JustifyContent.CENTER) {
+                    button(text = "", icon = "fas fa-chevron-left")
+                    button(text = "", icon = "fas fa-chevron-right")
+                }
+            }
         }
     }
 }

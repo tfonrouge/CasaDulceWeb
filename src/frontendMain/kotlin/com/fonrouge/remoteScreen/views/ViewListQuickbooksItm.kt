@@ -6,7 +6,6 @@ import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewList
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListQuickbooksItm
 import com.fonrouge.remoteScreen.model.QuickbooksItm
-import com.fonrouge.remoteScreen.model.ShopifyItm
 import com.fonrouge.remoteScreen.services.DataListService
 import io.kvision.core.Container
 import io.kvision.html.ImageShape

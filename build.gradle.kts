@@ -89,9 +89,11 @@ kotlin {
                 implementation(kotlin("reflect"))
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
+                implementation("io.ktor:ktor-client-auth:$ktor_version")
                 implementation("io.ktor:ktor-client-core:$ktor_version")
                 implementation("io.ktor:ktor-client-cio:$ktor_version")
                 implementation("io.ktor:ktor-client-content-negotiation:${ktor_version}")
+                implementation("io.ktor:ktor-client-encoding:$ktor_version")
                 implementation("io.ktor:ktor-client-serialization:${ktor_version}")
 
                 implementation("org.apache.poi:poi-ooxml:5.2.2")

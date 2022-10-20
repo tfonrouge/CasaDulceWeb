@@ -133,7 +133,7 @@ actual class DataListService : IDataListService {
         state: String?
     ): RemoteData<ShopifyItm> {
         val a = ApiShopifyService()
-        a.taskGetItems()
+        a.taskGetItems(page = page, size = size)
         println(a)
         return shopifyRemoteData()
     }
