@@ -2,7 +2,6 @@ package com.fonrouge.remoteScreen.views
 
 import com.fonrouge.fsLib.fieldName
 import com.fonrouge.fsLib.layout.fsTabulator
-import com.fonrouge.fsLib.layout.fsTabulator2
 import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewList
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListShopifyItm
@@ -44,7 +43,7 @@ class ViewListShopifyItm(
                 }
             }
             vPanel {
-                fsTabulator2(viewList = this@ViewListShopifyItm)
+                fsTabulator(viewList = this@ViewListShopifyItm)
                 hPanel(justify = JustifyContent.CENTER) {
                     navbar {
                         navForm {
