@@ -1,75 +1,42 @@
 package com.fonrouge.remoteScreen.services
 
+import com.fonrouge.fsLib.ContextDataUrl
 import com.fonrouge.fsLib.model.IDataList
+import com.fonrouge.fsLib.model.ListContainer
 import com.fonrouge.remoteScreen.model.*
 import io.kvision.annotations.KVService
-import io.kvision.remote.RemoteData
-import io.kvision.remote.RemoteFilter
-import io.kvision.remote.RemoteSorter
 
 @KVService
 interface IDataListService : IDataList {
     suspend fun customerItm(
-        page: Int?,
-        size: Int?,
-        filter: List<RemoteFilter>?,
-        sorter: List<RemoteSorter>?,
-        state: String?
-    ): RemoteData<CustomerItm>
+        contextDataUrl: ContextDataUrl?
+    ): ListContainer<CustomerItm>
 
     suspend fun customerOrderHdr(
-        page: Int?,
-        size: Int?,
-        filter: List<RemoteFilter>?,
-        sorter: List<RemoteSorter>?,
-        state: String?
-    ): RemoteData<CustomerOrderHdr>
+        contextDataUrl: ContextDataUrl?
+    ): ListContainer<CustomerOrderHdr>
 
     suspend fun customerOrderItm(
-        page: Int?,
-        size: Int?,
-        filter: List<RemoteFilter>?,
-        sorter: List<RemoteSorter>?,
-        state: String?
-    ): RemoteData<CustomerOrderItm>
+        contextDataUrl: ContextDataUrl?
+    ): ListContainer<CustomerOrderItm>
 
     suspend fun inventoryItm(
-        page: Int?,
-        size: Int?,
-        filter: List<RemoteFilter>?,
-        sorter: List<RemoteSorter>?,
-        state: String?
-    ): RemoteData<InventoryItm>
+        contextDataUrl: ContextDataUrl?
+    ): ListContainer<InventoryItm>
 
     suspend fun deliverList(
-        page: Int?,
-        size: Int?,
-        filter: List<RemoteFilter>?,
-        sorter: List<RemoteSorter>?,
-        state: String?
-    ): RemoteData<DeliveryOrderItm>
+        contextDataUrl: ContextDataUrl?
+    ): ListContainer<DeliveryOrderItm>
 
     suspend fun deliveryHdr(
-        page: Int?,
-        size: Int?,
-        filter: List<RemoteFilter>?,
-        sorter: List<RemoteSorter>?,
-        state: String?
-    ): RemoteData<DeliveryOrderHdr>
+        contextDataUrl: ContextDataUrl?
+    ): ListContainer<DeliveryOrderHdr>
 
     suspend fun quickbooksItm(
-        page: Int?,
-        size: Int?,
-        filter: List<RemoteFilter>?,
-        sorter: List<RemoteSorter>?,
-        state: String?
-    ): RemoteData<QuickbooksItm>
+        contextDataUrl: ContextDataUrl?
+    ): ListContainer<QuickbooksItm>
 
     suspend fun shopifyItm(
-        page: Int?,
-        size: Int?,
-        filter: List<RemoteFilter>?,
-        sorter: List<RemoteSorter>?,
-        state: String?
-    ): RemoteData<ShopifyItm>
+        contextDataUrl: ContextDataUrl?
+    ): ListContainer<ShopifyItm>
 }
