@@ -51,8 +51,10 @@ class ViewListShopifyItm(
                     height = 200.px
                 }
             }
-            vPanel(className = "flex-grow-1 bd-highlight") {
-                fsTabulator(viewList = this@ViewListShopifyItm)
+            vPanel(className = "flex-grow-1 p-2") {
+                fsTabulator(viewList = this@ViewListShopifyItm) {
+                    options.paginationMode
+                }
                 hPanel(justify = JustifyContent.CENTER) {
                     navbar {
                         navForm {
