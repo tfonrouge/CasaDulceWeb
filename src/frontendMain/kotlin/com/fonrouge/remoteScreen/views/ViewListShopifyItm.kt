@@ -8,7 +8,6 @@ import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListS
 import com.fonrouge.remoteScreen.model.ShopifyProduct
 import com.fonrouge.remoteScreen.services.DataListService
 import io.kvision.core.Container
-import io.kvision.core.FlexWrap
 import io.kvision.core.JustifyContent
 import io.kvision.core.onEvent
 import io.kvision.form.select.simpleSelect
