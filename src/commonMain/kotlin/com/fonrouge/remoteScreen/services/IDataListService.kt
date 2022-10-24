@@ -38,5 +38,5 @@ interface IDataListService : IDataList {
 
     suspend fun shopifyItm(
         contextDataUrl: ContextDataUrl?
-    ): ListContainer<ShopifyItm>
+    ): ListContainer<ShopifyProduct>
 }

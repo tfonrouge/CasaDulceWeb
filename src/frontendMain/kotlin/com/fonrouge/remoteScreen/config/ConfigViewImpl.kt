@@ -103,9 +103,9 @@ class ConfigViewImpl : IConfigView {
                 serviceManager = DataListServiceManager,
                 function = IDataListService::quickbooksItm
             ) {}
-        val ConfigViewListShopifyItm =
-            object : ConfigViewList<ShopifyItm, ViewListShopifyItm, DataListService, String>(
-                itemKClass = ShopifyItm::class,
+        val ConfigViewListShopifyProduct =
+            object : ConfigViewList<ShopifyProduct, ViewListShopifyItm, DataListService, Long>(
+                itemKClass = ShopifyProduct::class,
                 label = "Shopify Items",
                 viewFunc = ViewListShopifyItm::class,
                 serviceManager = DataListServiceManager,

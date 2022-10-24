@@ -20,6 +20,7 @@ class DeliveryOrderHdr(
     val status: String
 ) : BaseModel<String> {
     val customerOrderItm: CustomerOrderItm? = null
+
     @EncodeDefault(EncodeDefault.Mode.NEVER)
     val customerItm: CustomerItm? = null
     val statusDeliver: String

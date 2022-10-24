@@ -20,4 +20,4 @@ class QuickbooksItm(
     override var qty: Int,
     override val linked: Boolean?,
     override val updated: Boolean?
-) : IProduct
+) : IProduct<String>

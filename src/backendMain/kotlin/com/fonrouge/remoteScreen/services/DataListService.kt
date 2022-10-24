@@ -67,17 +67,10 @@ actual class DataListService : IDataListService {
 
     override suspend fun shopifyItm(
         contextDataUrl: ContextDataUrl?
-    ): ListContainer<ShopifyItm> {
-        val a = ApiShopifyService()
-        a.taskGetItems(
+    ): ListContainer<ShopifyProduct> {
+        return ApiShopifyService().taskGetItems(
             page = contextDataUrl?.tabPage,
             size = contextDataUrl?.tabSize
         )
-        println(a)
-        return shopifyRemoteData()
-    }
-
-    private fun shopifyRemoteData(): ListContainer<ShopifyItm> {
-        return ListContainer()
     }
 }

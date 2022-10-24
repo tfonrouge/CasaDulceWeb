@@ -4,7 +4,7 @@ import com.fonrouge.fsLib.model.base.BaseModel
 import kotlin.js.JsExport
 
 @JsExport
-interface IProduct : BaseModel<String> {
+interface IProduct<T : Any> : BaseModel<T> {
     var handle: String
     var title: String
     var bodyHtml: String

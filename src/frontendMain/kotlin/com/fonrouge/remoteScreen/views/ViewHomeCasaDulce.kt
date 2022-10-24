@@ -9,7 +9,7 @@ import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListC
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListDeliveryHdr
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListInventoryItm
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListQuickbooksItm
-import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListShopifyItm
+import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListShopifyProduct
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewPriceChecker
 import com.fonrouge.remoteScreen.model.Model
 import com.fonrouge.remoteScreen.model.Model.user
@@ -72,7 +72,7 @@ class ViewHomeCasaDulce(
                             text = "Shopify/Quickbooks",
                             icon = "fas fa-store",
                             elements = listOf(
-                                ConfigViewListShopifyItm.labelUrl,
+                                ConfigViewListShopifyProduct.labelUrl,
                                 ConfigViewListQuickbooksItm.labelUrl
                             ),
                             forNavbar = true

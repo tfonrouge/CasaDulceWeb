@@ -5,7 +5,6 @@ import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.ViewList
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListDeliveryHdr
 import com.fonrouge.remoteScreen.model.DeliveryOrderHdr
-import com.fonrouge.remoteScreen.model.DeliveryOrderItm
 import com.fonrouge.remoteScreen.services.DataListService
 import io.kvision.core.Container
 import io.kvision.html.Span

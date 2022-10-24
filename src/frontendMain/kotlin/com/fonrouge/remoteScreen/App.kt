@@ -30,7 +30,7 @@ class App : Application() {
         require("app.css")
 
         KVWebManager.initialize {
-            periodicUpdateDataViewList = false
+            periodicUpdateDataViewList = true
             periodicUpdateDataViewItem = true
             frontEndAppName = "Casa Dulce"
             frontEndVersion = version

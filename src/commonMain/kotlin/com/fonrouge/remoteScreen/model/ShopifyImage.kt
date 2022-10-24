@@ -1,22 +1,28 @@
 package com.fonrouge.remoteScreen.model
 
+import com.fonrouge.fsLib.serializers.FSOffsetDateTimeSerializer
 import io.kvision.types.OffsetDateTime
-import kotlinx.serialization.Contextual
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 class ShopifyImage(
     var id: Long,
-    var product_id: Long,
+    @SerialName(value = "product_id")
+    var productId: Long,
     var position: Int,
-    @Contextual
-    var created_at: OffsetDateTime,
-    @Contextual
+    @Serializable(with = FSOffsetDateTimeSerializer::class)
+    @SerialName(value = "created_at")
+    var createdAt: OffsetDateTime,
+    @Serializable(with = FSOffsetDateTimeSerializer::class)
+    @SerialName(value = "updated_at")
     var updated_at: OffsetDateTime,
-    var alt: String,
+    var alt: String?,
     var width: Int,
     var height: Int,
     var src: String,
-    var variant_ids: ArrayList<Long> = ArrayList(),
-    var admin_graphql_api_id: String,
+    @SerialName(value = "variant_ids")
+    var variantIds: ArrayList<Long> = ArrayList(),
+    @SerialName(value = "admin_graphql_api_id")
+    var adminGraphqlApiId: String,
 )

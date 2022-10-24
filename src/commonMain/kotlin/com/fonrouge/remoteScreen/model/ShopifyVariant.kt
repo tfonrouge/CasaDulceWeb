@@ -1,8 +1,10 @@
 package com.fonrouge.remoteScreen.model
 
 import kotlinx.serialization.Serializable
+import kotlin.js.JsExport
 
 @Serializable
+@JsExport
 class ShopifyVariant(
     var id: Long = 0,
     var product_id: Long = 0,
