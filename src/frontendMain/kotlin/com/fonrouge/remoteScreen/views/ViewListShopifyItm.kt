@@ -39,6 +39,24 @@ class ViewListShopifyItm(
         ColumnDefinition(
             title = "title",
             field = fieldName(ShopifyProduct::title)
+        ),
+        ColumnDefinition(
+            title = "bodyHtml",
+            field = fieldName(ShopifyProduct::bodyHtml)
+        ),
+        ColumnDefinition(
+            title = "createdAt",
+            field = fieldName(ShopifyProduct::createdAt)
+        ),
+        ColumnDefinition(
+            title = "tags",
+            field = fieldName(ShopifyProduct::tags)
+        ),
+        ColumnDefinition(
+            title = "image",
+            field = fieldName(ShopifyProduct::image),
+            formatterComponentFunction = { _, _, data -> Image(data.image!!.src)}
+
         )
     )
 
