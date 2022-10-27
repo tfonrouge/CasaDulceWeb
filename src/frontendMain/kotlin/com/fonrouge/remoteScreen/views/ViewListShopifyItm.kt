@@ -55,8 +55,11 @@ class ViewListShopifyItm(
         ColumnDefinition(
             title = "image",
             field = fieldName(ShopifyProduct::image),
-            formatterComponentFunction = { _, _, data -> Image(data.image!!.src)}
-
+            formatterComponentFunction = { _, _, data -> Image(data.image!!.src){
+                width = 200.px
+                height = 200.px
+            }
+                                         }
         )
     )
 
