@@ -17,9 +17,13 @@ import io.kvision.navbar.navbar
 import io.kvision.panel.hPanel
 import io.kvision.panel.vPanel
 import io.kvision.tabulator.ColumnDefinition
+import io.kvision.tabulator.js.Tabulator
 import io.kvision.utils.px
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromDynamic
+import org.w3c.dom.events.Event
 
-class ViewListShopifyItm(
+class ViewListShopifyProduct(
     override var urlParams: UrlParams?
 ) : ViewList<ShopifyProduct, DataListService, Long>(
     configView = ConfigViewListShopifyProduct
@@ -57,12 +61,18 @@ class ViewListShopifyItm(
             title = "image",
             field = fieldName(ShopifyProduct::image),
             formatterComponentFunction = { _, _, data ->
-                data.image?.let {
-                    Image(data.image!!.src) {
+                data.image?.src?.let { src ->
+                    Image(src) {
                         width = 35.px
                         height = 35.px
                     }
-                } ?: Span("no image")
+                } ?: Div("no image")
+            },
+            tooltip = { _: Event, cell: Tabulator.CellComponent, onRendered: () -> Unit ->
+                val shopifyProduct = Json.decodeFromDynamic<ShopifyProduct>(cell.getData())
+                shopifyProduct.image?.src?.let { src ->
+                    """<img class="rounded" src="$src" style="width: 500px; height: 500px;">"""
+                }
             }
         )
     )
@@ -76,7 +86,7 @@ class ViewListShopifyItm(
                 }
             }
             vPanel(className = "flex-grow-1 p-2") {
-                fsTabulator(viewList = this@ViewListShopifyItm) {
+                fsTabulator(viewList = this@ViewListShopifyProduct) {
                     options.paginationMode
                 }
                 hPanel(justify = JustifyContent.CENTER) {
