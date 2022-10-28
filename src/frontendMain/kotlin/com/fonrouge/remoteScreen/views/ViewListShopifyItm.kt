@@ -50,7 +50,7 @@ class ViewListShopifyItm(
         ),
         ColumnDefinition(
             title = "tags",
-            field = fieldName(ShopifyProduct::tags),
+            field = fieldName(ShopifyProduct::tags)
 
         ),
         ColumnDefinition(
