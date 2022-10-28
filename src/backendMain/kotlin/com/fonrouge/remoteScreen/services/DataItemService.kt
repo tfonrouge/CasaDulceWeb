@@ -4,7 +4,7 @@ import com.fonrouge.fsLib.StateItem
 import com.fonrouge.fsLib.StateItem.CallType.Action
 import com.fonrouge.fsLib.StateItem.CallType.Query
 import com.fonrouge.fsLib.model.CrudAction.*
-import com.fonrouge.fsLib.model.ItemContainer
+import com.fonrouge.fsLib.model.ItemResponse
 import com.fonrouge.fsLib.mongoDb.ModelLookup
 import com.fonrouge.remoteScreen.database.CustomerOrderHdrDb
 import com.fonrouge.remoteScreen.database.CustomerOrderItmDb
@@ -20,7 +20,7 @@ actual class DataItemService : IDataItemService {
     override suspend fun customerOrderHdr(
         _id: String?,
         state: StateItem<CustomerOrderHdr>,
-    ): ItemContainer<CustomerOrderHdr> {
+    ): ItemResponse<CustomerOrderHdr> {
         return when (state.callType) {
             Query -> when (state.crudAction) {
                 Create -> {
@@ -32,11 +32,11 @@ actual class DataItemService : IDataItemService {
                             it.numId = getNextNumId(CustomerOrderHdrDb)
                         }))
                     } else {
-                        ItemContainer(isOk = false, msgError = "Existe previamente documento Nuevo ...")
+                        ItemResponse(isOk = false, msgError = "Existe previamente documento Nuevo ...")
                     }
                 }
 
-                Read, Update, Delete -> CustomerOrderHdrDb.getItemContainer(_id = _id)
+                Read, Update, Delete -> CustomerOrderHdrDb.itemResponse(_id = _id)
             }
 
             Action -> when (state.crudAction) {
@@ -46,13 +46,13 @@ actual class DataItemService : IDataItemService {
                         CustomerOrderItmDb.coroutineColl.deleteMany(CustomerOrderItm::customerOrderHdr_id eq _id)
                     if (result.wasAcknowledged()) {
                         result = CustomerOrderHdrDb.coroutineColl.deleteOne(CustomerOrderHdr::_id eq _id)
-                        ItemContainer(isOk = result.deletedCount == 1L)
+                        ItemResponse(isOk = result.deletedCount == 1L)
                     } else {
-                        ItemContainer(isOk = false, msgError = "Error en operacion requerida ...")
+                        ItemResponse(isOk = false, msgError = "Error en operacion requerida ...")
                     }
                 }
 
-                else -> ItemContainer(isOk = false)
+                else -> ItemResponse(isOk = false)
             }
         }
     }
@@ -60,7 +60,7 @@ actual class DataItemService : IDataItemService {
     override suspend fun customerOrderItm(
         _id: String?,
         state: StateItem<CustomerOrderItm>,
-    ): ItemContainer<CustomerOrderItm> {
+    ): ItemResponse<CustomerOrderItm> {
         return when (state.callType) {
             Query -> when (state.crudAction) {
                 Create -> {
@@ -77,7 +77,7 @@ actual class DataItemService : IDataItemService {
                     )
                 }
 
-                Read, Update, Delete -> CustomerOrderItmDb.getItemContainer(
+                Read, Update, Delete -> CustomerOrderItmDb.itemResponse(
                     _id = _id,
                     ModelLookup(resultProperty = CustomerOrderHdr::customerItm)
                 )
@@ -86,7 +86,7 @@ actual class DataItemService : IDataItemService {
             Action -> when (state.crudAction) {
                 Create, Update -> CustomerOrderItmDb.updateOneById(_id = _id, state)
                 Delete -> CustomerOrderItmDb.deleteOneById(_id = _id)
-                else -> ItemContainer(isOk = false)
+                else -> ItemResponse(isOk = false)
             }
         }
     }
@@ -94,14 +94,14 @@ actual class DataItemService : IDataItemService {
     override suspend fun inventoryItm(
         _id: String?,
         state: StateItem<InventoryItm>,
-    ): ItemContainer<InventoryItm> {
+    ): ItemResponse<InventoryItm> {
         return when (state.callType) {
             Query -> when (state.crudAction) {
-                Create -> ItemContainer(isOk = false, msgError = "Not allowed ...")
-                Read -> InventoryItmDb.getItemContainer(_id)
-                Update -> ItemContainer(isOk = false, msgError = "No se permite editar ... ")
-                //InventoryItmDb.getItemContainer(_id)
-                Delete -> ItemContainer(isOk = false, msgError = "Not allowed ...")
+                Create -> ItemResponse(isOk = false, msgError = "Not allowed ...")
+                Read -> InventoryItmDb.itemResponse(_id)
+                Update -> ItemResponse(isOk = false, msgError = "No se permite editar ... ")
+                //InventoryItmDb.getItemResponse(_id)
+                Delete -> ItemResponse(isOk = false, msgError = "Not allowed ...")
             }
 
             Action -> when (state.crudAction) {
@@ -113,11 +113,11 @@ actual class DataItemService : IDataItemService {
         }
     }
 
-    override suspend fun inventoryItmByUpc(upc: String): ItemContainer<InventoryItm> {
-        return ItemContainer(item = InventoryItmDb.findOne(InventoryItm::upc eq upc))
+    override suspend fun inventoryItmByUpc(upc: String): ItemResponse<InventoryItm> {
+        return ItemResponse(item = InventoryItmDb.findOne(InventoryItm::upc eq upc))
     }
 
-    override suspend fun priceCheck(_id: String?, state: StateItem<InventoryItm>): ItemContainer<InventoryItm> {
+    override suspend fun priceCheck(_id: String?, state: StateItem<InventoryItm>): ItemResponse<InventoryItm> {
         TODO("Not yet implemented")
     }
 }
