@@ -68,7 +68,7 @@ class ViewListShopifyProduct(
                     }
                 } ?: Div("no image")
             },
-            tooltip = { _: Event, cell: Tabulator.CellComponent, onRendered: () -> Unit ->
+            tooltip = { event: Event, cell: Tabulator.CellComponent, onRendered: () -> Unit ->
                 val shopifyProduct = Json.decodeFromDynamic<ShopifyProduct>(cell.getData())
                 shopifyProduct.image?.src?.let { src ->
                     """<img class="rounded" src="$src" style="width: 500px; height: 500px;">"""
