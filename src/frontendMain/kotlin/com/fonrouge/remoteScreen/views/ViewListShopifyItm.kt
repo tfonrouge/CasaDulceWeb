@@ -56,11 +56,14 @@ class ViewListShopifyItm(
         ColumnDefinition(
             title = "image",
             field = fieldName(ShopifyProduct::image),
-            formatterComponentFunction = { _, _, data -> Image(data.image!!.src){
-                width = 35.px
-                height = 35.px
+            formatterComponentFunction = { _, _, data ->
+                data.image?.let {
+                    Image(data.image!!.src) {
+                        width = 35.px
+                        height = 35.px
+                    }
+                } ?: Span("no image")
             }
-                                         }
         )
     )
 
@@ -72,7 +75,7 @@ class ViewListShopifyItm(
                     height = 200.px
                 }
             }
-            vPanel(className = "flex-grow-1 p-2") {0
+            vPanel(className = "flex-grow-1 p-2") {
                 fsTabulator(viewList = this@ViewListShopifyItm) {
                     options.paginationMode
                 }
