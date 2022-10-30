@@ -112,7 +112,9 @@ class ViewListShopifyProduct(
                                     }
                                 }
                             }
-                            button(text = "", icon = "fas fa-chevron-left", style = ButtonStyle.OUTLINEPRIMARY)
+                            button(text = "", icon = "fas fa-chevron-left", style = ButtonStyle.OUTLINEPRIMARY) {
+                                disabled = true
+                            }
                             button(text = "", icon = "fas fa-chevron-right", style = ButtonStyle.OUTLINEPRIMARY)
                         }
                     }
