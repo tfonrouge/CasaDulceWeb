@@ -77,7 +77,8 @@ class ApiShopifyService {
         return ListContainer(
             data = products?.products?.toList() ?: emptyList(),
             last_page = 1,
-            responseStatus = ListContainer.ResponseStatus(checksum = crC32.value.toString())
+            checksum = crC32.value.toString(),
+            state = response.headers["link"]
         )
     }
 
