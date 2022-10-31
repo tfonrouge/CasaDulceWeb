@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
+        mavenLocal()
         gradlePluginPortal()
         mavenCentral()
-        mavenLocal()
     }
 }
 rootProject.name = "remoteScreen"

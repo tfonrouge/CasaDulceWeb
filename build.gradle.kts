@@ -13,9 +13,9 @@ version = "1.0.0-SNAPSHOT"
 group = "com.fonrouge"
 
 repositories {
+    mavenLocal()
     mavenCentral()
     jcenter()
-    mavenLocal()
 }
 
 // Versions
