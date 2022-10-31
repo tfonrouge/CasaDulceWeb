@@ -22,7 +22,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.util.zip.CRC32
 
-private fun String.toLine() : String {
+private fun String.toLine(): String {
     return this.replace("\n", "").trimIndent()
 }
 

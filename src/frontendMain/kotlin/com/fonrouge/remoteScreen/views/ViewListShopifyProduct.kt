@@ -3,24 +3,17 @@ package com.fonrouge.remoteScreen.views
 import com.fonrouge.fsLib.fieldName
 import com.fonrouge.fsLib.layout.fsTabulator
 import com.fonrouge.fsLib.lib.UrlParams
-import com.fonrouge.fsLib.view.AppScope
 import com.fonrouge.fsLib.view.ViewList
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListShopifyProduct
 import com.fonrouge.remoteScreen.model.ShopifyProduct
 import com.fonrouge.remoteScreen.services.DataListService
 import io.kvision.core.Container
-import io.kvision.core.JustifyContent
-import io.kvision.core.onEvent
-import io.kvision.form.select.simpleSelect
 import io.kvision.html.*
-import io.kvision.navbar.navForm
-import io.kvision.navbar.navbar
 import io.kvision.panel.hPanel
 import io.kvision.panel.vPanel
 import io.kvision.tabulator.ColumnDefinition
 import io.kvision.tabulator.js.Tabulator
 import io.kvision.utils.px
-import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromDynamic
 import org.w3c.dom.events.Event
@@ -30,9 +23,6 @@ class ViewListShopifyProduct(
 ) : ViewList<ShopifyProduct, DataListService, Long>(
     configView = ConfigViewListShopifyProduct
 ) {
-    private var tabSize = 10
-    private var navDirection: NavDirection = NavDirection.None
-
     override val columnDefinitionList: List<ColumnDefinition<ShopifyProduct>> = listOf(
         ColumnDefinition(
             title = "Id",
@@ -93,79 +83,8 @@ class ViewListShopifyProduct(
             vPanel(className = "flex-grow-1 p-2") {
                 fsTabulator(
                     viewList = this@ViewListShopifyProduct,
-                    pagination = null,
-                    contextDataUrlUpdate = {
-                        tabSize = this@ViewListShopifyProduct.tabSize
-                        state = navDirection.url
-                        navDirection = NavDirection.None
-                    },
-                    onResult = this@ViewListShopifyProduct::onResult,
                 )
-                hPanel(justify = JustifyContent.CENTER) {
-                    navbar {
-                        navForm {
-                            simpleSelect(
-                                options = listOf("10", "20", "30", "50", "100", "200").map { it to it },
-                                value = tabSize.toString()
-                            ).onEvent {
-                                change = {
-                                    tabSize = self.value?.toIntOrNull() ?: 10
-                                    AppScope.launch {
-                                        this@ViewListShopifyProduct.dataUpdate()
-                                    }
-                                }
-                            }
-                            button(
-                                text = "",
-                                icon = "fas fa-chevron-left",
-                                style = ButtonStyle.OUTLINEPRIMARY
-                            ).onClick {
-                                AppScope.launch {
-                                    navDirection = NavDirection.Prev
-                                    this@ViewListShopifyProduct.dataUpdate()
-                                }
-                            }
-                            button(
-                                text = "",
-                                icon = "fas fa-chevron-right",
-                                style = ButtonStyle.OUTLINEPRIMARY
-                            ).onClick {
-                                AppScope.launch {
-                                    navDirection = NavDirection.Next
-                                    this@ViewListShopifyProduct.dataUpdate()
-                                }
-                            }
-                        }
-                    }
-                }
             }
         }
-    }
-
-    private fun getUrl(s: String): String {
-        return s.split(';')[0].trim().let { it.substring(1, it.length - 1) }
-    }
-
-    private fun onResult(result: dynamic) {
-        console.warn("onResult ->", result)
-        if (result.state != undefined)
-            (result.state as? String)?.let { state ->
-                console.warn("STATE ->", state)
-                val a = state.split(',')
-                NavDirection.Prev.url = a.find { it.contains("rel=\"previous\"") }?.let { getUrl(it) }
-                console.warn("NEXT ->", NavDirection.Next.url)
-                NavDirection.Next.url = a.find { it.contains("rel=\"next\"") }?.let { getUrl(it) }
-                console.warn("PREV ->", NavDirection.Next.url)
-            }
-    }
-
-    enum class NavDirection(var url: String? = null) {
-        None,
-        Next,
-        Prev
-    }
-
-    init {
-        periodicUpdateDataView = false
     }
 }

@@ -2,8 +2,8 @@ package com.fonrouge.remoteScreen
 
 import com.fonrouge.fsLib.mongoDb.MongoDbPlugin
 import com.fonrouge.fsLib.mongoDb.collation
+import com.fonrouge.remoteScreen.database.Tables.UserItmDb
 import com.fonrouge.remoteScreen.database.UserItm
-import com.fonrouge.remoteScreen.database.UserItmDb
 import com.fonrouge.remoteScreen.services.*
 import com.fonrouge.remoteScreen.upload.uploadsRoute
 import com.toxicbakery.bcrypt.Bcrypt

@@ -6,9 +6,9 @@ import com.fonrouge.fsLib.StateItem.CallType.Query
 import com.fonrouge.fsLib.model.CrudAction.*
 import com.fonrouge.fsLib.model.ItemResponse
 import com.fonrouge.fsLib.mongoDb.ModelLookup
-import com.fonrouge.remoteScreen.database.CustomerOrderHdrDb
-import com.fonrouge.remoteScreen.database.CustomerOrderItmDb
-import com.fonrouge.remoteScreen.database.InventoryItmDb
+import com.fonrouge.remoteScreen.database.Tables.CustomerOrderHdrDb
+import com.fonrouge.remoteScreen.database.Tables.CustomerOrderItmDb
+import com.fonrouge.remoteScreen.database.Tables.InventoryItmDb
 import com.fonrouge.remoteScreen.database.getNextNumId
 import com.fonrouge.remoteScreen.model.CustomerOrderHdr
 import com.fonrouge.remoteScreen.model.CustomerOrderItm

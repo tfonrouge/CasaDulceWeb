@@ -1,7 +1,7 @@
 package com.fonrouge.remoteScreen.services
 
-import com.fonrouge.remoteScreen.database.CustomerItmDb
-import com.fonrouge.remoteScreen.database.InventoryItmDb
+import com.fonrouge.remoteScreen.database.Tables.CustomerItmDb
+import com.fonrouge.remoteScreen.database.Tables.InventoryItmDb
 import com.fonrouge.remoteScreen.model.CustomerItm
 import com.fonrouge.remoteScreen.model.InventoryItm
 import io.kvision.remote.RemoteOption

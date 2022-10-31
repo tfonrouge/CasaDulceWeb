@@ -3,7 +3,12 @@ package com.fonrouge.remoteScreen.services
 import com.fonrouge.fsLib.ContextDataUrl
 import com.fonrouge.fsLib.model.ListContainer
 import com.fonrouge.fsLib.mongoDb.ModelLookup
-import com.fonrouge.remoteScreen.database.*
+import com.fonrouge.remoteScreen.database.Tables.CustomerItmDb
+import com.fonrouge.remoteScreen.database.Tables.CustomerOrderHdrDb
+import com.fonrouge.remoteScreen.database.Tables.CustomerOrderItmDb
+import com.fonrouge.remoteScreen.database.Tables.DeliveryOrderHdrDb
+import com.fonrouge.remoteScreen.database.Tables.InventoryItmDb
+import com.fonrouge.remoteScreen.database.Tables.ShopifyProductDb
 import com.fonrouge.remoteScreen.model.*
 import org.litote.kmongo.eq
 import org.litote.kmongo.match
@@ -68,6 +73,8 @@ actual class DataListService : IDataListService {
     override suspend fun shopifyItm(
         contextDataUrl: ContextDataUrl?
     ): ListContainer<ShopifyProduct> {
-        return contextDataUrl?.let { ApiShopifyService().taskGetItems(it) } ?: ListContainer()
+        return ShopifyProductDb.listContainer(
+            contextDataUrl = contextDataUrl
+        )
     }
 }
