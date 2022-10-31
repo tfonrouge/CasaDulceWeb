@@ -91,9 +91,13 @@ object Tables : ITables {
     }
     val ShopifyProductDb = object : CTableDb<ShopifyProduct, Long>(
         klass = ShopifyProduct::class
-    ) {
-
-    }
+    ) {}
+    val ShopifyVariantDb = object : CTableDb<ShopifyVariant, Long>(
+        klass = ShopifyVariant::class
+    ) {}
+    val ShopifyImageDb = object : CTableDb<ShopifyImage, Long>(
+        klass = ShopifyImage::class
+    ) {}
     val UserItmDb = object : CTableDb<UserItm, Id<UserItm>>(
         klass = UserItm::class
     ) {}

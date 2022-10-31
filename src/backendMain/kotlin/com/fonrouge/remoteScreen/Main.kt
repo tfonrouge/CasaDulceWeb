@@ -102,6 +102,7 @@ fun Application.main() {
             applyRoutes(DataItemServiceManager)
             applyRoutes(DataListServiceManager)
             applyRoutes(SelectServiceManager)
+            applyRoutes(ShopifyApiServiceManager)
             applyRoutes(TypeaheadServiceManager)
             uploadsRoute()
         }
@@ -111,6 +112,7 @@ fun Application.main() {
         factoryOf(::DataItemService)
         factoryOf(::DataListService)
         factoryOf(::SelectService)
+        factoryOf(::ShopifyApiService)
         factoryOf(::TypeaheadService)
         factoryOf(::UserService)
     }

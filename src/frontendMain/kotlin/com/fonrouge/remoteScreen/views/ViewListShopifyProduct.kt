@@ -3,10 +3,12 @@ package com.fonrouge.remoteScreen.views
 import com.fonrouge.fsLib.fieldName
 import com.fonrouge.fsLib.layout.fsTabulator
 import com.fonrouge.fsLib.lib.UrlParams
+import com.fonrouge.fsLib.view.AppScope
 import com.fonrouge.fsLib.view.ViewList
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListShopifyProduct
 import com.fonrouge.remoteScreen.model.ShopifyProduct
 import com.fonrouge.remoteScreen.services.DataListService
+import com.fonrouge.remoteScreen.services.ShopifyApiService
 import io.kvision.core.Container
 import io.kvision.html.*
 import io.kvision.panel.hPanel
@@ -14,6 +16,7 @@ import io.kvision.panel.vPanel
 import io.kvision.tabulator.ColumnDefinition
 import io.kvision.tabulator.js.Tabulator
 import io.kvision.utils.px
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromDynamic
 import org.w3c.dom.events.Event
@@ -84,6 +87,11 @@ class ViewListShopifyProduct(
                 fsTabulator(
                     viewList = this@ViewListShopifyProduct,
                 )
+                button("Refresh data from Shopify ...").onClick {
+                    AppScope.launch {
+                        ShopifyApiService().syncFromShopify()
+                    }
+                }
             }
         }
     }

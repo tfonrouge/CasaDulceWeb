@@ -1,14 +1,16 @@
 package com.fonrouge.remoteScreen.model
 
 import com.fonrouge.fsLib.annotations.MongoDoc
+import com.fonrouge.fsLib.model.base.BaseModel
 import kotlinx.serialization.Serializable
-import kotlin.js.JsExport
+import kotlinx.serialization.json.JsonNames
 
 @MongoDoc(collection = "shopVariant")
 @Serializable
-@JsExport
+//@JsExport
 class ShopifyVariant(
-    var id: Long = 0,
+    @JsonNames("id")
+    override var _id: Long = 0,
     var product_id: Long = 0,
     var title: String? = null,
     var body_html: String? = null,
@@ -35,4 +37,4 @@ class ShopifyVariant(
     var old_inventory_quantity: Int? = null,
     var requires_shipping: Boolean? = null,
     var admin_graphql_api_id: String? = null,
-)
+) : BaseModel<Long>
