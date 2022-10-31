@@ -28,11 +28,8 @@ class ViewListShopifyProduct(
 ) {
     override val columnDefinitionList: List<ColumnDefinition<ShopifyProduct>> = listOf(
         ColumnDefinition(
-            title = "Id",
-            field = fieldName(ShopifyProduct::_id),
-            formatterComponentFunction = { _, _, data ->
-                Span(data._id.toString())
-            }
+            title = "Barcode",
+            field = fieldName(ShopifyProduct::barcode),
         ),
         ColumnDefinition(
             title = "Handle",

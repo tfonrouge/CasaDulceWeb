@@ -91,7 +91,24 @@ object Tables : ITables {
     }
     val ShopifyProductDb = object : CTableDb<ShopifyProduct, Long>(
         klass = ShopifyProduct::class
-    ) {}
+    ) {
+        override val lookupFun: (() -> List<LookupPipelineBuilder<ShopifyProduct, *, *>>) = {
+            listOf(
+                lookupFieldArray(
+                    cTableDb = ShopifyVariantDb::class,
+                    localField = ShopifyProduct::_id,
+                    foreignField = ShopifyVariant::product_id,
+                    resultFieldArray = ShopifyProduct::variants
+                )
+            )
+        }
+
+        init {
+            constLookupList = listOf(
+                ShopifyProduct::variants
+            )
+        }
+    }
     val ShopifyVariantDb = object : CTableDb<ShopifyVariant, Long>(
         klass = ShopifyVariant::class
     ) {}

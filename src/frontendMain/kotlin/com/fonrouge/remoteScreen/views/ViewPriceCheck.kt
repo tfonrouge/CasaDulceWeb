@@ -74,6 +74,9 @@ class ViewPriceCheck(
                                                 textBarcode.input.getElementJQuery()?.select()
                                                 ModelDataItemService.dataItemService.inventoryItmByUpc(barcode).item?.let { item ->
                                                     formPanel1.setData(item)
+                                                    AppScope.launch {
+                                                        image1.src = ModelDataItemService.getImageSrc(barcode = barcode)
+                                                    }
                                                 } ?: formPanel1.clearData()
                                             }
                                         }

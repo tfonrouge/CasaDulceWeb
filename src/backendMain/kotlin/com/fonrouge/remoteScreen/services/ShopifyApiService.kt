@@ -69,6 +69,14 @@ actual class ShopifyApiService : IShopifyApiService {
         }
     }
 
+    override suspend fun getImageSrc(barcode: String): String {
+        return ShopifyVariantDb.coroutineColl.findOne(ShopifyVariant::barcode eq barcode)?.let { shopifyVariant ->
+            ShopifyProductDb.coroutineColl.findOne(ShopifyProduct::_id eq shopifyVariant.product_id)?.let {
+                it.image?.src
+            }
+        } ?: ""
+    }
+
     override suspend fun syncFromShopify(): Boolean {
         var state: String? = null
         println(">>>>>>>>>>>>>>>> start")
