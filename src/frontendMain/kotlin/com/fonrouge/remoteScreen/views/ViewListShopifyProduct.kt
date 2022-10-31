@@ -31,6 +31,7 @@ class ViewListShopifyProduct(
     configView = ConfigViewListShopifyProduct
 ) {
     private var tabSize = 10
+    private var navDirection: NavDirection = NavDirection.None
 
     override val columnDefinitionList: List<ColumnDefinition<ShopifyProduct>> = listOf(
         ColumnDefinition(
@@ -95,6 +96,8 @@ class ViewListShopifyProduct(
                     pagination = null,
                     contextDataUrlUpdate = {
                         tabSize = this@ViewListShopifyProduct.tabSize
+                        state = navDirection.url
+                        navDirection = NavDirection.None
                     },
                     onResult = this@ViewListShopifyProduct::onResult,
                 )
@@ -112,10 +115,26 @@ class ViewListShopifyProduct(
                                     }
                                 }
                             }
-                            button(text = "", icon = "fas fa-chevron-left", style = ButtonStyle.OUTLINEPRIMARY) {
-                                disabled = true
+                            button(
+                                text = "",
+                                icon = "fas fa-chevron-left",
+                                style = ButtonStyle.OUTLINEPRIMARY
+                            ).onClick {
+                                AppScope.launch {
+                                    navDirection = NavDirection.Prev
+                                    this@ViewListShopifyProduct.dataUpdate()
+                                }
                             }
-                            button(text = "", icon = "fas fa-chevron-right", style = ButtonStyle.OUTLINEPRIMARY)
+                            button(
+                                text = "",
+                                icon = "fas fa-chevron-right",
+                                style = ButtonStyle.OUTLINEPRIMARY
+                            ).onClick {
+                                AppScope.launch {
+                                    navDirection = NavDirection.Next
+                                    this@ViewListShopifyProduct.dataUpdate()
+                                }
+                            }
                         }
                     }
                 }
@@ -123,7 +142,30 @@ class ViewListShopifyProduct(
         }
     }
 
+    private fun getUrl(s: String): String {
+        return s.split(';')[0].trim().let { it.substring(1, it.length - 1) }
+    }
+
     private fun onResult(result: dynamic) {
         console.warn("onResult ->", result)
+        if (result.state != undefined)
+            (result.state as? String)?.let { state ->
+                console.warn("STATE ->", state)
+                val a = state.split(',')
+                NavDirection.Prev.url = a.find { it.contains("rel=\"previous\"") }?.let { getUrl(it) }
+                console.warn("NEXT ->", NavDirection.Next.url)
+                NavDirection.Next.url = a.find { it.contains("rel=\"next\"") }?.let { getUrl(it) }
+                console.warn("PREV ->", NavDirection.Next.url)
+            }
+    }
+
+    enum class NavDirection(var url: String? = null) {
+        None,
+        Next,
+        Prev
+    }
+
+    init {
+        periodicUpdateDataView = false
     }
 }

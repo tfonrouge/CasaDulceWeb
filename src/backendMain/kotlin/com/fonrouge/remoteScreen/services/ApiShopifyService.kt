@@ -1,5 +1,6 @@
 package com.fonrouge.remoteScreen.services
 
+import com.fonrouge.fsLib.ContextDataUrl
 import com.fonrouge.fsLib.model.ListContainer
 import com.fonrouge.remoteScreen.model.SLocation
 import com.fonrouge.remoteScreen.model.ShopifyProduct
@@ -13,19 +14,24 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.util.*
+import io.ktor.util.reflect.*
 import io.ktor.utils.io.*
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import org.bson.BsonDocument
-import org.litote.kmongo.json
 import java.util.zip.CRC32
 
+private fun String.toLine() : String {
+    return this.replace("\n", "").trimIndent()
+}
+
+@OptIn(InternalAPI::class)
 class ApiShopifyService {
 
     companion object {
-        private const val apiVersion = "2020-01"
-        const val baseURI = "https://casa-dulce-usa.myshopify.com/admin/api/${apiVersion}/"
+        private const val apiVersion = "2022-10"
+        const val baseURI = "https://casa-dulce-usa.myshopify.com/admin/api/${apiVersion}"
         val httpClient = HttpClient(CIO) {
             install(ContentNegotiation)
             install(ContentEncoding)
@@ -47,24 +53,27 @@ class ApiShopifyService {
                 }
             }
         }
-        var locationId: Long = 0
+        var locations: Locations? = null
+        var locationId: Long? = null
+
+        init {
+            runBlocking {
+                locations = httpClient.get("$baseURI/locations.json").content.readUTF8Line()?.let {
+                    Json.decodeFromString<Locations>(it)
+                }
+                locationId = locations?.locations?.get(0)?.id
+            }
+        }
     }
 
     @OptIn(InternalAPI::class)
-    suspend fun taskGetItems(page: Int?, size: Int?): ListContainer<ShopifyProduct> {
-        var response = httpClient.get("${baseURI}/locations.json")
-        val content = response.content
-        val locations = content.readUTF8Line()?.let { contentLine ->
-            BsonDocument.parse(contentLine)["locations"]?.json?.let {
-                Json.decodeFromString<Array<SLocation>>(it)
-            }
-        }
-        if (locations.isNullOrEmpty()) return ListContainer()
-        val location0 = locations[0]
-        locationId = location0.id
-        val callUrl = baseURI
-        val path = "products.json?limit=$size"
-        response = httpClient.get("$callUrl/$path")
+    suspend fun taskGetItems(
+        contextDataUrl: ContextDataUrl,
+    ): ListContainer<ShopifyProduct> {
+        val url = contextDataUrl.state ?: "$baseURI/products.json?limit=${contextDataUrl.tabSize}&query=CHAMOY"
+        val response = httpClient.get(url)
+        println("URL = $url")
+        println("LINK = ${response.headers["link"]}")
         var products: Products? = null
         val crC32 = CRC32()
         response.content.read {
@@ -81,6 +90,11 @@ class ApiShopifyService {
             state = response.headers["link"]
         )
     }
+
+    @Serializable
+    class Locations(
+        val locations: Array<SLocation>
+    )
 
     @Serializable
     class Products(

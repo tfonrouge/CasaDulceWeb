@@ -68,9 +68,6 @@ actual class DataListService : IDataListService {
     override suspend fun shopifyItm(
         contextDataUrl: ContextDataUrl?
     ): ListContainer<ShopifyProduct> {
-        return ApiShopifyService().taskGetItems(
-            page = contextDataUrl?.tabPage,
-            size = contextDataUrl?.tabSize
-        )
+        return contextDataUrl?.let { ApiShopifyService().taskGetItems(it) } ?: ListContainer()
     }
 }

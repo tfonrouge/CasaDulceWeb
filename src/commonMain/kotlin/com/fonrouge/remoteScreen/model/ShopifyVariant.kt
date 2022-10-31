@@ -1,8 +1,10 @@
 package com.fonrouge.remoteScreen.model
 
+import com.fonrouge.fsLib.annotations.MongoDoc
 import kotlinx.serialization.Serializable
 import kotlin.js.JsExport
 
+@MongoDoc(collection = "shopVariant")
 @Serializable
 @JsExport
 class ShopifyVariant(
@@ -11,7 +13,7 @@ class ShopifyVariant(
     var title: String? = null,
     var body_html: String? = null,
     var price: Double,
-    var sku: String,
+    var sku: String?,
     var position: Int = 0,
     var inventory_policy: String? = null,
     var compare_at_price: Double? = null,

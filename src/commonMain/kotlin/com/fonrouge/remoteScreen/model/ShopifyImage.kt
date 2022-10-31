@@ -1,10 +1,12 @@
 package com.fonrouge.remoteScreen.model
 
+import com.fonrouge.fsLib.annotations.MongoDoc
 import com.fonrouge.fsLib.serializers.FSOffsetDateTimeSerializer
 import io.kvision.types.OffsetDateTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@MongoDoc(collection = "shopImage")
 @Serializable
 class ShopifyImage(
     var id: Long,
