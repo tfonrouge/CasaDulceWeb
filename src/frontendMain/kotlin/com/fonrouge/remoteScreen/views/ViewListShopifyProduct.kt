@@ -9,6 +9,7 @@ import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListS
 import com.fonrouge.remoteScreen.model.ShopifyProduct
 import com.fonrouge.remoteScreen.services.DataListService
 import com.fonrouge.remoteScreen.services.ShopifyApiService
+import csstype.HtmlAttributes
 import io.kvision.core.Container
 import io.kvision.html.*
 import io.kvision.panel.hPanel
@@ -68,6 +69,18 @@ class ViewListShopifyProduct(
                 shopifyProduct.image?.src?.let { src ->
                     """<img class="rounded" src="$src" style="width: 500px; height: 500px;">"""
                 }
+            }
+        ),
+        ColumnDefinition(
+            title = "images",
+            fieldName(ShopifyProduct::images),
+            formatterComponentFunction = { _, _, data ->
+                data.images.let { src ->
+                    Image(src.toString()) {
+                        width = 35.px
+                        height = 35.px
+                    }
+                } ?: Div("no image")
             }
         )
     )
