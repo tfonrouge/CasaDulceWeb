@@ -31,7 +31,7 @@ const val uploadsDir = "uploads"
 @Suppress("unused")
 fun Application.main() {
     install(MongoDbPlugin) {
-        serverUrl = "casadulce.fonrouge.com"
+        serverUrl = "app.casadulceusa.com"
 //        serverUrl = "localhost"
         serverPort = 27017
         database = "CasaDulce"
