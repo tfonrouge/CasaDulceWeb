@@ -6,10 +6,10 @@ import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.AppScope
 import com.fonrouge.fsLib.view.ViewList
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListShopifyProduct
+import com.fonrouge.remoteScreen.model.ModelShopifyApiService
 import com.fonrouge.remoteScreen.model.ShopifyProduct
 import com.fonrouge.remoteScreen.services.DataListService
 import com.fonrouge.remoteScreen.services.ShopifyApiService
-import csstype.HtmlAttributes
 import io.kvision.core.Container
 import io.kvision.html.*
 import io.kvision.panel.hPanel
@@ -80,7 +80,7 @@ class ViewListShopifyProduct(
                         width = 35.px
                         height = 35.px
                     }
-                } ?: Div("no image")
+                }
             }
         )
     )
@@ -103,6 +103,12 @@ class ViewListShopifyProduct(
                     }
                 }
             }
+        }
+    }
+
+    init {
+        AppScope.launch {
+            ModelShopifyApiService.shopifyApiService.syncFromShopify()
         }
     }
 }

@@ -22,17 +22,20 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.util.*
 import io.ktor.utils.io.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.litote.kmongo.eq
+import java.time.Duration
 import java.util.zip.CRC32
 
 @OptIn(InternalAPI::class)
 actual class ShopifyApiService : IShopifyApiService {
 
     companion object {
+        var taskRetrievingShopifyProducts = false
         private const val apiVersion = "2022-10"
         const val baseURI = "https://casa-dulce-usa.myshopify.com/admin/api/${apiVersion}"
         val httpClient = HttpClient(CIO) {
@@ -78,19 +81,26 @@ actual class ShopifyApiService : IShopifyApiService {
     }
 
     override suspend fun syncFromShopify(): Boolean {
-        var state: String? = null
-        println(">>>>>>>>>>>>>>>> start")
-        while (true) {
-            val listContainer = taskGetItems(state)
-            listContainer.state?.let { s ->
-                val a = s.split(',')
-                state = a.find { it.contains("rel=\"next\"") }?.let { getUrl(it) }
+        if (!taskRetrievingShopifyProducts) {
+            taskRetrievingShopifyProducts = true
+            var state: String? = null
+            println(">>>>>>>>>>>>>>>> start")
+            while (true) {
+                val listContainer = taskGetItems(state)
+                listContainer.state?.let { s ->
+                    val a = s.split(',')
+                    state = a.find { it.contains("rel=\"next\"") }?.let { getUrl(it) }
+                }
+                checkList(listContainer.data)
+                state ?: break
             }
-            checkList(listContainer.data)
-            state ?: break
+            println(">>>>>>>>>>>>>>>> end")
+            delay(Duration.ofSeconds(30).toMillis())
+            println(">>>>>>>>>>>>>>>> delay end")
+            taskRetrievingShopifyProducts = false
+            return true
         }
-        println(">>>>>>>>>>>>>>>> end")
-        return true
+        return false
     }
 
     private suspend fun checkList(shopifyProducts: List<ShopifyProduct>) {
