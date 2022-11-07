@@ -15,6 +15,7 @@ import io.kvision.html.*
 import io.kvision.panel.hPanel
 import io.kvision.panel.vPanel
 import io.kvision.tabulator.ColumnDefinition
+import io.kvision.tabulator.Editor
 import io.kvision.tabulator.js.Tabulator
 import io.kvision.utils.px
 import kotlinx.coroutines.launch
@@ -31,18 +32,22 @@ class ViewListShopifyProduct(
         ColumnDefinition(
             title = "Barcode",
             field = fieldName(ShopifyProduct::barcode),
+            headerFilter = Editor.INPUT,
         ),
         ColumnDefinition(
             title = "Handle",
             field = fieldName(ShopifyProduct::handle),
+            headerFilter = Editor.INPUT,
         ),
         ColumnDefinition(
             title = "title",
-            field = fieldName(ShopifyProduct::title)
+            field = fieldName(ShopifyProduct::title),
+            headerFilter = Editor.INPUT,
         ),
         ColumnDefinition(
             title = "bodyHtml",
-            field = fieldName(ShopifyProduct::bodyHtml)
+            field = fieldName(ShopifyProduct::bodyHtml),
+            headerFilter = Editor.INPUT,
         ),
         ColumnDefinition(
             title = "createdAt",
@@ -50,8 +55,8 @@ class ViewListShopifyProduct(
         ),
         ColumnDefinition(
             title = "tags",
-            field = fieldName(ShopifyProduct::tags)
-
+            field = fieldName(ShopifyProduct::tags),
+            headerFilter = Editor.INPUT,
         ),
         ColumnDefinition(
             title = "image",
