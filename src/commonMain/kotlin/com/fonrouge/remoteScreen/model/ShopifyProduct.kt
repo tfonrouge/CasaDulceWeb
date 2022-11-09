@@ -45,7 +45,10 @@ class ShopifyProduct(
     var vendor: String,
     @SerialName(value = "admin_graphql_api_id")
     var adminGraphqlApiId: String,
+    var productQuickbooks: QuickbooksProduct? = null
 ) : BaseModel<Long> {
+    var variant0: ShopifyVariant? = null
+        get() = variants.getOrNull(0)
     var barcode: String? = null
-        get() = if(variants.isNotEmpty()) variants[0].barcode else null
+        get() = if (variants.isNotEmpty()) variants[0].barcode else null
 }

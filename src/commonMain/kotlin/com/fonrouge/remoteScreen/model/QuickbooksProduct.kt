@@ -5,7 +5,7 @@ import kotlin.js.JsExport
 
 @Serializable
 @JsExport
-class QuickbooksItm(
+class QuickbooksProduct(
     override val _id: String,
     override var handle: String,
     override var title: String,

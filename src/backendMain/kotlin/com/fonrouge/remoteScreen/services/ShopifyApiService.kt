@@ -4,7 +4,7 @@ import com.fonrouge.fsLib.model.ListContainer
 import com.fonrouge.remoteScreen.database.Tables.ShopifyImageDb
 import com.fonrouge.remoteScreen.database.Tables.ShopifyProductDb
 import com.fonrouge.remoteScreen.database.Tables.ShopifyVariantDb
-import com.fonrouge.remoteScreen.model.SLocation
+import com.fonrouge.remoteScreen.model.ShopifyLocation
 import com.fonrouge.remoteScreen.model.ShopifyImage
 import com.fonrouge.remoteScreen.model.ShopifyProduct
 import com.fonrouge.remoteScreen.model.ShopifyVariant
@@ -176,7 +176,7 @@ actual class ShopifyApiService : IShopifyApiService {
 
     @Serializable
     class Locations(
-        val locations: Array<SLocation>
+        val locations: Array<ShopifyLocation>
     )
 
     @Serializable

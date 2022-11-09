@@ -6,15 +6,17 @@ import com.fonrouge.fsLib.lib.UrlParams
 import com.fonrouge.fsLib.view.AppScope
 import com.fonrouge.fsLib.view.ViewList
 import com.fonrouge.remoteScreen.config.ConfigViewImpl.Companion.ConfigViewListShopifyProduct
+import com.fonrouge.remoteScreen.model.QuickbooksProduct
 import com.fonrouge.remoteScreen.model.ShopifyProduct
+import com.fonrouge.remoteScreen.model.ShopifyVariant
 import com.fonrouge.remoteScreen.services.DataListService
 import com.fonrouge.remoteScreen.services.ShopifyApiService
-import csstype.HtmlAttributes
 import io.kvision.core.Container
 import io.kvision.html.*
 import io.kvision.panel.hPanel
 import io.kvision.panel.vPanel
 import io.kvision.tabulator.ColumnDefinition
+import io.kvision.tabulator.Editor
 import io.kvision.tabulator.js.Tabulator
 import io.kvision.utils.px
 import kotlinx.coroutines.launch
@@ -31,18 +33,32 @@ class ViewListShopifyProduct(
         ColumnDefinition(
             title = "Barcode",
             field = fieldName(ShopifyProduct::barcode),
+            headerFilter = Editor.INPUT,
         ),
         ColumnDefinition(
             title = "Handle",
             field = fieldName(ShopifyProduct::handle),
+            headerFilter = Editor.INPUT,
+        ),
+        ColumnDefinition(
+            title = "Sku",
+            field = fieldName(ShopifyProduct::variant0, ShopifyVariant::sku),
+            headerFilter = Editor.INPUT,
         ),
         ColumnDefinition(
             title = "title",
-            field = fieldName(ShopifyProduct::title)
+            field = fieldName(ShopifyProduct::title),
+            headerFilter = Editor.INPUT,
         ),
         ColumnDefinition(
             title = "bodyHtml",
-            field = fieldName(ShopifyProduct::bodyHtml)
+            field = fieldName(ShopifyProduct::bodyHtml),
+            headerFilter = Editor.INPUT,
+        ),
+        ColumnDefinition(
+            title = "cost",
+            field = fieldName(ShopifyProduct::productQuickbooks, QuickbooksProduct::cost),
+            headerFilter = Editor.INPUT,
         ),
         ColumnDefinition(
             title = "createdAt",
@@ -50,8 +66,8 @@ class ViewListShopifyProduct(
         ),
         ColumnDefinition(
             title = "tags",
-            field = fieldName(ShopifyProduct::tags)
-
+            field = fieldName(ShopifyProduct::tags),
+            headerFilter = Editor.INPUT,
         ),
         ColumnDefinition(
             title = "image",
@@ -80,7 +96,7 @@ class ViewListShopifyProduct(
                         width = 35.px
                         height = 35.px
                     }
-                } ?: Div("no image")
+                }
             }
         )
     )

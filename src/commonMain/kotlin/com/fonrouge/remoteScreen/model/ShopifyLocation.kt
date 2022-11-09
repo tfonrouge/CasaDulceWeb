@@ -5,7 +5,7 @@ import io.kvision.types.OffsetDateTime
 import kotlinx.serialization.Serializable
 
 @Serializable
-class SLocation(
+class ShopifyLocation(
     var id: Long,
     var name: String,
     var address1: String,

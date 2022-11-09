@@ -66,7 +66,7 @@ actual class DataListService : IDataListService {
 
     override suspend fun quickbooksItm(
         contextDataUrl: ContextDataUrl?
-    ): ListContainer<QuickbooksItm> {
+    ): ListContainer<QuickbooksProduct> {
         TODO("Not yet implemented")
     }
 

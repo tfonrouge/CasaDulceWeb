@@ -34,7 +34,7 @@ interface IDataListService : IDataList {
 
     suspend fun quickbooksItm(
         contextDataUrl: ContextDataUrl?
-    ): ListContainer<QuickbooksItm>
+    ): ListContainer<QuickbooksProduct>
 
     suspend fun shopifyItm(
         contextDataUrl: ContextDataUrl?

@@ -95,9 +95,9 @@ class ConfigViewImpl : IConfigView {
                 serviceManager = DataListServiceManager,
                 function = IDataListService::deliveryHdr
             ) {}
-        val ConfigViewListQuickbooksItm =
-            object : ConfigViewList<QuickbooksItm, ViewListQuickbooksItm, DataListService, String>(
-                itemKClass = QuickbooksItm::class,
+        val ConfigViewListQuickbooksProduct =
+            object : ConfigViewList<QuickbooksProduct, ViewListQuickbooksItm, DataListService, String>(
+                itemKClass = QuickbooksProduct::class,
                 label = "Quickbooks Items",
                 viewFunc = ViewListQuickbooksItm::class,
                 serviceManager = DataListServiceManager,
