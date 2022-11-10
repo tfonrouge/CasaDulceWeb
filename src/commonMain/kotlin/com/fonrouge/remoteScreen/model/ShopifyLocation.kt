@@ -1,12 +1,15 @@
 package com.fonrouge.remoteScreen.model
 
+import com.fonrouge.fsLib.model.base.BaseModel
 import com.fonrouge.fsLib.serializers.FSOffsetDateTimeSerializer
 import io.kvision.types.OffsetDateTime
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 
 @Serializable
 class ShopifyLocation(
-    var id: Long,
+    @JsonNames("id")
+    override val _id: Long,
     var name: String,
     var address1: String,
     var address2: String,
@@ -27,4 +30,4 @@ class ShopifyLocation(
     var admin_graphql_api_id: String,
     var localized_country_name: String,
     var localized_province_name: String,
-)
+) : BaseModel<Long>

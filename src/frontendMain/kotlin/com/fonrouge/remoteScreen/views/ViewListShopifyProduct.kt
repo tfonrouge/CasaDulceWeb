@@ -115,10 +115,16 @@ class ViewListShopifyProduct(
                 )
                 button("Refresh data from Shopify ...").onClick {
                     AppScope.launch {
-                        ShopifyApiService().syncFromShopify()
+                        ShopifyApiService().syncFromShopifyApi()
                     }
                 }
             }
+        }
+    }
+
+    init {
+        AppScope.launch {
+            ShopifyApiService().syncFromShopifyApi()
         }
     }
 }

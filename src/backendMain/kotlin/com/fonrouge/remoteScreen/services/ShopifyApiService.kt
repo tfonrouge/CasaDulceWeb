@@ -1,13 +1,11 @@
 package com.fonrouge.remoteScreen.services
 
 import com.fonrouge.fsLib.model.ListContainer
+import com.fonrouge.fsLib.model.base.BaseModel
 import com.fonrouge.remoteScreen.database.Tables.ShopifyImageDb
 import com.fonrouge.remoteScreen.database.Tables.ShopifyProductDb
 import com.fonrouge.remoteScreen.database.Tables.ShopifyVariantDb
-import com.fonrouge.remoteScreen.model.ShopifyLocation
-import com.fonrouge.remoteScreen.model.ShopifyImage
-import com.fonrouge.remoteScreen.model.ShopifyProduct
-import com.fonrouge.remoteScreen.model.ShopifyVariant
+import com.fonrouge.remoteScreen.model.*
 import com.mongodb.client.model.ReplaceOneModel
 import com.mongodb.client.model.ReplaceOptions
 import com.mongodb.client.model.WriteModel
@@ -35,7 +33,7 @@ import java.util.zip.CRC32
 actual class ShopifyApiService : IShopifyApiService {
 
     companion object {
-        var taskRetrievingShopifyProducts = false
+        private var taskRetrievingShopifyProducts = false
         private const val apiVersion = "2022-10"
         const val baseURI = "https://casa-dulce-usa.myshopify.com/admin/api/${apiVersion}"
         val httpClient = HttpClient(CIO) {
@@ -59,17 +57,90 @@ actual class ShopifyApiService : IShopifyApiService {
                 }
             }
         }
-        var locations: Locations? = null
-        var locationId: Long? = null
+        private var locations: List<ShopifyLocation>? = null
+        private var locationId: Long? = null
+
+        private fun getUrl(s: String): String {
+            return s.split(';')[0].trim().let { it.substring(1, it.length - 1) }
+        }
+
+        private suspend inline fun <T : BaseModel<*>, reified U : Any> syncShopifyComponent(
+            urlSuffix: String,
+            funcList: (U) -> List<T>,
+            funcSync: (List<T>) -> Unit
+        ): Boolean {
+            if (!taskRetrievingShopifyProducts) {
+                taskRetrievingShopifyProducts = true
+                var state: String? = null
+                println("> start syncing ${U::class.simpleName}")
+                while (true) {
+                    val listContainer = shopifyComponentBlock(
+                        urlSuffix = urlSuffix,
+                        state = state,
+                        funcList = funcList
+                    )
+                    listContainer.state?.let { s ->
+                        val a = s.split(',')
+                        state = a.find { it.contains("rel=\"next\"") }?.let { getUrl(it) }
+                    }
+                    funcSync(listContainer.data)
+                    state ?: break
+                }
+                println("> end syncing ${U::class.simpleName}")
+                taskRetrievingShopifyProducts = false
+                return true
+            }
+            return false
+        }
+
+        private suspend inline fun <T : BaseModel<*>, reified U : Any> shopifyComponentBlock(
+            urlSuffix: String,
+            state: String?,
+            funcList: (U) -> List<T>,
+        ): ListContainer<T> {
+            val pageSize = 250
+            val url = state ?: "$baseURI/$urlSuffix?limit=$pageSize"
+            val response = httpClient.get(url)
+            println("URL = $url")
+            println("LINK = ${response.headers["link"]}")
+            lateinit var products: U
+            val crC32 = CRC32()
+            response.content.read {
+                val bytes = it.moveToByteArray()
+                crC32.update(bytes)
+                val s = String(bytes)
+                products = Json.decodeFromString(s)
+            }
+            val list = funcList(products)
+            println("components: ${list.size}")
+            return ListContainer(
+                data = list,
+                last_page = 1,
+                checksum = crC32.value.toString(),
+                state = response.headers["link"]
+            )
+        }
 
         init {
             runBlocking {
-                locations = httpClient.get("$baseURI/locations.json").content.readUTF8Line()?.let {
-                    Json.decodeFromString<Locations>(it)
-                }
-                locationId = locations?.locations?.get(0)?.id
+                syncShopifyComponent<ShopifyLocation, Locations>(
+                    urlSuffix = "locations.json",
+                    funcList = { it.locations },
+                    funcSync = { locations = it }
+                )
+                locationId = locations?.get(0)?._id
             }
         }
+    }
+
+    override suspend fun syncFromShopifyApi(): Boolean {
+        val result = syncShopifyComponent<ShopifyProduct, Products>(
+            urlSuffix = "products.json",
+            funcList = { it.products },
+            funcSync = { syncShopifyProducts(it) }
+        )
+        delay(Duration.ofSeconds(30).toMillis())
+        return result
     }
 
     override suspend fun getImageSrc(barcode: String): String {
@@ -80,30 +151,7 @@ actual class ShopifyApiService : IShopifyApiService {
         } ?: ""
     }
 
-    override suspend fun syncFromShopify(): Boolean {
-        if (!taskRetrievingShopifyProducts) {
-            taskRetrievingShopifyProducts = true
-            var state: String? = null
-            println(">>>>>>>>>>>>>>>> start")
-            while (true) {
-                val listContainer = taskGetItems(state)
-                listContainer.state?.let { s ->
-                    val a = s.split(',')
-                    state = a.find { it.contains("rel=\"next\"") }?.let { getUrl(it) }
-                }
-                checkList(listContainer.data)
-                state ?: break
-            }
-            println(">>>>>>>>>>>>>>>> end")
-            delay(Duration.ofSeconds(30).toMillis())
-            println(">>>>>>>>>>>>>>>> delay end")
-            taskRetrievingShopifyProducts = false
-            return true
-        }
-        return false
-    }
-
-    private suspend fun checkList(shopifyProducts: List<ShopifyProduct>) {
+    private suspend fun syncShopifyProducts(shopifyProducts: List<ShopifyProduct>) {
         runBlocking {
             val shopifyProductWriteModels = mutableListOf<WriteModel<ShopifyProduct>>()
             val shopifyVariantWriteModels = mutableListOf<WriteModel<ShopifyVariant>>()
@@ -147,40 +195,17 @@ actual class ShopifyApiService : IShopifyApiService {
         }
     }
 
-    private suspend fun taskGetItems(state: String?): ListContainer<ShopifyProduct> {
-        val pageSize = 250
-        val url = state ?: "$baseURI/products.json?limit=$pageSize"
-        val response = httpClient.get(url)
-        println("URL = $url")
-        println("LINK = ${response.headers["link"]}")
-        var products: Products? = null
-        val crC32 = CRC32()
-        response.content.read {
-            val bytes = it.moveToByteArray()
-            crC32.update(bytes)
-            val s = String(bytes)
-            products = Json.decodeFromString(s)
-        }
-        println("products: ${products?.products?.size}")
-        return ListContainer(
-            data = products?.products?.toList() ?: emptyList(),
-            last_page = 1,
-            checksum = crC32.value.toString(),
-            state = response.headers["link"]
-        )
-    }
-
-    private fun getUrl(s: String): String {
-        return s.split(';')[0].trim().let { it.substring(1, it.length - 1) }
+    private suspend fun shopifyInventoryItem(state: String?): ListContainer<ShopifyInventoryItem> {
+        return ListContainer()
     }
 
     @Serializable
     class Locations(
-        val locations: Array<ShopifyLocation>
+        val locations: List<ShopifyLocation>
     )
 
     @Serializable
     class Products(
-        val products: Array<ShopifyProduct>
+        val products: List<ShopifyProduct>
     )
 }
