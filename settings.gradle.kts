@@ -5,4 +5,4 @@ pluginManagement {
         mavenCentral()
     }
 }
-rootProject.name = "remoteScreen"
+rootProject.name = "casaDulceWeb"
